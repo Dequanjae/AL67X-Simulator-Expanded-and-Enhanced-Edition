@@ -1,9 +1,0 @@
-{
-  "id": "greased_soles",
-  "name": "Greased Soles",
-  "description": "+12% move speed",
-  "base": true,
-  "weight": 10,
-  "icon": "",
-  "effect": { "type": "speed_mult", "value": 1.12 }
-}

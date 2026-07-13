@@ -1,9 +1,0 @@
-{
-  "id": "megavolt_coil",
-  "name": "Megavolt Coil",
-  "description": "+60% damage",
-  "base": false,
-  "weight": 3,
-  "icon": "",
-  "effect": { "type": "damage_mult", "value": 1.6 }
-}

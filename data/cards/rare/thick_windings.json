@@ -1,9 +1,0 @@
-{
-  "id": "thick_windings",
-  "name": "Thick Windings",
-  "description": "+30% projectile size",
-  "base": false,
-  "weight": 8,
-  "icon": "",
-  "effect": { "type": "projectile_scale_mult", "value": 1.3 }
-}

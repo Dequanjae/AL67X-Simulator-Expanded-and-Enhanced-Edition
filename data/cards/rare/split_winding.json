@@ -1,9 +1,0 @@
-{
-  "id": "split_winding",
-  "name": "Split Winding",
-  "description": "+1 projectile",
-  "base": true,
-  "weight": 5,
-  "icon": "",
-  "effect": { "type": "projectile_add", "value": 1 }
-}
