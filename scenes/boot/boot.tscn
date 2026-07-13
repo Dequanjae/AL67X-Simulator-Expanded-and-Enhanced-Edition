@@ -1,0 +1,170 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://src/ui/boot.gd" id="1_boot"]
+[ext_resource type="Texture2D" path="res://assets/video/splash_pride.png" id="2_splash"]
+
+[sub_resource type="StyleBoxFlat" id="support_style"]
+bg_color = Color(0.08, 0.07, 0.1, 0.98)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_left = 12
+corner_radius_bottom_right = 12
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+
+[node name="Boot" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_boot")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.05, 0.05, 0.07, 1)
+
+[node name="Splash" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_splash")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="TitleLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -250.0
+offset_right = 300.0
+offset_bottom = -150.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "AL67X"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Menu" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -110.0
+offset_right = 240.0
+offset_bottom = 230.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="PlayNowButton" type="Button" parent="Menu"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+theme_override_font_sizes/font_size = 28
+text = "PLAY NOW"
+
+[node name="GoogleButton" type="Button" parent="Menu"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 72)
+theme_override_font_sizes/font_size = 22
+text = "Sign in with Google"
+
+[node name="SocialRow" type="HBoxContainer" parent="Menu"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="IGButton" type="Button" parent="Menu/SocialRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 60)
+theme_override_font_sizes/font_size = 18
+text = "Follow @al67x._"
+
+[node name="SupportButton" type="Button" parent="Menu/SocialRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 60)
+theme_override_font_sizes/font_size = 18
+text = "Support the Creator"
+
+[node name="StatusLabel" type="Label" parent="Menu"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 48)
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="SupportPanel" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -340.0
+offset_top = -170.0
+offset_right = 340.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("support_style")
+
+[node name="SupportBox" type="VBoxContainer" parent="SupportPanel"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="SupportTitle" type="Label" parent="SupportPanel/SupportBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+theme_override_colors/font_color = Color(1, 0.75, 0.3, 1)
+text = "SUPPORT THE CREATOR"
+horizontal_alignment = 1
+
+[node name="SupportDesc" type="Label" parent="SupportPanel/SupportBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Monero (XMR) — every blob helps Allan keep the lights on:"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="XMRLabel" type="Label" parent="SupportPanel/SupportBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+horizontal_alignment = 1
+autowrap_mode = 1
+modulate = Color(0.7, 0.9, 1, 1)
+
+[node name="CopyButton" type="Button" parent="SupportPanel/SupportBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 64)
+theme_override_font_sizes/font_size = 22
+text = "COPY ADDRESS"
+
+[node name="CloseButton" type="Button" parent="SupportPanel/SupportBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+theme_override_font_sizes/font_size = 18
+text = "Close"

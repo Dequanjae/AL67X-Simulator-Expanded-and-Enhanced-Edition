@@ -1,0 +1,94 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://src/dev/billboard_smoke_test.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprites/allan/frames/player_idle0.png" id="2_allan"]
+[ext_resource type="Texture2D" path="res://assets/sprites/enemies/yes_king.png" id="3_enemy"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/blobs/shawarma.png" id="4_shawarma"]
+
+[sub_resource type="PlaneMesh" id="ground_mesh"]
+size = Vector2(48, 48)
+
+[sub_resource type="StandardMaterial3D" id="ground_mat"]
+albedo_color = Color(0.32, 0.42, 0.36, 1)
+
+[sub_resource type="BoxMesh" id="prop_mesh"]
+size = Vector3(1.5, 1.2, 1.5)
+
+[sub_resource type="StandardMaterial3D" id="prop_mat"]
+albedo_color = Color(0.55, 0.42, 0.28, 1)
+
+[sub_resource type="BoxMesh" id="prop_mesh_tall"]
+size = Vector3(1, 2.4, 1)
+
+[sub_resource type="StandardMaterial3D" id="prop_mat_tall"]
+albedo_color = Color(0.4, 0.45, 0.6, 1)
+
+[sub_resource type="Environment" id="env"]
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.6
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+
+[node name="BillboardSmokeTest" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 8, 0)
+shadow_enabled = true
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+mesh = SubResource("ground_mesh")
+surface_material_override/0 = SubResource("ground_mat")
+
+[node name="Prop1" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0.6, -3)
+mesh = SubResource("prop_mesh")
+surface_material_override/0 = SubResource("prop_mat")
+
+[node name="Prop2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0.6, 2)
+mesh = SubResource("prop_mesh")
+surface_material_override/0 = SubResource("prop_mat")
+
+[node name="Prop3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.2, -6)
+mesh = SubResource("prop_mesh_tall")
+surface_material_override/0 = SubResource("prop_mat_tall")
+
+[node name="Actor" type="Node3D" parent="."]
+
+[node name="AllanSprite" type="Sprite3D" parent="Actor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2, 0)
+billboard = 1
+texture_filter = 2
+pixel_size = 0.002
+texture = ExtResource("2_allan")
+
+[node name="Enemy1" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0.85, 4)
+billboard = 1
+texture_filter = 2
+pixel_size = 0.003
+texture = ExtResource("3_enemy")
+
+[node name="Enemy2" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.85, -4)
+billboard = 1
+texture_filter = 2
+pixel_size = 0.003
+texture = ExtResource("3_enemy")
+
+[node name="Shawarma" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.4, 5)
+billboard = 1
+texture_filter = 2
+pixel_size = 0.003
+texture = ExtResource("4_shawarma")
+
+[node name="CameraRig" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig"]

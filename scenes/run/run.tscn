@@ -1,0 +1,103 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://src/run/run_controller.gd" id="1_run"]
+[ext_resource type="Script" path="res://src/worldgen/level_builder.gd" id="2_builder"]
+[ext_resource type="Script" path="res://src/run/player.gd" id="3_player"]
+[ext_resource type="Script" path="res://src/run/pickup_manager.gd" id="4_pickups"]
+[ext_resource type="Texture2D" path="res://assets/sprites/allan/frames/player_idle0.png" id="5_allan"]
+[ext_resource type="Script" path="res://src/run/horde_system.gd" id="6_horde"]
+[ext_resource type="Script" path="res://src/run/blob_swarm.gd" id="7_swarm"]
+[ext_resource type="Script" path="res://src/run/level_up_controller.gd" id="8_levelup"]
+[ext_resource type="Shader" path="res://src/shaders/spotlight.gdshader" id="9_spotlight"]
+[ext_resource type="Script" path="res://src/run/run_camera.gd" id="10_camera"]
+[ext_resource type="Script" path="res://src/run/damage_numbers.gd" id="11_dmgnum"]
+[ext_resource type="Script" path="res://src/run/splat_system.gd" id="12_splats"]
+[ext_resource type="Script" path="res://src/services/webview_host.gd" id="13_webview"]
+
+[sub_resource type="ShaderMaterial" id="spotlight_mat"]
+shader = ExtResource("9_spotlight")
+
+[sub_resource type="Environment" id="env"]
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.65
+
+[sub_resource type="SphereShape3D" id="player_shape"]
+radius = 0.45
+
+[node name="Run" type="Node3D"]
+script = ExtResource("1_run")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 12, 0)
+shadow_enabled = true
+
+[node name="LevelRoot" type="Node3D" parent="."]
+script = ExtResource("2_builder")
+
+[node name="Player" type="CharacterBody3D" parent="."]
+collision_layer = 2
+collision_mask = 1
+script = ExtResource("3_player")
+
+[node name="Sprite" type="Sprite3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07, 0)
+billboard = 1
+texture_filter = 2
+pixel_size = 0.0018
+texture = ExtResource("5_allan")
+
+[node name="Collision" type="CollisionShape3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+shape = SubResource("player_shape")
+
+[node name="Pickups" type="Node3D" parent="."]
+script = ExtResource("4_pickups")
+
+[node name="Horde" type="Node3D" parent="."]
+script = ExtResource("6_horde")
+
+[node name="Swarm" type="Node3D" parent="."]
+script = ExtResource("7_swarm")
+
+[node name="DamageNumbers" type="Node3D" parent="."]
+script = ExtResource("11_dmgnum")
+
+[node name="Splats" type="Node3D" parent="."]
+script = ExtResource("12_splats")
+
+[node name="CameraRig" type="Node3D" parent="."]
+script = ExtResource("10_camera")
+
+[node name="Camera" type="Camera3D" parent="CameraRig"]
+
+[node name="LevelUpController" type="Node" parent="."]
+process_mode = 3
+script = ExtResource("8_levelup")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="DeathSpotlight" type="ColorRect" parent="HUD"]
+visible = false
+material = SubResource("spotlight_mat")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="WebViewHost" type="Control" parent="HUD"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+script = ExtResource("13_webview")
+page_path = "res://web_ui/hud/index.html"
