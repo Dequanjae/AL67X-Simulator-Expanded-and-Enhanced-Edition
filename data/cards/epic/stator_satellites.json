@@ -1,0 +1,10 @@
+{
+  "id": "stator_satellites",
+  "name": "Stator Satellites",
+  "description": "+1 orbital goon circling Allan at all times (the rotor stays home, the stator never leaves)",
+  "base": false,
+  "weight": 6,
+  "icon": "",
+  "upgrades": ["damage", "scale"],
+  "effect": { "type": "orbital_add", "value": 1 }
+}

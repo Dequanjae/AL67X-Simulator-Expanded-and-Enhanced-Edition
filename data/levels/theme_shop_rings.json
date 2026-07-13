@@ -1,0 +1,68 @@
+{
+  "_readme": "Rings theme \u2014 concentric prop rings with door gaps around the central spawn. See theme_shop_classic.json for field docs.",
+  "id": "shop_rings",
+  "name": "The Shop \u2014 Winding Workshop",
+  "colors": {
+    "floor": "#414a44",
+    "floor_alt": "#3a423d",
+    "wall": "#5f4a4a",
+    "accent": "#c97f7f"
+  },
+  "props": [
+    {
+      "shape": "box",
+      "size": [
+        1.6,
+        1.0,
+        1.2
+      ],
+      "color": "#87672e",
+      "weight": 4
+    },
+    {
+      "shape": "cylinder",
+      "size": [
+        1.2,
+        1.6,
+        1.2
+      ],
+      "color": "#707a85",
+      "weight": 3
+    },
+    {
+      "shape": "mesh",
+      "mesh": "res://assets/models/electric_motor.glb",
+      "size": [
+        1.9,
+        1.2,
+        0.95
+      ],
+      "color": "#2a5a60",
+      "weight": 4
+    }
+  ],
+  "generation": {
+    "algorithm": "rings",
+    "arena_size": [
+      44,
+      44
+    ],
+    "prop_density": 0.03,
+    "min_clearance": 3.4,
+    "spawn_clear_radius": 5.0
+  },
+  "spawns": {
+    "shawarma_max": 24,
+    "shawarma_respawn_sec": 2.6,
+    "powerup_interval_sec": [
+      18,
+      34
+    ],
+    "lootbox_chance": 0.2
+  },
+  "order": 3,
+  "textures": {
+    "floor": "res://assets/textures/concrete_floor_1k.jpg",
+    "wall": "res://assets/textures/concrete_block_wall_1k.jpg"
+  }
+}

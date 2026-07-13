@@ -1,0 +1,14 @@
+{
+  "id": "big_tank",
+  "name": "Big Tank",
+  "sprite": "res://assets/sprites/enemies/big_tank.png",
+  "hp": 90,
+  "speed": 1.4,
+  "damage": 20,
+  "radius": 0.7,
+  "xp": 4,
+  "weight": 3,
+  "min_level": 4,
+  "size_m": 1.8,
+  "behavior": { "type": "chase" }
+}

@@ -1,0 +1,9 @@
+{
+  "_readme": "Fusion system tunables (spec Section 6). Real-time energy: regenerates 1 per regen_minutes (lazy timestamp accounting — works offline), capped at energy_max; token_refill_cost tops it up instantly (monetization hook). Grid: grid_width x grid_height tiles; each fusion costs 1 energy and merges 3 same-tier Allans into 1 of tier+1. spawn_tier_weights = odds for refill tiles (explicit odds field). The grid can never soft-lock: refills are forced matchable.",
+  "energy_max": 5,
+  "regen_minutes": 10,
+  "token_refill_cost": 20,
+  "grid_width": 4,
+  "grid_height": 4,
+  "spawn_tier_weights": { "1": 78, "2": 18, "3": 4 }
+}

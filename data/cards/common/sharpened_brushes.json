@@ -1,0 +1,10 @@
+{
+  "_readme": "AGENT-ADDABLE card. Folder = rarity (data/cards/common|rare|epic|legendary). base=true means always in the level-up pool for every player. weight = relative odds within its pool (explicit odds field, store compliance). effect.type values are code-backed (new types require code — flagged exception); current: damage_mult, fire_rate_mult, speed_mult, projectile_add, projectile_scale_mult, max_hp_add.",
+  "id": "sharpened_brushes",
+  "name": "Sharpened Brushes",
+  "description": "+25% damage",
+  "base": true,
+  "weight": 10,
+  "icon": "",
+  "effect": { "type": "damage_mult", "value": 1.25 }
+}

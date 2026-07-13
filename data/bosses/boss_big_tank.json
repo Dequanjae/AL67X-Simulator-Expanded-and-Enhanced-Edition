@@ -1,0 +1,21 @@
+{
+  "id": "boss_big_tank",
+  "name": "THE BIG TANK",
+  "enemy_base": "big_tank",
+  "hp_mult": 1.4,
+  "patterns": [
+    {
+      "type": "summon_minions",
+      "interval": 5.0,
+      "count": 4
+    },
+    {
+      "type": "radial_burst",
+      "interval": 3.6,
+      "count": 14,
+      "proj_speed": 4.8,
+      "damage": 10
+    }
+  ],
+  "order": 3
+}
