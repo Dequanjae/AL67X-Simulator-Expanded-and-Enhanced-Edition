@@ -1,0 +1,28 @@
+{
+  "_readme": "Allan skin registry. AGENT-ADDABLE: to add skin N, drop assets/sprites/allan/playerN.png (7032x2370, 8x2 grid of 879x1185 frames, standard state layout) and append one entry here. No code changes.",
+  "sheet_layout": {
+    "frame_width": 879,
+    "frame_height": 1185,
+    "columns": 8,
+    "rows": 2,
+    "frame_map": {
+      "idle": [0, 1, 2, 3, 4],
+      "eat": [5, 6],
+      "succ": [7],
+      "cry": [8],
+      "turn": [9]
+    }
+  },
+  "allans": [
+    { "id": "player1",  "name": "Allan",          "tier": 1,  "sheet": "res://assets/sprites/allan/player1.png",  "unlock": "default" },
+    { "id": "player2",  "name": "Allan II",       "tier": 2,  "sheet": "res://assets/sprites/allan/player2.png",  "unlock": "fusion" },
+    { "id": "player3",  "name": "Allan III",      "tier": 3,  "sheet": "res://assets/sprites/allan/player3.png",  "unlock": "fusion" },
+    { "id": "player4",  "name": "Allan IV",       "tier": 4,  "sheet": "res://assets/sprites/allan/player4.png",  "unlock": "fusion" },
+    { "id": "player5",  "name": "Allan V",        "tier": 5,  "sheet": "res://assets/sprites/allan/player5.png",  "unlock": "fusion" },
+    { "id": "player6",  "name": "Allan VI",       "tier": 6,  "sheet": "res://assets/sprites/allan/player6.png",  "unlock": "fusion" },
+    { "id": "player7",  "name": "Allan VII",      "tier": 7,  "sheet": "res://assets/sprites/allan/player7.png",  "unlock": "fusion" },
+    { "id": "player8",  "name": "Allan VIII",     "tier": 8,  "sheet": "res://assets/sprites/allan/player8.png",  "unlock": "fusion" },
+    { "id": "player9",  "name": "Allan IX",       "tier": 9,  "sheet": "res://assets/sprites/allan/player9.png",  "unlock": "fusion" },
+    { "id": "player10", "name": "Allan X",        "tier": 10, "sheet": "res://assets/sprites/allan/player10.png", "unlock": "fusion" }
+  ]
+}

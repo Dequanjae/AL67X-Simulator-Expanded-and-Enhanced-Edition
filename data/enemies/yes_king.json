@@ -1,0 +1,15 @@
+{
+  "_readme": "AGENT-ADDABLE enemy. Drop a new .json in data/enemies/. weight = relative spawn odds among eligible enemies; min_level gates when it appears; size_m = world height in meters. behavior.type: 'chase' (default) or 'charge' (params: interval, windup_sec, dash_speed_mult, dash_sec, trigger_range). phases=true walks through props (ghost). New behavior types require code (flagged exception).",
+  "id": "yes_king",
+  "name": "YES KING",
+  "sprite": "res://assets/sprites/enemies/yes_king.png",
+  "hp": 20,
+  "speed": 2.6,
+  "damage": 10,
+  "radius": 0.5,
+  "xp": 1,
+  "weight": 10,
+  "min_level": 1,
+  "size_m": 1.4,
+  "behavior": { "type": "chase" }
+}

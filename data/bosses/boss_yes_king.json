@@ -1,0 +1,25 @@
+{
+  "_readme": "AGENT-ADDABLE boss. Bosses cycle by level (sorted file order); on each full cycle the composition rule REMIXES in patterns borrowed from other bosses and tightens intervals (Isaac-style, see BossCatalog.compose_for_level). enemy_base = id from data/enemies/ (sprite/stat base). pattern types are code-backed modules (new modules require code \u2014 flagged exception): radial_burst (count, proj_speed, damage, interval), aimed_volley (count, spread_deg, proj_speed, damage, interval), charge_dash (windup_sec, dash_speed, dash_sec, interval), summon_minions (count, interval).",
+  "id": "boss_yes_king",
+  "name": "YES KING PRIME",
+  "enemy_base": "yes_king",
+  "hp_mult": 1.0,
+  "patterns": [
+    {
+      "type": "radial_burst",
+      "interval": 3.2,
+      "count": 10,
+      "proj_speed": 5.5,
+      "damage": 8
+    },
+    {
+      "type": "aimed_volley",
+      "interval": 1.8,
+      "count": 3,
+      "spread_deg": 16,
+      "proj_speed": 8.5,
+      "damage": 6
+    }
+  ],
+  "order": 1
+}

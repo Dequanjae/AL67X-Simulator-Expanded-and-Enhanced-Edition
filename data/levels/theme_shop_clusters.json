@@ -1,0 +1,78 @@
+{
+  "_readme": "Clusters theme \u2014 islands of stacked stock with open lanes between. See theme_shop_classic.json for field docs.",
+  "id": "shop_clusters",
+  "name": "The Shop \u2014 Delivery Day",
+  "colors": {
+    "floor": "#4b4650",
+    "floor_alt": "#433e48",
+    "wall": "#46605a",
+    "accent": "#7fc9a8"
+  },
+  "props": [
+    {
+      "shape": "box",
+      "size": [
+        1.3,
+        1.2,
+        1.3
+      ],
+      "color": "#8c6a3f",
+      "weight": 5
+    },
+    {
+      "shape": "box",
+      "size": [
+        1.0,
+        2.0,
+        1.0
+      ],
+      "color": "#5a7d74",
+      "weight": 2
+    },
+    {
+      "shape": "cylinder",
+      "size": [
+        0.9,
+        0.9,
+        0.9
+      ],
+      "color": "#a09484",
+      "weight": 2
+    },
+    {
+      "shape": "mesh",
+      "mesh": "res://assets/models/electric_motor.glb",
+      "size": [
+        1.9,
+        1.2,
+        0.95
+      ],
+      "color": "#2a5a60",
+      "weight": 4
+    }
+  ],
+  "generation": {
+    "algorithm": "clusters",
+    "arena_size": [
+      46,
+      42
+    ],
+    "prop_density": 0.032,
+    "min_clearance": 3.2,
+    "spawn_clear_radius": 4.5
+  },
+  "spawns": {
+    "shawarma_max": 28,
+    "shawarma_respawn_sec": 2.2,
+    "powerup_interval_sec": [
+      15,
+      28
+    ],
+    "lootbox_chance": 0.15
+  },
+  "order": 4,
+  "textures": {
+    "floor": "res://assets/textures/concrete_floor_1k.jpg",
+    "wall": "res://assets/textures/concrete_block_wall_1k.jpg"
+  }
+}

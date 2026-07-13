@@ -1,0 +1,9 @@
+{
+  "id": "copper_plating",
+  "name": "Copper Plating",
+  "description": "+1 max heart (and heals 1)",
+  "base": true,
+  "weight": 8,
+  "icon": "",
+  "effect": { "type": "heart_add", "value": 1 }
+}

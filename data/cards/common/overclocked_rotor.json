@@ -1,0 +1,9 @@
+{
+  "id": "overclocked_rotor",
+  "name": "Overclocked Rotor",
+  "description": "+20% attack speed",
+  "base": true,
+  "weight": 10,
+  "icon": "",
+  "effect": { "type": "fire_rate_mult", "value": 1.2 }
+}

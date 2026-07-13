@@ -1,0 +1,9 @@
+{
+  "id": "goon_launcher",
+  "name": "Goon Launcher",
+  "description": "+2 projectiles",
+  "base": false,
+  "weight": 6,
+  "icon": "",
+  "effect": { "type": "projectile_add", "value": 2 }
+}

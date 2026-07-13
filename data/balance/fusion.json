@@ -1,0 +1,7 @@
+{
+  "_readme": "Fusion GRID tunables only (spec Section 6). Energy is now owned by the global Amps pool (data/balance/amps.json + AmpsService) — merge costs 1 Amp per fuse via FusionSystem.spend_energy(), which delegates there. Grid: grid_width x grid_height tiles; each fusion merges 3 same-tier Allans into 1 of tier+1. spawn_tier_weights = odds for refill tiles (explicit odds field). The grid can never soft-lock: refills are forced matchable.",
+  "grid_width": 4,
+  "grid_height": 4,
+  "spawn_tier_weights": { "1": 78, "2": 18, "3": 4 }
+}
+

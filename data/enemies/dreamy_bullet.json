@@ -1,0 +1,15 @@
+{
+  "id": "dreamy_bullet",
+  "name": "Dreamy Bullet",
+  "sprite": "res://assets/sprites/enemies/dreamy_bullet.png",
+  "hp": 10,
+  "speed": 3.9,
+  "damage": 6,
+  "radius": 0.45,
+  "xp": 1,
+  "weight": 7,
+  "min_level": 2,
+  "size_m": 1.1,
+  "phases": true,
+  "behavior": { "type": "chase" }
+}

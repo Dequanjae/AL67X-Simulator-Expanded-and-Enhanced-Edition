@@ -1,0 +1,11 @@
+{
+  "_readme": "AGENT-ADDABLE loot box. drops = rarity pools with EXPLICIT weight odds (store compliance: these are the displayed drop rates). cost.currency: 'blobs' or 'tokens'. A pull rolls a rarity by weight, then a uniform card within that rarity folder (non-base cards preferred). Opening flow lands in Phase 8; purchases already bank into inventory.",
+  "id": "basic_box",
+  "name": "Basic Loot Box",
+  "cost": { "currency": "blobs", "amount": 100 },
+  "drops": [
+    { "rarity": "common", "weight": 70 },
+    { "rarity": "rare", "weight": 25 },
+    { "rarity": "epic", "weight": 5 }
+  ]
+}

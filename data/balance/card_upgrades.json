@@ -1,0 +1,55 @@
+{
+  "_readme": "Card upgrade system tunables (spec Section 12). Flat, UNCAPPED incremental upgrades per card. cost(level) = ceil(cost_base * cost_growth^level) \u2014 scaling data, not a fixed table. currency: 'blobs' or 'tokens'. per_level effect types are code-backed in PlayerStats (flagged exception): damage_mult_add, range_add, projectile_add, projectile_scale_add. Cards may override which types they offer via an 'upgrades' array in their JSON; default is all four.",
+  "upgrade_types": {
+    "damage": {
+      "name": "Damage",
+      "per_level": {
+        "type": "damage_mult_add",
+        "value": 0.05
+      },
+      "cost_base": 50,
+      "cost_growth": 1.25,
+      "currency": "blobs"
+    },
+    "range": {
+      "name": "Range",
+      "per_level": {
+        "type": "range_add",
+        "value": 0.4
+      },
+      "cost_base": 40,
+      "cost_growth": 1.22,
+      "currency": "blobs"
+    },
+    "projectiles": {
+      "name": "Projectiles",
+      "per_level": {
+        "type": "projectile_add",
+        "value": 1
+      },
+      "cost_base": 60,
+      "cost_growth": 2.4,
+      "currency": "tokens"
+    },
+    "scale": {
+      "name": "Projectile Size",
+      "per_level": {
+        "type": "projectile_scale_add",
+        "value": 0.06
+      },
+      "cost_base": 60,
+      "cost_growth": 1.3,
+      "currency": "blobs"
+    },
+    "bounces": {
+      "name": "Bounces",
+      "per_level": {
+        "type": "projectile_bounce_add",
+        "value": 1
+      },
+      "cost_base": 120,
+      "cost_growth": 1.6,
+      "currency": "blobs"
+    }
+  }
+}

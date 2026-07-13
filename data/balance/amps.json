@@ -1,0 +1,6 @@
+{
+  "_readme": "Amps — global real-time energy/stamina pool (spec: Overvolt Garage UI overhaul). Regenerates 1 Amp every regen_sec of real time via lazy timestamp accounting (works while the app is closed, remainder preserved). token_refill_cost tops the pool instantly to max (monetization hook). max is the DEFAULT cap; AmpsService.set_max() lets future systems raise it (e.g. a shop upgrade) without a data edit. Any system that costs player action (merge minigame today; gameplay/shop later) spends from this ONE pool via AmpsService.spend() — do not add a second energy resource.",
+  "max": 10,
+  "regen_sec": 45,
+  "token_refill_cost": 20
+}
