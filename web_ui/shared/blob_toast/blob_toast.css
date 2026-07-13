@@ -1,0 +1,75 @@
+/* BLOB-GAIN TOAST — "Blobs You Rescued", count-up tween, mini avatars
+   flying in and getting "collected". Non-blocking HUD toast, not a modal. */
+
+.og-blobtoast {
+  position: fixed;
+  top: 14%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-30px);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-chunky-lg);
+  padding: 8px 20px 8px 8px;
+  z-index: var(--z-toast);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.35s var(--ease-bounce), opacity 0.25s ease;
+}
+.og-blobtoast.is-shown {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.og-blobtoast__icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.og-blobtoast__icon img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  animation: og-happy-bounce 1.4s ease-in-out infinite;
+}
+
+.og-blobtoast__body {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.og-blobtoast__label {
+  font-family: var(--font-voice);
+  font-weight: 800;
+  font-size: 12px;
+  color: var(--panel);
+  text-transform: uppercase;
+}
+
+.og-blobtoast__count {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 20px;
+  color: var(--ink);
+}
+
+.og-blobtoast__mini-fly {
+  position: fixed;
+  width: 26px;
+  height: 26px;
+  z-index: var(--z-toast);
+  pointer-events: none;
+  transition: all 0.55s cubic-bezier(0.3, 0, 0.4, 1);
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.4));
+}
+.og-blobtoast__mini-fly img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}

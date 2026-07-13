@@ -1,0 +1,462 @@
+/* ============================================================================
+   HOME DASHBOARD — Overvolt Garage hub screen
+   Landscape only. Backdrop = pegboard wall (top ~60%) into garage floor
+   (bottom ~35-40%). All positioning is viewport-relative (vw/vh) so it holds
+   up across landscape aspect ratios without a portrait fallback.
+   ============================================================================ */
+
+#view-home {
+  overflow: hidden;
+}
+
+/* ---- Backdrop ------------------------------------------------------------- */
+.og-home-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-backdrop);
+}
+
+.og-home-wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60%;
+  background-color: var(--wall);
+  background-image: radial-gradient(circle, var(--wall-dk) 2.2px, transparent 2.2px);
+  background-size: 26px 26px;
+}
+
+.og-home-floor {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 42%;
+  background: linear-gradient(to bottom, #3a2a1c 0%, var(--grease) 100%);
+  box-shadow: inset 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* ---- Warehouse parallax depth ----------------------------------------------
+   Three depth bands, each bobbing at its own slow rate/amplitude so
+   Allan's base reads as a living room rather than a flat poster. Layers
+   further "back" move less/slower; the floor (closest) moves a touch more. */
+@keyframes og-bob-back {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(4px); }
+}
+@keyframes og-bob-mid {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-7px) rotate(0.4deg); }
+}
+@keyframes og-bob-front {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+.og-parallax-layer--back {
+  animation: og-bob-back 9s ease-in-out infinite;
+}
+.og-parallax-layer--mid {
+  animation: og-bob-mid 6s ease-in-out infinite;
+}
+.og-parallax-layer--front {
+  animation: og-bob-front 4.5s ease-in-out infinite;
+}
+
+/* Warehouse shelving/pipes — mid-depth base props behind the character. */
+.og-home-shelving {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.og-shelf-unit {
+  position: absolute;
+  bottom: 40%;
+  width: 130px;
+  height: 150px;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--wall-dk) 0px, var(--wall-dk) 6px, transparent 6px, transparent 44px
+  );
+  border: 3px solid rgba(28, 28, 28, 0.35);
+  border-radius: 4px;
+  opacity: 0.55;
+}
+.og-shelf-unit i {
+  position: absolute;
+  width: 26px;
+  height: 22px;
+  background: var(--safety-lt);
+  border: 2px solid rgba(28, 28, 28, 0.4);
+  border-radius: 3px;
+  opacity: 0.8;
+}
+.og-shelf-unit--a { left: 1%; }
+.og-shelf-unit--a i:nth-child(1) { top: 8px; left: 10px; }
+.og-shelf-unit--a i:nth-child(2) { top: 8px; left: 42px; background: var(--volt); }
+.og-shelf-unit--a i:nth-child(3) { top: 52px; left: 18px; background: var(--caution); }
+.og-shelf-unit--b { right: 2%; }
+.og-shelf-unit--b i:nth-child(1) { top: 10px; left: 14px; background: var(--volt); }
+.og-shelf-unit--b i:nth-child(2) { top: 54px; left: 46px; background: var(--safety-lt); }
+.og-shelf-unit--b i:nth-child(3) { top: 54px; left: 12px; background: var(--caution); }
+
+.og-hanging-pipe {
+  position: absolute;
+  top: 0;
+  left: 20%;
+  width: 60%;
+  height: 10px;
+  background: var(--panel-lt);
+  opacity: 0.4;
+  border-radius: 0 0 4px 4px;
+}
+
+.og-hanging-light {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 4px;
+  height: 60px;
+  background: rgba(28, 28, 28, 0.3);
+}
+.og-hanging-light::after {
+  content: "";
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 46px;
+  height: 24px;
+  border-radius: 0 0 50% 50%;
+  background: radial-gradient(ellipse at top, rgba(255, 244, 200, 0.5), transparent 70%);
+}
+
+.og-neon-sign {
+  position: absolute;
+  top: 13%;
+  left: 3%;
+  font-family: var(--font-display);
+  font-size: clamp(14px, 2vw, 22px);
+  line-height: 1.05;
+  text-align: center;
+  color: #ff5ecf;
+  text-shadow: 0 0 6px #ff5ecf, 0 0 14px #ff2fb0, 0 0 2px #fff;
+  border: 3px solid #ff5ecf;
+  border-radius: var(--r-md);
+  padding: 6px 12px;
+  background: rgba(20, 10, 20, 0.55);
+  animation: og-blink 2.6s ease-in-out infinite;
+}
+
+.og-meme-poster {
+  position: absolute;
+  top: 6%;
+  right: 8%;
+  width: 90px;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-chunky-sm);
+  padding: 8px 6px;
+  text-align: center;
+}
+
+.og-meme-poster__arrow {
+  color: var(--safety);
+  font-size: 22px;
+  line-height: 1;
+}
+
+.og-meme-poster__text {
+  font-family: var(--font-display);
+  font-size: 10px;
+  color: var(--ink);
+  line-height: 1.1;
+  margin-top: 2px;
+}
+
+.og-motor-prop {
+  position: absolute;
+  bottom: 6%;
+  left: 6%;
+  width: 90px;
+  height: 110px;
+}
+
+.og-motor-prop__body {
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  width: 60px;
+  height: 78px;
+  border-radius: 14px;
+  background: var(--panel-lt);
+  border: 3px solid var(--ink);
+  box-shadow: var(--shadow-chunky-sm);
+}
+
+.og-motor-prop__cap {
+  position: absolute;
+  bottom: 68px;
+  left: 15px;
+  width: 50px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--safety);
+  border: 3px solid var(--ink);
+}
+
+.og-motor-prop__spark {
+  position: absolute;
+  top: -6px;
+  right: -2px;
+  font-size: 20px;
+  color: var(--caution);
+  filter: drop-shadow(0 0 4px rgba(255, 212, 0, 0.8));
+  animation: og-blink 1.8s ease-in-out infinite;
+}
+
+/* ---- Blob swarm ------------------------------------------------------------ */
+.og-blob-swarm {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-swarm);
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.og-blob-swarm .og-blob-avatar {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  animation: og-drift ease-in-out infinite;
+  will-change: transform;
+}
+.og-blob-swarm .og-blob-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: og-happy-bounce 2.2s ease-in-out infinite;
+}
+
+/* ---- Top bars --------------------------------------------------------------- */
+.og-topbar-left {
+  position: absolute;
+  top: var(--sp-4);
+  left: var(--sp-4);
+  display: flex;
+  gap: var(--sp-3);
+  z-index: var(--z-chrome);
+}
+
+.og-topbar-right {
+  position: absolute;
+  top: var(--sp-4);
+  right: var(--sp-4);
+  display: flex;
+  gap: var(--sp-3);
+  z-index: var(--z-chrome);
+}
+
+.og-amps-ring {
+  position: absolute;
+  right: -3px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+#pill-amps {
+  position: relative;
+  padding-right: 30px;
+}
+
+/* ---- Nav rail ---------------------------------------------------------------- */
+.og-nav-rail {
+  position: absolute;
+  top: 50%;
+  right: var(--sp-3);
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  z-index: var(--z-nav);
+}
+
+/* ---- Center character -------------------------------------------------------- */
+.og-character {
+  position: absolute;
+  left: 50%;
+  bottom: 30%;
+  transform: translateX(-50%);
+  z-index: var(--z-chrome);
+  width: 140px;
+  height: 220px;
+}
+
+.og-character__body {
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  width: 100px;
+  height: 140px;
+  background: var(--volt-dk);
+  border: var(--border-w) solid var(--ink);
+  border-radius: 26px 26px 16px 16px;
+  box-shadow: var(--shadow-chunky);
+}
+
+.og-character__strap {
+  position: absolute;
+  top: -6px;
+  width: 16px;
+  height: 60px;
+  background: var(--volt-dk);
+  border: 3px solid var(--ink);
+  border-radius: 6px;
+}
+.og-character__strap--l { left: 18px; transform: rotate(6deg); }
+.og-character__strap--r { right: 18px; transform: rotate(-6deg); }
+
+.og-character__badge {
+  position: absolute;
+  top: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--safety);
+  border: 3px solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.og-character__badge svg { width: 22px; height: 22px; }
+
+.og-character__head {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  margin-left: -54px;
+  width: 108px;
+  filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.4));
+  animation: og-happy-bounce 2.6s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+.og-character__head img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.og-character__wrench {
+  position: absolute;
+  bottom: 34px;
+  left: 4px;
+  width: 30px;
+  height: 30px;
+  transform: rotate(-25deg);
+  z-index: 1;
+}
+.og-character__wrench svg { width: 100%; height: 100%; }
+
+.og-character-tag {
+  position: absolute;
+  left: 50%;
+  bottom: 23%;
+  transform: translateX(-50%) rotate(-4deg);
+  z-index: var(--z-chrome);
+  text-align: center;
+}
+
+.og-level-pill {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  color: var(--ink);
+  background: var(--caution);
+  border: var(--border-w-sm) solid var(--ink);
+  border-radius: var(--r-pill);
+  padding: 4px 14px;
+  box-shadow: var(--shadow-chunky-sm);
+  display: inline-block;
+}
+
+.og-name-plate {
+  margin-top: 4px;
+  font-family: var(--font-voice);
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--paper);
+  -webkit-text-stroke: 2.5px var(--ink);
+  paint-order: stroke fill;
+}
+
+/* ---- CTA position ------------------------------------------------------------ */
+.og-cta--positioned {
+  position: absolute;
+  left: 50%;
+  bottom: var(--sp-3);
+  transform: translateX(-50%);
+  z-index: var(--z-cta);
+}
+
+/* ---- Warp zone teleport (played before handing off to the run) -------------- */
+.og-warp {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-popup-fx);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(5, 0, 15, 0) 0%, rgba(5, 0, 15, 0.96) 78%);
+  overflow: hidden;
+}
+.og-warp.is-active {
+  display: flex;
+}
+
+.og-warp__ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  border: 6px solid var(--volt);
+  box-shadow: 0 0 24px 4px var(--volt);
+  opacity: 0;
+}
+.og-warp.is-active .og-warp__ring--1 { animation: og-warp-suck 0.9s ease-in forwards; }
+.og-warp.is-active .og-warp__ring--2 { animation: og-warp-suck 0.9s 0.1s ease-in forwards; border-color: var(--safety-lt); box-shadow: 0 0 24px 4px var(--safety-lt); }
+.og-warp.is-active .og-warp__ring--3 { animation: og-warp-suck 0.9s 0.2s ease-in forwards; border-color: var(--caution); box-shadow: 0 0 24px 4px var(--caution); }
+
+@keyframes og-warp-suck {
+  0%   { width: 900px; height: 900px; opacity: 0; transform: translate(-50%, -50%) rotate(0deg); }
+  15%  { opacity: 0.9; }
+  100% { width: 6px; height: 6px; opacity: 1; transform: translate(-50%, -50%) rotate(220deg); }
+}
+
+.og-warp__core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0;
+}
+.og-warp.is-active .og-warp__core {
+  animation: og-warp-flash 0.9s ease-in forwards;
+}
+@keyframes og-warp-flash {
+  0%, 70%  { opacity: 0; transform: translate(-50%, -50%) scale(1); }
+  85%      { opacity: 1; transform: translate(-50%, -50%) scale(4); }
+  100%     { opacity: 0; transform: translate(-50%, -50%) scale(60); }
+}
+
+/* ---- Icon color overrides via inline SVG injection (see home.js) ------------- */
+#icon-tokens svg, #icon-amps svg { width: 22px; height: 22px; }

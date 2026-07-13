@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Overvolt Garage</title>
+
+<!-- Google Fonts — per design system: Anton (display), Baloo 2 (voice), Rubik (body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Anton&family=Baloo+2:wght@700;800&family=Rubik:wght@500;600;700;800&display=swap"
+  rel="stylesheet"
+/>
+
+<link rel="stylesheet" href="../shared/tokens.css" />
+<link rel="stylesheet" href="../shared/components.css" />
+<link rel="stylesheet" href="home/home.css" />
+<link rel="stylesheet" href="shop/shop.css" />
+<link rel="stylesheet" href="settings/settings.css" />
+<link rel="stylesheet" href="merge/merge.css" />
+<link rel="stylesheet" href="../shared/news/news.css" />
+<link rel="stylesheet" href="../shared/chest/chest.css" />
+<link rel="stylesheet" href="../shared/blob_toast/blob_toast.css" />
+<link rel="stylesheet" href="../shared/card_select/card_select.css" />
+</head>
+<body>
+
+<div id="app">
+  <!-- ===================== HOME DASHBOARD ===================== -->
+  <section id="view-home" class="og-view is-active">
+    <div class="og-home-backdrop">
+      <!-- Warehouse depth layers (back -> front), each bobs at its own
+           slow rate for a parallax-alive feel instead of a static poster. -->
+      <div class="og-home-wall og-parallax-layer og-parallax-layer--back"></div>
+      <div class="og-home-shelving og-parallax-layer og-parallax-layer--mid">
+        <div class="og-shelf-unit og-shelf-unit--a"><i></i><i></i><i></i></div>
+        <div class="og-shelf-unit og-shelf-unit--b"><i></i><i></i><i></i></div>
+        <div class="og-hanging-pipe"></div>
+        <div class="og-hanging-light"></div>
+      </div>
+      <div class="og-home-floor og-parallax-layer og-parallax-layer--front"></div>
+
+      <!-- Ambient shop decor -->
+      <div class="og-neon-sign og-tilt-r og-parallax-layer og-parallax-layer--mid">NO<br/>STALLING</div>
+      <div class="og-meme-poster og-tilt-l2 og-parallax-layer og-parallax-layer--mid">
+        <div class="og-meme-poster__arrow">&#9650;</div>
+        <div class="og-meme-poster__text">UPVOTE<br/>THIS<br/>SHOP</div>
+      </div>
+      <div class="og-motor-prop og-parallax-layer og-parallax-layer--front">
+        <div class="og-motor-prop__body"></div>
+        <div class="og-motor-prop__cap"></div>
+        <div class="og-motor-prop__spark">&#9889;</div>
+      </div>
+    </div>
+
+    <!-- Floating blob swarm (behind chrome, above backdrop) -->
+    <div id="blob-swarm" class="og-blob-swarm"></div>
+
+    <!-- Top bar: left resource pills -->
+    <div class="og-topbar-left">
+      <button id="pill-blobs" class="og-pill og-pressable" title="Tap to test swarm growth (dev)">
+        <span class="og-pill__icon og-pill__icon--blobs">
+          <img src="../../assets/sprites/allan/frames/player_idle0.png" alt="" />
+        </span>
+        <span class="og-pill__body">
+          <span class="og-pill__value" id="stat-blobs">0</span>
+          <span class="og-pill__label">Blobs</span>
+        </span>
+      </button>
+
+      <button id="pill-tokens" class="og-pill og-pressable">
+        <span class="og-pill__icon og-pill__icon--tokens" id="icon-tokens"></span>
+        <span class="og-pill__body">
+          <span class="og-pill__value" id="stat-tokens">0</span>
+          <span class="og-pill__label">AL67X</span>
+        </span>
+      </button>
+
+      <button id="pill-amps" class="og-pill og-pressable">
+        <span class="og-pill__icon og-pill__icon--amps" id="icon-amps"></span>
+        <span class="og-pill__body">
+          <span class="og-pill__value" id="stat-amps">0/0</span>
+          <span class="og-pill__label">Amps</span>
+        </span>
+        <svg class="og-amps-ring" viewBox="0 0 36 36" width="30" height="30">
+          <circle cx="18" cy="18" r="15" fill="none" stroke="#cfc6ae" stroke-width="3"/>
+          <circle id="amps-ring-fg" cx="18" cy="18" r="15" fill="none" stroke="#ff6a13" stroke-width="3"
+            stroke-dasharray="94.2" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 18 18)"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Top bar: right icon buttons -->
+    <div class="og-topbar-right">
+      <button id="btn-news" class="og-icon-btn og-pressable" title="What's New"></button>
+      <button id="btn-mail" class="og-icon-btn og-pressable" title="Mail"></button>
+      <button id="btn-settings" class="og-icon-btn og-pressable" title="Settings"></button>
+    </div>
+
+    <!-- Right edge nav rail -->
+    <nav class="og-nav-rail">
+      <button class="og-nav-badge is-active og-pressable" data-tab="home">
+        <span class="og-nav-badge__icon" data-icon="home"></span>
+        <span class="og-nav-badge__label">HOME</span>
+      </button>
+      <button class="og-nav-badge og-pressable" data-tab="deck">
+        <span class="og-nav-badge__icon" data-icon="cards"></span>
+        <span class="og-nav-badge__label">CARDS</span>
+      </button>
+      <button class="og-nav-badge og-pressable" data-tab="merge">
+        <span class="og-nav-badge__icon" data-icon="merge"></span>
+        <span class="og-nav-badge__label">MERGE</span>
+      </button>
+      <button class="og-nav-badge og-pressable" data-tab="shop">
+        <span class="og-nav-badge__icon" data-icon="shop"></span>
+        <span class="og-nav-badge__label">SHOP</span>
+      </button>
+    </nav>
+
+    <!-- Center character -->
+    <div class="og-character">
+      <div class="og-character__wrench" id="icon-wrench"></div>
+      <div class="og-character__body">
+        <div class="og-character__strap og-character__strap--l"></div>
+        <div class="og-character__strap og-character__strap--r"></div>
+        <div class="og-character__badge">
+          <span id="icon-badge-bolt"></span>
+        </div>
+      </div>
+      <div class="og-character__head">
+        <img src="../../assets/sprites/allan/frames/player_idle0.png" alt="Allan" />
+      </div>
+    </div>
+    <div class="og-character-tag og-tilt-l">
+      <div class="og-level-pill" id="level-pill">LV 1 &middot; SHOP TECH</div>
+      <div class="og-name-plate" id="name-plate">ALLAN</div>
+    </div>
+
+    <!-- Bottom CTA -->
+    <button id="btn-ignition" class="og-cta og-cta--positioned" title="Start a run">
+      <span id="icon-cta-bolt"></span>
+    </button>
+
+    <!-- Warp zone teleport transition, played before handing off to the run -->
+    <div class="og-warp" id="og-warp">
+      <div class="og-warp__ring og-warp__ring--1"></div>
+      <div class="og-warp__ring og-warp__ring--2"></div>
+      <div class="og-warp__ring og-warp__ring--3"></div>
+      <div class="og-warp__core"></div>
+    </div>
+  </section>
+
+  <!-- ===================== SHOP ===================== -->
+  <section id="view-shop" class="og-view">
+    <div id="shop-root"></div>
+  </section>
+
+  <!-- ===================== SETTINGS ===================== -->
+  <section id="view-settings" class="og-view">
+    <div id="settings-root"></div>
+  </section>
+
+  <!-- ===================== MERGE (Allans candy-crush) ===================== -->
+  <section id="view-merge" class="og-view">
+    <div id="merge-root"></div>
+  </section>
+
+  <!-- ===================== DECK (placeholder tab reuse of shop styling until built) ===================== -->
+  <section id="view-deck" class="og-view">
+    <div id="deck-root"></div>
+  </section>
+</div>
+
+<!-- Shared overlay popups (mounted above every view) -->
+<div id="popup-news-root"></div>
+<div id="popup-chest-root"></div>
+<div id="popup-blobtoast-root"></div>
+<div id="popup-cardselect-root"></div>
+
+<script src="../shared/bridge.js"></script>
+<script src="../shared/assets.js"></script>
+<script src="../shared/icons.js"></script>
+<script src="../shared/allan_sheet.js"></script>
+<script src="../shared/news/news.js"></script>
+<script src="../shared/chest/chest.js"></script>
+<script src="../shared/blob_toast/blob_toast.js"></script>
+<script src="../shared/card_select/card_select.js"></script>
+<script src="home/home.js"></script>
+<script src="shop/shop.js"></script>
+<script src="settings/settings.js"></script>
+<script src="merge/merge.js"></script>
+<script src="hub_shell.js"></script>
+</body>
+</html>

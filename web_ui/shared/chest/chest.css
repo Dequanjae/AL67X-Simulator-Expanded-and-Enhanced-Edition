@@ -1,0 +1,111 @@
+/* CHEST / LOOT BOX opening popup — event-like reveal, not a silent modal. */
+
+.og-chest-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-popup);
+}
+.og-chest-backdrop.is-open {
+  display: flex;
+}
+
+.og-chest-stage {
+  position: relative;
+  width: 320px;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.og-chest-box {
+  position: relative;
+  width: 160px;
+  height: 120px;
+}
+
+.og-chest-box__base {
+  position: absolute;
+  bottom: 0;
+  width: 160px;
+  height: 90px;
+  background: var(--safety);
+  border: var(--border-w) solid var(--ink);
+  border-radius: 0 0 var(--r-md) var(--r-md);
+  box-shadow: var(--shadow-chunky-lg);
+}
+
+.og-chest-box__lid {
+  position: absolute;
+  top: 10px;
+  width: 172px;
+  left: -6px;
+  height: 46px;
+  background: var(--safety-lt);
+  border: var(--border-w) solid var(--ink);
+  border-radius: var(--r-md);
+  transform-origin: left center;
+  transition: transform 0.35s var(--ease-bounce);
+  box-shadow: var(--shadow-chunky);
+}
+
+.og-chest-box.is-opening .og-chest-box__lid {
+  transform: rotate(-100deg) translateY(-10px);
+}
+
+.og-chest-burst {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.9);
+  opacity: 0;
+}
+
+.og-chest-box.is-opening .og-chest-burst {
+  animation: og-chest-flash 0.5s ease-out forwards;
+}
+
+@keyframes og-chest-flash {
+  0% { opacity: 1; box-shadow: 0 0 40px 60px rgba(255, 255, 255, 0.9); transform: scale(0.2); }
+  100% { opacity: 0; box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); transform: scale(2.4); }
+}
+
+.og-chest-reveal {
+  margin-top: var(--sp-4);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  animation: og-pop-in var(--dur-slow) var(--ease-pop);
+}
+.og-chest-reveal.is-shown {
+  display: flex;
+}
+
+.og-chest-reveal__face {
+  background-repeat: no-repeat;
+}
+
+.og-chest-reveal__title {
+  font-family: var(--font-display);
+  font-size: 22px;
+}
+
+.og-chest-reveal__card {
+  min-width: 200px;
+}
+
+.og-chest-reveal__dupe {
+  font-size: 12px;
+  opacity: 0.7;
+  font-family: var(--font-body);
+}

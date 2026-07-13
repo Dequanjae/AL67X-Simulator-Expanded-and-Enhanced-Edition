@@ -1,0 +1,91 @@
+/* SETTINGS — quieter/simpler than the rest of the UI, per spec, but still
+   built from the same shared tokens (borders/shadows/fonts). */
+
+#view-settings {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 20, 20, 0.55);
+}
+
+.og-settings-panel {
+  width: 460px;
+  max-height: 90%;
+  overflow-y: auto;
+  background: var(--panel);
+  border: var(--border-w) solid var(--ink);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-pop);
+  padding: var(--sp-5);
+}
+
+.og-settings-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--paper);
+  text-align: center;
+  margin-bottom: var(--sp-4);
+}
+
+.og-settings-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.og-settings-row__label {
+  flex: 1;
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.og-settings-row input[type="range"] {
+  width: 140px;
+  accent-color: var(--safety);
+}
+
+.og-toggle {
+  position: relative;
+  width: 46px;
+  height: 26px;
+  border-radius: var(--r-pill);
+  background: var(--panel-lt);
+  border: 2px solid var(--ink);
+  cursor: pointer;
+}
+.og-toggle__knob {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  transition: transform var(--dur-fast) ease;
+}
+.og-toggle.is-on {
+  background: var(--volt);
+}
+.og-toggle.is-on .og-toggle__knob {
+  transform: translateX(18px);
+}
+
+.og-settings-account {
+  margin-top: var(--sp-4);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.og-settings-footer {
+  margin-top: var(--sp-5);
+  text-align: center;
+  font-size: 11px;
+  color: var(--paper);
+  opacity: 0.5;
+}

@@ -1,0 +1,362 @@
+/* ============================================================================
+   OVERVOLT GARAGE — SHARED COMPONENTS
+   Reusable building blocks (resource pill, icon button, nav badge, cards,
+   toasts) built on top of tokens.css. Screens compose these instead of
+   inventing their own button/pill markup.
+   ============================================================================ */
+
+@keyframes og-wobble {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25%      { transform: rotate(-3deg) translateY(-2px); }
+  75%      { transform: rotate(3deg) translateY(-2px); }
+}
+
+@keyframes og-jiggle-in {
+  0%   { transform: scale(0.4) rotate(-12deg); opacity: 0; }
+  60%  { transform: scale(1.08) rotate(4deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+@keyframes og-blink {
+  0%, 45%  { opacity: 1; }
+  50%, 95% { opacity: 0.25; }
+  100%     { opacity: 1; }
+}
+
+@keyframes og-spark-burst {
+  0%   { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--sx, 40px), var(--sy, -40px)) scale(0); opacity: 0; }
+}
+
+@keyframes og-pop-in {
+  0%   { transform: scale(0.6); opacity: 0; }
+  70%  { transform: scale(1.06); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes og-drift {
+  0%   { transform: translate(0, 0) rotate(0deg); }
+  50%  { transform: translate(var(--dx, 10px), var(--dy, -14px)) rotate(var(--dr, 6deg)); }
+  100% { transform: translate(0, 0) rotate(0deg); }
+}
+
+/* Happy/excited bounce — used on blob avatars to sell "having fun, glad
+   to be rescued" through motion since the art itself is a deadpan meme
+   cutout with no literal smiling frame. */
+@keyframes og-happy-bounce {
+  0%, 100% { transform: translateY(0) rotate(var(--hr, -6deg)) scale(1); }
+  30%      { transform: translateY(-38%) rotate(calc(var(--hr, -6deg) * -1)) scale(1.08); }
+  55%      { transform: translateY(0) rotate(var(--hr, -6deg)) scale(0.96); }
+  75%      { transform: translateY(-14%) rotate(0deg) scale(1.03); }
+}
+
+/* ---- Resource pill (Blobs / AL67X Tokens / Amps) ------------------------- */
+.og-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-chunky-sm);
+  padding: 4px 14px 4px 4px;
+  cursor: pointer;
+}
+
+.og-pill__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: var(--border-w-sm) solid var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--wall);
+}
+
+.og-pill__icon img {
+  width: 92%;
+  height: 92%;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.35));
+}
+
+.og-pill__icon--blobs { background: var(--caution); }
+.og-pill__icon--tokens { background: var(--volt); }
+.og-pill__icon--amps { background: var(--safety); }
+
+.og-pill__body {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.og-pill__value {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--ink);
+}
+
+.og-pill__label {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--panel-lt);
+  opacity: 0.75;
+}
+
+/* ---- Round icon-button (news/mail/settings) ------------------------------ */
+.og-icon-btn {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-chunky-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.og-icon-btn svg {
+  width: 30px;
+  height: 30px;
+}
+
+.og-icon-btn__dot {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--hotpink);
+  border: 2px solid var(--ink);
+}
+}
+
+/* ---- Nav rail badge -------------------------------------------------------- */
+.og-nav-badge {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  border-radius: var(--r-md);
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-chunky);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.og-nav-badge svg {
+  width: 34px;
+  height: 34px;
+}
+
+.og-nav-badge__label {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.4px;
+  color: var(--ink);
+}
+
+.og-nav-badge.is-active {
+  background: var(--caution);
+  transform: scale(1.06) rotate(-2deg);
+}
+
+.og-nav-badge.is-active::before {
+  content: "";
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 34px;
+  border-radius: 4px;
+  background: var(--safety);
+  border: 2px solid var(--ink);
+}
+
+/* ---- Primary CTA (Ignition button) ---------------------------------------- */
+.og-cta {
+  width: 118px;
+  height: 118px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 30%, var(--safety-lt), var(--safety) 70%);
+  border: var(--border-w) solid var(--ink);
+  outline: 7px solid var(--caution);
+  outline-offset: 4px;
+  box-shadow: var(--shadow-chunky-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: og-wobble 3.4s ease-in-out infinite;
+  position: relative;
+}
+
+.og-cta svg {
+  width: 52px;
+  height: 52px;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.4));
+}
+
+.og-cta:active {
+  animation: none;
+  transform: scale(0.93);
+}
+
+.og-spark {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--volt);
+  box-shadow: 0 0 6px var(--volt);
+  animation: og-spark-burst 0.5s ease-out forwards;
+  pointer-events: none;
+}
+
+/* ---- Card / item frame (shop + card-select + chest rewards) --------------- */
+.og-card {
+  background: var(--paper);
+  border: var(--border-w) solid var(--ink);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-chunky);
+  padding: var(--sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  position: relative;
+}
+
+.og-card__rarity-tag {
+  position: absolute;
+  top: -10px;
+  left: 10px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  padding: 3px 10px;
+  border-radius: var(--r-pill);
+  border: 2px solid var(--ink);
+  background: var(--caution);
+  color: var(--ink);
+  transform: rotate(-3deg);
+}
+
+.og-price-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 13px;
+  background: var(--wall);
+  border: 2px solid var(--ink);
+  border-radius: var(--r-pill);
+  padding: 3px 10px;
+}
+
+.og-price-tag img,
+.og-price-tag svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ---- Generic primary/secondary button -------------------------------------- */
+.og-btn {
+  font-family: var(--font-display);
+  font-size: 16px;
+  letter-spacing: 0.4px;
+  color: var(--paper);
+  background: var(--safety);
+  border: var(--border-w) solid var(--ink);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-chunky);
+  padding: 12px 22px;
+}
+
+.og-btn--volt { background: var(--volt); }
+.og-btn--caution { background: var(--caution); color: var(--ink); }
+.og-btn--ghost { background: var(--paper); color: var(--ink); }
+
+/* ---- Blob mini-avatar (swarm + toast + chest reactions) -------------------- */
+.og-blob-avatar {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.4));
+}
+.og-blob-avatar img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* ---- Popup backdrop shared by all overlay screens -------------------------- */
+.og-popup-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--z-popup);
+}
+
+.og-popup-panel {
+  background: var(--panel);
+  border: var(--border-w) solid var(--ink);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-pop);
+  padding: var(--sp-5);
+  animation: og-pop-in var(--dur-slow) var(--ease-pop);
+}
+
+/* ---- Hub SPA view switching (see hub_shell.js) -----------------------------
+   Deliberately toggles `visibility`/`pointer-events`, NEVER `display` —
+   individual screens legitimately set `display: flex/grid` on their own
+   `#view-*` root for internal layout, and a bare ID selector always beats
+   this shared class rule on specificity if we fought over the same
+   property. Toggling a different property sidesteps that entirely: a
+   screen's layout `display` value is left alone, and it's simply
+   invisible + non-interactive + not counted in layout flow impact
+   (irrelevant anyway since every view is position:absolute inset:0). */
+.og-view {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.og-view.is-active {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* ---- Room transitions (nav tabs feel like walking into a room at
+   Allan's base, not an instant screen swap) — see hub_shell.js. ---------- */
+@keyframes og-room-leave {
+  0%   { transform: scale(1) translateY(0); filter: brightness(1); opacity: 1; }
+  100% { transform: scale(1.06) translateY(-14px); filter: brightness(0.4); opacity: 0; }
+}
+@keyframes og-room-enter {
+  0%   { transform: scale(0.92) translateY(10px); filter: brightness(0.5); opacity: 0; }
+  100% { transform: scale(1) translateY(0); filter: brightness(1); opacity: 1; }
+}
+.og-room-leaving {
+  animation: og-room-leave 0.26s ease-in forwards;
+}
+.og-room-entering {
+  animation: og-room-enter 0.26s ease-out both;
+}
