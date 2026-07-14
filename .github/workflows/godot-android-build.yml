@@ -25,13 +25,8 @@ jobs:
           mkdir -p ~/.local/share/godot
           ln -sf /root/.local/share/godot/export_templates ~/.local/share/godot/export_templates
 
-      - name: Extract Android build template (AARs are gitignored)
-        run: |
-          rm -rf android/build/
-          unzip -o ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/android_source.zip \
-            -d android/build/
-          git config --global --add safe.directory "$GITHUB_WORKSPACE"
-          git checkout android/build/google-services.json
+      - name: Save Firebase config (before template install overwrites it)
+        run: cp android/build/google-services.json /tmp/
 
       - name: Decode keystore
         env:
@@ -66,6 +61,12 @@ jobs:
 
       - name: Import project
         run: godot --headless --verbose --import
+
+      - name: Install Android build template (writes version marker)
+        run: godot --headless --install-android-build-template
+
+      - name: Restore Firebase config
+        run: cp /tmp/google-services.json android/build/google-services.json
 
       - name: Export APK
         run: |
