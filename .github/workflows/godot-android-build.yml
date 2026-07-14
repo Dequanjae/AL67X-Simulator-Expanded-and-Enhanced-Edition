@@ -62,7 +62,7 @@ jobs:
       - name: Install template + Export APK
         run: |
           godot --headless --install-android-build-template \
-            --export-release "${EXPORT_PRESET}" build/android/${EXPORT_NAME}.apk
+            --export-debug "${EXPORT_PRESET}" build/android/${EXPORT_NAME}.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
