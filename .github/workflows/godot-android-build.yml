@@ -20,8 +20,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Verify export templates
-        run: ls -la ~/.local/share/godot/export_templates/
+      - name: Setup export templates
+        run: |
+          mkdir -p ~/.local/share/godot
+          ln -sf /root/.local/share/godot/export_templates ~/.local/share/godot/export_templates
+          ls -la ~/.local/share/godot/export_templates/
 
       - name: Setup Java and Android SDK
         run: |
