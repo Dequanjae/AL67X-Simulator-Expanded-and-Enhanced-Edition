@@ -29,10 +29,10 @@ jobs:
       - name: Setup Java and Android SDK
         run: |
           apt-get update -qq
-          apt-get install -y -qq openjdk-17-jdk unzip
+          apt-get install -y -qq openjdk-17-jdk wget unzip
           mkdir -p /root/android-sdk/cmdline-tools/latest
-          curl -sLo /tmp/cmdline-tools.zip \
-            https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-11076708_latest.zip \
+            -O /tmp/cmdline-tools.zip
           unzip -q /tmp/cmdline-tools.zip -d /tmp/_android
           mv /tmp/_android/cmdline-tools/* /root/android-sdk/cmdline-tools/latest/
           rm -rf /tmp/cmdline-tools.zip /tmp/_android
