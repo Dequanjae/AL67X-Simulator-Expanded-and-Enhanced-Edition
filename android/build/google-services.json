@@ -1,0 +1,29 @@
+{
+	"project_info": {
+		"project_number": "967878949735",
+		"project_id": "al67x-6f95b",
+		"storage_bucket": "al67x-6f95b.firebasestorage.app"
+	},
+	"client": [
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:967878949735:android:39a778ca208d92cb174dc2",
+				"android_client_info": {
+					"package_name": "com.dequanjae.al67x"
+				}
+			},
+			"oauth_client": [],
+			"api_key": [
+				{
+					"current_key": "AIzaSyDsbazMQiCkD1ysOaPFfxNP_PsHJ-Lpj0I"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": []
+				}
+			}
+		}
+	],
+	"configuration_version": "1"
+}
