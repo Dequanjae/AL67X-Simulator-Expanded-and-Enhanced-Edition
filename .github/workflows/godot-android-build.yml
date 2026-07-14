@@ -6,15 +6,15 @@ on:
   workflow_dispatch: {}
 
 env:
-  GODOT_VERSION: "4.3"
-  EXPORT_NAME: "game"          # base name of the exported apk (no extension)
-  EXPORT_PRESET: "Android"     # must match the preset name in export_presets.cfg
+  GODOT_VERSION: "4.7"
+  EXPORT_NAME: "game"
+  EXPORT_PRESET: "Android"
 
 jobs:
   build-android:
     runs-on: ubuntu-latest
     container:
-      image: barichello/godot-ci:4.3
+      image: barichello/godot-ci:4.7
 
     steps:
       - name: Checkout repository
@@ -24,12 +24,6 @@ jobs:
         run: |
           mkdir -p ~/.local/share/godot
           ln -sf /root/.local/share/godot/export_templates ~/.local/share/godot/export_templates
-
-      - name: Verify Android build template
-        run: |
-          ls -la ./android/
-          ls -la ./android/build/
-          test -f ./android/build/build.gradle || { echo "Missing build template"; exit 1; }
 
       - name: Decode keystore
         env:
@@ -43,7 +37,7 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
         run: |
-          SETTINGS="$HOME/.config/godot/editor_settings-4.3.tres"
+          SETTINGS="$HOME/.config/godot/editor_settings-4.7.tres"
           mkdir -pv "$(dirname "$SETTINGS")"
           cat > "$SETTINGS" <<EOF
           [gd_resource type="EditorSettings" format=3]
