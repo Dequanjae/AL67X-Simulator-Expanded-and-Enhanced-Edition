@@ -45,10 +45,10 @@ jobs:
           [resource]
           export/android/android_sdk_path = "/usr/lib/android-sdk"
           export/android/java_sdk_path = "/usr/lib/jvm/java-17-openjdk-amd64"
-          export/android/debug_keystore = "android-keystore/release.keystore"
+          export/android/debug_keystore = "$GITHUB_WORKSPACE/android-keystore/release.keystore"
           export/android/debug_keystore_user = "${KEYSTORE_ALIAS}"
           export/android/debug_keystore_pass = "${KEYSTORE_PASSWORD}"
-          export/android/release_keystore = "android-keystore/release.keystore"
+          export/android/release_keystore = "$GITHUB_WORKSPACE/android-keystore/release.keystore"
           export/android/release_keystore_user = "${KEYSTORE_ALIAS}"
           export/android/release_keystore_pass = "${KEYSTORE_PASSWORD}"
           EOF
