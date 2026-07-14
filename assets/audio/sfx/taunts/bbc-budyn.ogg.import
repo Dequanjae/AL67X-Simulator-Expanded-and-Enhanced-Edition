@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dk2a7luumnvp3"
-path="res://.godot/imported/bbc-budyn.mp3-b2549c4258e31ce3e3e14503cdbebfcd.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/bbc-budyn.mp3"
-dest_files=["res://.godot/imported/bbc-budyn.mp3-b2549c4258e31ce3e3e14503cdbebfcd.mp3str"]
+source_file="res://assets/audio/sfx/taunts/bbc-budyn.ogg"
 
 [params]
 

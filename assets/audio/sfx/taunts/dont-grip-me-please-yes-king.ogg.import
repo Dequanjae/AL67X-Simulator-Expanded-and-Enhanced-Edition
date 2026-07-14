@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://cx047jh7agypa"
-path="res://.godot/imported/dont-grip-me-please-yes-king.mp3-b533fbf03d28135c9ba381d9788f91ae.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/dont-grip-me-please-yes-king.mp3"
-dest_files=["res://.godot/imported/dont-grip-me-please-yes-king.mp3-b533fbf03d28135c9ba381d9788f91ae.mp3str"]
+source_file="res://assets/audio/sfx/taunts/dont-grip-me-please-yes-king.ogg"
 
 [params]
 

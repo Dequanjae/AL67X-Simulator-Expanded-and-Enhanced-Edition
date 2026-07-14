@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://sekflnxl4ass"
-path="res://.godot/imported/amboutablow.mp3-17b83ff3160e7c62a1a2ef3189b0e8a3.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/amboutablow.mp3"
-dest_files=["res://.godot/imported/amboutablow.mp3-17b83ff3160e7c62a1a2ef3189b0e8a3.mp3str"]
+source_file="res://assets/audio/sfx/taunts/amboutablow.ogg"
 
 [params]
 

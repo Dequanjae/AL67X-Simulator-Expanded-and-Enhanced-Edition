@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://ctea7ajx2dphp"
-path="res://.godot/imported/ambatukam-dies.mp3-e33693974b631a328c188d6d9521aa92.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/ambatukam-dies.mp3"
-dest_files=["res://.godot/imported/ambatukam-dies.mp3-e33693974b631a328c188d6d9521aa92.mp3str"]
+source_file="res://assets/audio/sfx/taunts/ambatukam-dies.ogg"
 
 [params]
 

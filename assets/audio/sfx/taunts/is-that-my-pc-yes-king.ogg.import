@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://li88pe54yy7o"
-path="res://.godot/imported/is-that-my-pc-yes-king.mp3-c3a7fd5b189ab8dbbeb63c5dcc30270c.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/is-that-my-pc-yes-king.mp3"
-dest_files=["res://.godot/imported/is-that-my-pc-yes-king.mp3-c3a7fd5b189ab8dbbeb63c5dcc30270c.mp3str"]
+source_file="res://assets/audio/sfx/taunts/is-that-my-pc-yes-king.ogg"
 
 [params]
 

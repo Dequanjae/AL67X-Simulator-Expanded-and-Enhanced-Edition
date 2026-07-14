@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dcops21lytyn7"
-path="res://.godot/imported/dreamybull-2.mp3-f5e5285d3a99481ccf074c95145af4b6.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/dreamybull-2.mp3"
-dest_files=["res://.godot/imported/dreamybull-2.mp3-f5e5285d3a99481ccf074c95145af4b6.mp3str"]
+source_file="res://assets/audio/sfx/taunts/dreamybull-2.ogg"
 
 [params]
 

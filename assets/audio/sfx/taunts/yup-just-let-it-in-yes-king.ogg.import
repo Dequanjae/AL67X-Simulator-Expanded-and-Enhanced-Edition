@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://btbtuqub67wkx"
-path="res://.godot/imported/yup-just-let-it-in-yes-king.mp3-af0d90b160915a6fc0bb1e7de82ca557.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/yup-just-let-it-in-yes-king.mp3"
-dest_files=["res://.godot/imported/yup-just-let-it-in-yes-king.mp3-af0d90b160915a6fc0bb1e7de82ca557.mp3str"]
+source_file="res://assets/audio/sfx/taunts/yup-just-let-it-in-yes-king.ogg"
 
 [params]
 

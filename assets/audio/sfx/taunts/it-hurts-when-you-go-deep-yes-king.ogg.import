@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dt4oewvktci4"
-path="res://.godot/imported/it-hurts-when-you-go-deep-yes-king.mp3-336665cf250a6ac8d6fd3b52abc8a182.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/it-hurts-when-you-go-deep-yes-king.mp3"
-dest_files=["res://.godot/imported/it-hurts-when-you-go-deep-yes-king.mp3-336665cf250a6ac8d6fd3b52abc8a182.mp3str"]
+source_file="res://assets/audio/sfx/taunts/it-hurts-when-you-go-deep-yes-king.ogg"
 
 [params]
 

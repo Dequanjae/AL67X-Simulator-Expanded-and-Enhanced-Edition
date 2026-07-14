@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dg5pfuly6yjx7"
-path="res://.godot/imported/smii7y-transition-music.mp3-e302719f577c4569052f838f895cc515.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/transitions/smii7y-transition-music.mp3"
-dest_files=["res://.godot/imported/smii7y-transition-music.mp3-e302719f577c4569052f838f895cc515.mp3str"]
+source_file="res://assets/audio/sfx/transitions/smii7y-transition-music.ogg"
 
 [params]
 

@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://cck8ymgax1ps5"
-path="res://.godot/imported/spongebob-bubble-transition.mp3-f0a6410d0388e959da5e2107f7c44ec5.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/transitions/spongebob-bubble-transition.mp3"
-dest_files=["res://.godot/imported/spongebob-bubble-transition.mp3-f0a6410d0388e959da5e2107f7c44ec5.mp3str"]
+source_file="res://assets/audio/sfx/transitions/spongebob-bubble-transition.ogg"
 
 [params]
 

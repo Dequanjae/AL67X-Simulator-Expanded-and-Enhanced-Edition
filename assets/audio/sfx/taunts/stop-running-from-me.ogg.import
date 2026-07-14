@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://01lutmp6daxp"
-path="res://.godot/imported/stop-running-from-me.mp3-087015c835ae5021302a94602be25000.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/stop-running-from-me.mp3"
-dest_files=["res://.godot/imported/stop-running-from-me.mp3-087015c835ae5021302a94602be25000.mp3str"]
+source_file="res://assets/audio/sfx/taunts/stop-running-from-me.ogg"
 
 [params]
 

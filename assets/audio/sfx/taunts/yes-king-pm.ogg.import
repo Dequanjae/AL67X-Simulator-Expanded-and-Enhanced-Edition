@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bcwj6sceeeqxg"
-path="res://.godot/imported/yes-king-pm.mp3-03a84a654dc04fe4d62b563577b486d2.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/yes-king-pm.mp3"
-dest_files=["res://.godot/imported/yes-king-pm.mp3-03a84a654dc04fe4d62b563577b486d2.mp3str"]
+source_file="res://assets/audio/sfx/taunts/yes-king-pm.ogg"
 
 [params]
 

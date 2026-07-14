@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dxd6qv6l2104b"
-path="res://.godot/imported/nick-karaleen.mp3-110b589ea524cf892d54e1699b08913d.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/nick-karaleen.mp3"
-dest_files=["res://.godot/imported/nick-karaleen.mp3-110b589ea524cf892d54e1699b08913d.mp3str"]
+source_file="res://assets/audio/sfx/taunts/nick-karaleen.ogg"
 
 [params]
 

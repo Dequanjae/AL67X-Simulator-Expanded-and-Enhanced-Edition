@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bhdqgbojffqba"
-path="res://.godot/imported/yes-king-now-i-understand.mp3-5c0743b615800d6f8ff4d50d4fda2c0b.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/yes-king-now-i-understand.mp3"
-dest_files=["res://.godot/imported/yes-king-now-i-understand.mp3-5c0743b615800d6f8ff4d50d4fda2c0b.mp3str"]
+source_file="res://assets/audio/sfx/taunts/yes-king-now-i-understand.ogg"
 
 [params]
 

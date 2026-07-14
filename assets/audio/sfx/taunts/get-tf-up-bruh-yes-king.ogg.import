@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://ckjtu4vrhogi0"
-path="res://.godot/imported/get-tf-up-bruh-yes-king.mp3-123a688a119ae9532f48e518283778ec.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/get-tf-up-bruh-yes-king.mp3"
-dest_files=["res://.godot/imported/get-tf-up-bruh-yes-king.mp3-123a688a119ae9532f48e518283778ec.mp3str"]
+source_file="res://assets/audio/sfx/taunts/get-tf-up-bruh-yes-king.ogg"
 
 [params]
 

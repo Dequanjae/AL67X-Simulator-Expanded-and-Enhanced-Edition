@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://uacypboma6py"
-path="res://.godot/imported/whos-king-whos-god-yes-king.mp3-9777f5bfeb63a582663df1d5b92ba383.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/whos-king-whos-god-yes-king.mp3"
-dest_files=["res://.godot/imported/whos-king-whos-god-yes-king.mp3-9777f5bfeb63a582663df1d5b92ba383.mp3str"]
+source_file="res://assets/audio/sfx/taunts/whos-king-whos-god-yes-king.ogg"
 
 [params]
 

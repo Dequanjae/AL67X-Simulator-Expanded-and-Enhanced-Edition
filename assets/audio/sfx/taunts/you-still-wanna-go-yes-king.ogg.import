@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bomhpd1pwytvm"
-path="res://.godot/imported/you-still-wanna-go-yes-king.mp3-144798f96569236bd87c033183472ddb.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/you-still-wanna-go-yes-king.mp3"
-dest_files=["res://.godot/imported/you-still-wanna-go-yes-king.mp3-144798f96569236bd87c033183472ddb.mp3str"]
+source_file="res://assets/audio/sfx/taunts/you-still-wanna-go-yes-king.ogg"
 
 [params]
 

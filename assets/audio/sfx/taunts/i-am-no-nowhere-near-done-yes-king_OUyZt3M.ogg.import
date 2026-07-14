@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://clgeqcylp62dn"
-path="res://.godot/imported/i-am-no-nowhere-near-done-yes-king_OUyZt3M.mp3-1412c1852e6273f246abf09c51cbdbf5.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/i-am-no-nowhere-near-done-yes-king_OUyZt3M.mp3"
-dest_files=["res://.godot/imported/i-am-no-nowhere-near-done-yes-king_OUyZt3M.mp3-1412c1852e6273f246abf09c51cbdbf5.mp3str"]
+source_file="res://assets/audio/sfx/taunts/i-am-no-nowhere-near-done-yes-king_OUyZt3M.ogg"
 
 [params]
 

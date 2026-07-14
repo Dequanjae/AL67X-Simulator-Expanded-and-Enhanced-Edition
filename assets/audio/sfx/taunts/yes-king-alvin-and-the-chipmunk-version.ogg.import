@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://nxvr07lijkhf"
-path="res://.godot/imported/yes-king-alvin-and-the-chipmunk-version.mp3-16aea9ed996e1e945316c7f585cbb6b0.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/yes-king-alvin-and-the-chipmunk-version.mp3"
-dest_files=["res://.godot/imported/yes-king-alvin-and-the-chipmunk-version.mp3-16aea9ed996e1e945316c7f585cbb6b0.mp3str"]
+source_file="res://assets/audio/sfx/taunts/yes-king-alvin-and-the-chipmunk-version.ogg"
 
 [params]
 

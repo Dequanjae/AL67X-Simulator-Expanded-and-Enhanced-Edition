@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bu3sg6v1ts1w0"
-path="res://.godot/imported/hitting-that-spot.mp3-92fc7f0ca31169cb8841491cca7aa83e.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/hitting-that-spot.mp3"
-dest_files=["res://.godot/imported/hitting-that-spot.mp3-92fc7f0ca31169cb8841491cca7aa83e.mp3str"]
+source_file="res://assets/audio/sfx/taunts/hitting-that-spot.ogg"
 
 [params]
 

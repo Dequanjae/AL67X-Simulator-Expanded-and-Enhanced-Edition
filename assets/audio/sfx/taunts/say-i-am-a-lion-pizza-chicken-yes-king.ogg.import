@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://ckmt0oh141ukr"
-path="res://.godot/imported/say-i-am-a-lion-pizza-chicken-yes-king.mp3-4d6778b1718e1bd3b139c9930b584e81.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/say-i-am-a-lion-pizza-chicken-yes-king.mp3"
-dest_files=["res://.godot/imported/say-i-am-a-lion-pizza-chicken-yes-king.mp3-4d6778b1718e1bd3b139c9930b584e81.mp3str"]
+source_file="res://assets/audio/sfx/taunts/say-i-am-a-lion-pizza-chicken-yes-king.ogg"
 
 [params]
 

@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dv52rfotaelcj"
-path="res://.godot/imported/up-and-down-yes-king.mp3-007c65adcc36dd16f65e9bf954ae9f9c.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/up-and-down-yes-king.mp3"
-dest_files=["res://.godot/imported/up-and-down-yes-king.mp3-007c65adcc36dd16f65e9bf954ae9f9c.mp3str"]
+source_file="res://assets/audio/sfx/taunts/up-and-down-yes-king.ogg"
 
 [params]
 

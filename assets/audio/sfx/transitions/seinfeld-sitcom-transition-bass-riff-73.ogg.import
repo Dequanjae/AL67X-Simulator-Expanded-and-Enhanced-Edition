@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bjb0kwxdibcp5"
-path="res://.godot/imported/seinfeld-sitcom-transition-bass-riff-73.mp3-b3846eeaea5993ad61c9823a239a40cf.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/transitions/seinfeld-sitcom-transition-bass-riff-73.mp3"
-dest_files=["res://.godot/imported/seinfeld-sitcom-transition-bass-riff-73.mp3-b3846eeaea5993ad61c9823a239a40cf.mp3str"]
+source_file="res://assets/audio/sfx/transitions/seinfeld-sitcom-transition-bass-riff-73.ogg"
 
 [params]
 

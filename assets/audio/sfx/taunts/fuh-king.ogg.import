@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dgt3sne150fil"
-path="res://.godot/imported/fuh-king.mp3-1b3debed8e41563fa62d6c074f75be24.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/fuh-king.mp3"
-dest_files=["res://.godot/imported/fuh-king.mp3-1b3debed8e41563fa62d6c074f75be24.mp3str"]
+source_file="res://assets/audio/sfx/taunts/fuh-king.ogg"
 
 [params]
 

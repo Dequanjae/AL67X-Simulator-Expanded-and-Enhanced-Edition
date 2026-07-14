@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://ccmjxmxwuigon"
-path="res://.godot/imported/dihlan.mp3-67542c9e61897a83d203fd51001318e9.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/dihlan.mp3"
-dest_files=["res://.godot/imported/dihlan.mp3-67542c9e61897a83d203fd51001318e9.mp3str"]
+source_file="res://assets/audio/sfx/taunts/dylan.ogg"
 
 [params]
 

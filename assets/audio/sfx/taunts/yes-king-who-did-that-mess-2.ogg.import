@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://cyk51qpxjnik1"
-path="res://.godot/imported/yes-king-who-did-that-mess-2.mp3-a734aa0143d51a85a58fbcc23bffdee9.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/yes-king-who-did-that-mess-2.mp3"
-dest_files=["res://.godot/imported/yes-king-who-did-that-mess-2.mp3-a734aa0143d51a85a58fbcc23bffdee9.mp3str"]
+source_file="res://assets/audio/sfx/taunts/yes-king-who-did-that-mess-2.ogg"
 
 [params]
 

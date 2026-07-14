@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://lvvvy7ib05y4"
-path="res://.godot/imported/south-park-guitar-transition-strums-collection-mp3cut.mp3-c46ff09f2a7b9392eff43036e3be0e51.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/transitions/south-park-guitar-transition-strums-collection-mp3cut.mp3"
-dest_files=["res://.godot/imported/south-park-guitar-transition-strums-collection-mp3cut.mp3-c46ff09f2a7b9392eff43036e3be0e51.mp3str"]
+source_file="res://assets/audio/sfx/transitions/south-park-guitar-transition-strums-collection-mp3cut.ogg"
 
 [params]
 

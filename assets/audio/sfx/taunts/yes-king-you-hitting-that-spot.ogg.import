@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://tjclhdyg4wbe"
-path="res://.godot/imported/yes-king-you-hitting-that-spot.mp3-1ffb567a7f86dc0e755c4bceb9ca18dd.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/yes-king-you-hitting-that-spot.mp3"
-dest_files=["res://.godot/imported/yes-king-you-hitting-that-spot.mp3-1ffb567a7f86dc0e755c4bceb9ca18dd.mp3str"]
+source_file="res://assets/audio/sfx/taunts/yes-king-you-hitting-that-spot.ogg"
 
 [params]
 

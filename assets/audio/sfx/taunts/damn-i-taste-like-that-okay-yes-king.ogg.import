@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bamoejpnkrv70"
-path="res://.godot/imported/damn-i-taste-like-that-okay-yes-king.mp3-b9d137210779c5d60050e0cdcc26805e.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/damn-i-taste-like-that-okay-yes-king.mp3"
-dest_files=["res://.godot/imported/damn-i-taste-like-that-okay-yes-king.mp3-b9d137210779c5d60050e0cdcc26805e.mp3str"]
+source_file="res://assets/audio/sfx/taunts/damn-i-taste-like-that-okay-yes-king.ogg"
 
 [params]
 

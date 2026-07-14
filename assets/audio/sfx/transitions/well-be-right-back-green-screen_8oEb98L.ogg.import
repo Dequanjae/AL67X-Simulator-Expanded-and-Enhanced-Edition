@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bvduls6rr5qan"
-path="res://.godot/imported/well-be-right-back-green-screen_8oEb98L.mp3-041775046848c13e35004f757a08edcb.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/transitions/well-be-right-back-green-screen_8oEb98L.mp3"
-dest_files=["res://.godot/imported/well-be-right-back-green-screen_8oEb98L.mp3-041775046848c13e35004f757a08edcb.mp3str"]
+source_file="res://assets/audio/sfx/transitions/well-be-right-back-green-screen_8oEb98L.ogg"
 
 [params]
 

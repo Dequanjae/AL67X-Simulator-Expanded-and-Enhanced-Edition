@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://df0yi07adcu36"
-path="res://.godot/imported/push-tf-out-yes-king.mp3-8ac1569609ae12cb74db2cb5f384202e.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/push-tf-out-yes-king.mp3"
-dest_files=["res://.godot/imported/push-tf-out-yes-king.mp3-8ac1569609ae12cb74db2cb5f384202e.mp3str"]
+source_file="res://assets/audio/sfx/taunts/push-tf-out-yes-king.ogg"
 
 [params]
 

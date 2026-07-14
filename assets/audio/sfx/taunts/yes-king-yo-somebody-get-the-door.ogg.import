@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dpi7jowbemyjv"
-path="res://.godot/imported/yes-king-yo-somebody-get-the-door.mp3-19ea7774e0915f0ab7d7444813392c08.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/yes-king-yo-somebody-get-the-door.mp3"
-dest_files=["res://.godot/imported/yes-king-yo-somebody-get-the-door.mp3-19ea7774e0915f0ab7d7444813392c08.mp3str"]
+source_file="res://assets/audio/sfx/taunts/yes-king-yo-somebody-get-the-door.ogg"
 
 [params]
 

@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dpjkfisfn4a7d"
-path="res://.godot/imported/i-got-the-green-light-yes-king.mp3-eff4422807195d49b217602ac54a4449.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/i-got-the-green-light-yes-king.mp3"
-dest_files=["res://.godot/imported/i-got-the-green-light-yes-king.mp3-eff4422807195d49b217602ac54a4449.mp3str"]
+source_file="res://assets/audio/sfx/taunts/i-got-the-green-light-yes-king.ogg"
 
 [params]
 

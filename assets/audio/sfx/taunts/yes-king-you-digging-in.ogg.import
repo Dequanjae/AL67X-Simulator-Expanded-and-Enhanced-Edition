@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://dekrq7qvdjtvn"
-path="res://.godot/imported/yes-king-you-digging-in.mp3-ad2f64262c3a40a73332fa3f17c889cb.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/yes-king-you-digging-in.mp3"
-dest_files=["res://.godot/imported/yes-king-you-digging-in.mp3-ad2f64262c3a40a73332fa3f17c889cb.mp3str"]
+source_file="res://assets/audio/sfx/taunts/yes-king-you-digging-in.ogg"
 
 [params]
 

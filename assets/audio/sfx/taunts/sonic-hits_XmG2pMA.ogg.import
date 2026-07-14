@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://cra18sxgrxy0g"
-path="res://.godot/imported/sonic-hits_XmG2pMA.mp3-5bea5565f23af7d5c7a68b19917c3cc9.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/sonic-hits_XmG2pMA.mp3"
-dest_files=["res://.godot/imported/sonic-hits_XmG2pMA.mp3-5bea5565f23af7d5c7a68b19917c3cc9.mp3str"]
+source_file="res://assets/audio/sfx/taunts/sonic-hits_XmG2pMA.ogg"
 
 [params]
 

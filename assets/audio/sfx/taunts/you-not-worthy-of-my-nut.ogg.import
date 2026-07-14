@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://cfhtwqjthyk5w"
-path="res://.godot/imported/you-not-worthy-of-my-nut.mp3-5c1664109a144f8e02cc5e87281126c5.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/you-not-worthy-of-my-nut.mp3"
-dest_files=["res://.godot/imported/you-not-worthy-of-my-nut.mp3-5c1664109a144f8e02cc5e87281126c5.mp3str"]
+source_file="res://assets/audio/sfx/taunts/you-not-worthy-of-my-nut.ogg"
 
 [params]
 

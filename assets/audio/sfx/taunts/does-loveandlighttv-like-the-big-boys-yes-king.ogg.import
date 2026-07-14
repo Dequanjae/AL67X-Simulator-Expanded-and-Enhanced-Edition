@@ -3,12 +3,11 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://rkxet02oc72p"
-path="res://.godot/imported/does-loveandlighttv-like-the-big-boys-yes-king.mp3-64306b01b39a37ab3f02b4dd29725135.mp3str"
+valid=false
 
 [deps]
 
-source_file="res://assets/audio/sfx/taunts/does-loveandlighttv-like-the-big-boys-yes-king.mp3"
-dest_files=["res://.godot/imported/does-loveandlighttv-like-the-big-boys-yes-king.mp3-64306b01b39a37ab3f02b4dd29725135.mp3str"]
+source_file="res://assets/audio/sfx/taunts/does-loveandlighttv-like-the-big-boys-yes-king.ogg"
 
 [params]
 
