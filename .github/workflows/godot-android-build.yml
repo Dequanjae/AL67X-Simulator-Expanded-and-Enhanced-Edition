@@ -30,6 +30,7 @@ jobs:
           rm -rf android/build/
           unzip -o ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/android_source.zip \
             -d android/build/
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git checkout android/build/google-services.json
 
       - name: Decode keystore
