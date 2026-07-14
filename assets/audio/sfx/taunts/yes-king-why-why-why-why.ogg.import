@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://c7pucnvy44gcl"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cxd2xpu8qd2ys"
+path="res://.godot/imported/yes-king-why-why-why-why.ogg-8cfc139d31a84d454dd88025c54fdb20.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yes-king-why-why-why-why.ogg"
+dest_files=["res://.godot/imported/yes-king-why-why-why-why.ogg-8cfc139d31a84d454dd88025c54fdb20.oggvorbisstr"]
 
 [params]
 

@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://bdssw5udyepj5"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bq5hgta10e2dg"
+path="res://.godot/imported/yes-king-a-1.ogg-dd528ab85945150f7810205454cd4685.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yes-king-a-1.ogg"
+dest_files=["res://.godot/imported/yes-king-a-1.ogg-dd528ab85945150f7810205454cd4685.oggvorbisstr"]
 
 [params]
 

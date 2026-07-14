@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://bwfah8v85oc5r"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cw7e2ga63ds1j"
+path="res://.godot/imported/transition-from-sp-3.ogg-e18692bd3f689718046dcb9f7d09f97b.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/transitions/transition-from-sp-3.ogg"
+dest_files=["res://.godot/imported/transition-from-sp-3.ogg-e18692bd3f689718046dcb9f7d09f97b.oggvorbisstr"]
 
 [params]
 

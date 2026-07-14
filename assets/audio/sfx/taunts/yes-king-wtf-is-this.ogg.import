@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://yx6f1qe0ptfq"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://flmcnt8g1stp"
+path="res://.godot/imported/yes-king-wtf-is-this.ogg-7c866c3b1ffea8eabb272bc4732709b2.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yes-king-wtf-is-this.ogg"
+dest_files=["res://.godot/imported/yes-king-wtf-is-this.ogg-7c866c3b1ffea8eabb272bc4732709b2.oggvorbisstr"]
 
 [params]
 

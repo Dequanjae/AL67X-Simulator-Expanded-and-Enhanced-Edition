@@ -217,9 +217,9 @@ func _play_random_taunt() -> void:
 
 
 func _scan_pools() -> void:
-	_taunt_paths = JsonData.list_files(str(_map.get("taunts_dir", "")), "mp3")
+	_taunt_paths = JsonData.list_files(str(_map.get("taunts_dir", "")), "ogg")
 	var max_sec := float(_map.get("transition_max_sec", 6.0))
-	for path in JsonData.list_files(str(_map.get("transitions_dir", "")), "mp3"):
+	for path in JsonData.list_files(str(_map.get("transitions_dir", "")), "ogg"):
 		var stream := _stream(path)
 		if stream != null and stream.get_length() <= max_sec:
 			_transition_streams.append(stream)

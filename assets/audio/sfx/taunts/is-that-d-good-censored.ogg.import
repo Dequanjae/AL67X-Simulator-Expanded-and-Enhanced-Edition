@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://xei5u33ef4t6"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d24mn256b66fv"
+path="res://.godot/imported/is-that-d-good-censored.ogg-e9c9ff0d735f8d29b243b75c4ba8bb17.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/is-that-d-good-censored.ogg"
+dest_files=["res://.godot/imported/is-that-d-good-censored.ogg-e9c9ff0d735f8d29b243b75c4ba8bb17.oggvorbisstr"]
 
 [params]
 

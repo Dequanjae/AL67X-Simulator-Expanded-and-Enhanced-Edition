@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://ckmt0oh141ukr"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://wgyqfh11ms5h"
+path="res://.godot/imported/say-i-am-a-lion-pizza-chicken-yes-king.ogg-dc62fc5ccf19c62add2786897f1bcb07.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/say-i-am-a-lion-pizza-chicken-yes-king.ogg"
+dest_files=["res://.godot/imported/say-i-am-a-lion-pizza-chicken-yes-king.ogg-dc62fc5ccf19c62add2786897f1bcb07.oggvorbisstr"]
 
 [params]
 

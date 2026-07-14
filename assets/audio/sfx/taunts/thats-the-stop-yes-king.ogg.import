@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://bqd1wg0jrrtqt"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://wr3582tdmhx7"
+path="res://.godot/imported/thats-the-stop-yes-king.ogg-e00a5c8be007569914cb3365e30f8018.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/thats-the-stop-yes-king.ogg"
+dest_files=["res://.godot/imported/thats-the-stop-yes-king.ogg-e00a5c8be007569914cb3365e30f8018.oggvorbisstr"]
 
 [params]
 

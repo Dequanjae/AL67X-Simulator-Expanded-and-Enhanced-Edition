@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://dcl7mvfp4lycy"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cmppilfkqs23x"
+path="res://.godot/imported/how-is-that-d-yes-king.ogg-2a5b167529a3b2b59616132f7d218f53.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/how-is-that-d-yes-king.ogg"
+dest_files=["res://.godot/imported/how-is-that-d-yes-king.ogg-2a5b167529a3b2b59616132f7d218f53.oggvorbisstr"]
 
 [params]
 

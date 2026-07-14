@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://p7iqcha42ibt"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cuc5ak8d8t068"
+path="res://.godot/imported/yoyoyes_1.ogg-d3ce9d1bcc8a28a3bde351a26a35192e.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yoyoyes_1.ogg"
+dest_files=["res://.godot/imported/yoyoyes_1.ogg-d3ce9d1bcc8a28a3bde351a26a35192e.oggvorbisstr"]
 
 [params]
 

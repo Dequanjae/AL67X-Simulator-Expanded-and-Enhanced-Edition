@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://dwmjku4gi185x"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c2vlusdlso016"
+path="res://.godot/imported/collard-greens-x-yes-king.ogg-ebfd0ef2f93a24fa670f8871077eba7e.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/collard-greens-x-yes-king.ogg"
+dest_files=["res://.godot/imported/collard-greens-x-yes-king.ogg-ebfd0ef2f93a24fa670f8871077eba7e.oggvorbisstr"]
 
 [params]
 

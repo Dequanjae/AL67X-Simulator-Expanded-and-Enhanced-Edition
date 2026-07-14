@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://d181mgy8k3de1"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bw32rjd0yt3kj"
+path="res://.godot/imported/cream-factory.ogg-f0aa870a9947149c520851c343640f7a.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/cream-factory.ogg"
+dest_files=["res://.godot/imported/cream-factory.ogg-f0aa870a9947149c520851c343640f7a.oggvorbisstr"]
 
 [params]
 

@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://clgeqcylp62dn"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://clox6gercve5r"
+path="res://.godot/imported/i-am-no-nowhere-near-done-yes-king_OUyZt3M.ogg-3933f97785fc775a359ef4f20d363e91.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/i-am-no-nowhere-near-done-yes-king_OUyZt3M.ogg"
+dest_files=["res://.godot/imported/i-am-no-nowhere-near-done-yes-king_OUyZt3M.ogg-3933f97785fc775a359ef4f20d363e91.oggvorbisstr"]
 
 [params]
 

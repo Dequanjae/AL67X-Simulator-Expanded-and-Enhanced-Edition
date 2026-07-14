@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://cck8ymgax1ps5"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dp1bxb4r51au3"
+path="res://.godot/imported/spongebob-bubble-transition.ogg-1b6ab7e5c8d50f7dcc542655677e3070.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/transitions/spongebob-bubble-transition.ogg"
+dest_files=["res://.godot/imported/spongebob-bubble-transition.ogg-1b6ab7e5c8d50f7dcc542655677e3070.oggvorbisstr"]
 
 [params]
 

@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://d1gt8xissm1mo"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cecjvc47yps6c"
+path="res://.godot/imported/yes-king-bomboclatt-edition_TzZsmEx.ogg-d8c8ec59662277ee62f7554177b025da.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yes-king-bomboclatt-edition_TzZsmEx.ogg"
+dest_files=["res://.godot/imported/yes-king-bomboclatt-edition_TzZsmEx.ogg-d8c8ec59662277ee62f7554177b025da.oggvorbisstr"]
 
 [params]
 

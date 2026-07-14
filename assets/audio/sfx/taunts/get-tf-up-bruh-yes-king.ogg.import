@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://ckjtu4vrhogi0"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cdqug2osrc5dp"
+path="res://.godot/imported/get-tf-up-bruh-yes-king.ogg-c29782ab8a72d9190317d5d51376a27c.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/get-tf-up-bruh-yes-king.ogg"
+dest_files=["res://.godot/imported/get-tf-up-bruh-yes-king.ogg-c29782ab8a72d9190317d5d51376a27c.oggvorbisstr"]
 
 [params]
 

@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://d4gcus61yvpwe"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d0g6q67tj7w5h"
+path="res://.godot/imported/tf-did-i-say-yes-king.ogg-e8b898f548857ecc65f2e3717dfd1557.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/tf-did-i-say-yes-king.ogg"
+dest_files=["res://.godot/imported/tf-did-i-say-yes-king.ogg-e8b898f548857ecc65f2e3717dfd1557.oggvorbisstr"]
 
 [params]
 

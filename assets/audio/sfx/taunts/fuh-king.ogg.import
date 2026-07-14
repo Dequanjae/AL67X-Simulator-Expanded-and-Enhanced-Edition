@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://dgt3sne150fil"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b7gqtnj58kegd"
+path="res://.godot/imported/fuh-king.ogg-585842ca63fa42800a845cff6eb858aa.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/fuh-king.ogg"
+dest_files=["res://.godot/imported/fuh-king.ogg-585842ca63fa42800a845cff6eb858aa.oggvorbisstr"]
 
 [params]
 

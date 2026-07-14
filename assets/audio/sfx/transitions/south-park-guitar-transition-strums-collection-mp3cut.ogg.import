@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://lvvvy7ib05y4"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b2gsqkeuankyp"
+path="res://.godot/imported/south-park-guitar-transition-strums-collection-mp3cut.ogg-531f3414277e04f2388e46a8cb272d22.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/transitions/south-park-guitar-transition-strums-collection-mp3cut.ogg"
+dest_files=["res://.godot/imported/south-park-guitar-transition-strums-collection-mp3cut.ogg-531f3414277e04f2388e46a8cb272d22.oggvorbisstr"]
 
 [params]
 

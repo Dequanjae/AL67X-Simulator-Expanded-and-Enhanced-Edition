@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://df0yi07adcu36"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bboq36aap8mmh"
+path="res://.godot/imported/push-tf-out-yes-king.ogg-8e714d40dbb3a537bf819508df818f39.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/push-tf-out-yes-king.ogg"
+dest_files=["res://.godot/imported/push-tf-out-yes-king.ogg-8e714d40dbb3a537bf819508df818f39.oggvorbisstr"]
 
 [params]
 

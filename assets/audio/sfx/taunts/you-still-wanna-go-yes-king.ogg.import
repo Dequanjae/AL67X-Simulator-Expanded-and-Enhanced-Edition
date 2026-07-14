@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://bomhpd1pwytvm"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cdulxcutt7ael"
+path="res://.godot/imported/you-still-wanna-go-yes-king.ogg-575dfd3f66cc4d017a4a685fb2cb3334.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/you-still-wanna-go-yes-king.ogg"
+dest_files=["res://.godot/imported/you-still-wanna-go-yes-king.ogg-575dfd3f66cc4d017a4a685fb2cb3334.oggvorbisstr"]
 
 [params]
 

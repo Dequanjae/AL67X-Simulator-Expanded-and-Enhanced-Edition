@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://s1ijlc1s7hhv"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c6pky6nekaxor"
+path="res://.godot/imported/yes-king-you-digging-in-a.ogg-5308afe387c3aeff1f44c7132c6b39da.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yes-king-you-digging-in-a.ogg"
+dest_files=["res://.godot/imported/yes-king-you-digging-in-a.ogg-5308afe387c3aeff1f44c7132c6b39da.oggvorbisstr"]
 
 [params]
 

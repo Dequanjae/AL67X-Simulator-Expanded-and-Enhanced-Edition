@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://cfhtwqjthyk5w"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ddsunuahqt3mr"
+path="res://.godot/imported/you-not-worthy-of-my-nut.ogg-29adb77668d0705026c714e5921d1ac0.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/you-not-worthy-of-my-nut.ogg"
+dest_files=["res://.godot/imported/you-not-worthy-of-my-nut.ogg-29adb77668d0705026c714e5921d1ac0.oggvorbisstr"]
 
 [params]
 

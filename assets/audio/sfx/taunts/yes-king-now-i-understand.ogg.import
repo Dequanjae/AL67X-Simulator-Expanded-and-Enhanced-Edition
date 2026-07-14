@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://bhdqgbojffqba"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://botxi3ffefi8f"
+path="res://.godot/imported/yes-king-now-i-understand.ogg-f2ff960153a017e274cb672faf07dbe1.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yes-king-now-i-understand.ogg"
+dest_files=["res://.godot/imported/yes-king-now-i-understand.ogg-f2ff960153a017e274cb672faf07dbe1.oggvorbisstr"]
 
 [params]
 

@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://bvduls6rr5qan"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d3w3ixafxydk1"
+path="res://.godot/imported/well-be-right-back-green-screen_8oEb98L.ogg-82aa7c924e7b918a89dfaa167d61bfdf.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/transitions/well-be-right-back-green-screen_8oEb98L.ogg"
+dest_files=["res://.godot/imported/well-be-right-back-green-screen_8oEb98L.ogg-82aa7c924e7b918a89dfaa167d61bfdf.oggvorbisstr"]
 
 [params]
 

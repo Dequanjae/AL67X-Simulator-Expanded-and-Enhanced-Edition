@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://kgtdph4ac25w"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://brojlvopd5qs0"
+path="res://.godot/imported/do-i-know-how-to-use-this-dih-yes-king.ogg-287f1d3bbf9d218ec23960c6ee3b9443.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/do-i-know-how-to-use-this-dih-yes-king.ogg"
+dest_files=["res://.godot/imported/do-i-know-how-to-use-this-dih-yes-king.ogg-287f1d3bbf9d218ec23960c6ee3b9443.oggvorbisstr"]
 
 [params]
 

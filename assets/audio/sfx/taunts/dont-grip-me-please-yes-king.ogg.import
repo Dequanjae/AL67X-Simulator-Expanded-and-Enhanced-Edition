@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://cx047jh7agypa"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dr7cq7gjor4bg"
+path="res://.godot/imported/dont-grip-me-please-yes-king.ogg-6e0ee3a1dc0386a5dce36f4bea359e25.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/dont-grip-me-please-yes-king.ogg"
+dest_files=["res://.godot/imported/dont-grip-me-please-yes-king.ogg-6e0ee3a1dc0386a5dce36f4bea359e25.oggvorbisstr"]
 
 [params]
 

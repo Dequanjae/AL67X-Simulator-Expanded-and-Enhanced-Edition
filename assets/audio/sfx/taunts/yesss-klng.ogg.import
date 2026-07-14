@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://durwh0k605bd6"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://q71u88j7ppv2"
+path="res://.godot/imported/yesss-klng.ogg-0d509b3f646f3aa24ccc258ce148088b.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yesss-klng.ogg"
+dest_files=["res://.godot/imported/yesss-klng.ogg-0d509b3f646f3aa24ccc258ce148088b.oggvorbisstr"]
 
 [params]
 

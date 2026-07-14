@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://bq7lhh0nd0vi1"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cpc1v066i1n64"
+path="res://.godot/imported/thick-of-it-x-fe-n-reupload.ogg-93d830cc1ae8d2df91f96f7e981c5427.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/transitions/thick-of-it-x-fe-n-reupload.ogg"
+dest_files=["res://.godot/imported/thick-of-it-x-fe-n-reupload.ogg-93d830cc1ae8d2df91f96f7e981c5427.oggvorbisstr"]
 
 [params]
 

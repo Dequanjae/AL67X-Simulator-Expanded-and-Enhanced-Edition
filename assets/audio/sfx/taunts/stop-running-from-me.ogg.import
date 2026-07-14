@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://01lutmp6daxp"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://duxslsd2mhj8f"
+path="res://.godot/imported/stop-running-from-me.ogg-730d7dd7c6e8c5ea4efe8fd929035c4d.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/stop-running-from-me.ogg"
+dest_files=["res://.godot/imported/stop-running-from-me.ogg-730d7dd7c6e8c5ea4efe8fd929035c4d.oggvorbisstr"]
 
 [params]
 

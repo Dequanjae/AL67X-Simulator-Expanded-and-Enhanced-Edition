@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://cra18sxgrxy0g"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b88nj2lvhm5q6"
+path="res://.godot/imported/sonic-hits_XmG2pMA.ogg-f7c7119a065fc303f4d2ba5a0c2e3d73.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/sonic-hits_XmG2pMA.ogg"
+dest_files=["res://.godot/imported/sonic-hits_XmG2pMA.ogg-f7c7119a065fc303f4d2ba5a0c2e3d73.oggvorbisstr"]
 
 [params]
 

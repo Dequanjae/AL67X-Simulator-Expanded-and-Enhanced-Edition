@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://ctea7ajx2dphp"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dyoyvxwk4gkl8"
+path="res://.godot/imported/ambatukam-dies.ogg-627bef4ab01bc8183efc832e22134686.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/ambatukam-dies.ogg"
+dest_files=["res://.godot/imported/ambatukam-dies.ogg-627bef4ab01bc8183efc832e22134686.oggvorbisstr"]
 
 [params]
 

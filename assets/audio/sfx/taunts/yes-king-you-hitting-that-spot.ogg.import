@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://tjclhdyg4wbe"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c2hpue6vm8f8h"
+path="res://.godot/imported/yes-king-you-hitting-that-spot.ogg-e3a0c132d8e72ef3a462ffa61820733a.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yes-king-you-hitting-that-spot.ogg"
+dest_files=["res://.godot/imported/yes-king-you-hitting-that-spot.ogg-e3a0c132d8e72ef3a462ffa61820733a.oggvorbisstr"]
 
 [params]
 

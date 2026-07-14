@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://dxd6qv6l2104b"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://23jmr082cwjb"
+path="res://.godot/imported/nick-karaleen.ogg-3a68dffd6ae8ff66bf63fac35c047353.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/nick-karaleen.ogg"
+dest_files=["res://.godot/imported/nick-karaleen.ogg-3a68dffd6ae8ff66bf63fac35c047353.oggvorbisstr"]
 
 [params]
 

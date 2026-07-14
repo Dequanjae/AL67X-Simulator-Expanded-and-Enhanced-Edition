@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://bamoejpnkrv70"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://c7k5b11g6mdog"
+path="res://.godot/imported/damn-i-taste-like-that-okay-yes-king.ogg-86e4d9207b2edd6b6c349fdbd86b2c38.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/damn-i-taste-like-that-okay-yes-king.ogg"
+dest_files=["res://.godot/imported/damn-i-taste-like-that-okay-yes-king.ogg-86e4d9207b2edd6b6c349fdbd86b2c38.oggvorbisstr"]
 
 [params]
 

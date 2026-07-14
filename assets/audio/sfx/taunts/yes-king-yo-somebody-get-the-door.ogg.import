@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://dpi7jowbemyjv"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dsww6s72y5m81"
+path="res://.godot/imported/yes-king-yo-somebody-get-the-door.ogg-a7800a761f56a5408816dd60cd799f35.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yes-king-yo-somebody-get-the-door.ogg"
+dest_files=["res://.godot/imported/yes-king-yo-somebody-get-the-door.ogg-a7800a761f56a5408816dd60cd799f35.oggvorbisstr"]
 
 [params]
 

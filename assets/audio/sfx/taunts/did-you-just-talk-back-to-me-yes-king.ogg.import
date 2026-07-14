@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://bdhudq6kwxp03"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dq4hkwuww3jfr"
+path="res://.godot/imported/did-you-just-talk-back-to-me-yes-king.ogg-7b231c0ccc47861ddc3c5cfb333976a5.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/did-you-just-talk-back-to-me-yes-king.ogg"
+dest_files=["res://.godot/imported/did-you-just-talk-back-to-me-yes-king.ogg-7b231c0ccc47861ddc3c5cfb333976a5.oggvorbisstr"]
 
 [params]
 

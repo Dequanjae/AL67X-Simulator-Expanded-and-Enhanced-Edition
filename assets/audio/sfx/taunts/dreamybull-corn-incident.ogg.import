@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://c057mmwgcmcpt"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b8wo81kal8ofi"
+path="res://.godot/imported/dreamybull-corn-incident.ogg-9472b73c0cfcb0917abe548478195273.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/dreamybull-corn-incident.ogg"
+dest_files=["res://.godot/imported/dreamybull-corn-incident.ogg-9472b73c0cfcb0917abe548478195273.oggvorbisstr"]
 
 [params]
 

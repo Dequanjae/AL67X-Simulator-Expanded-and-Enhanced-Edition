@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://cuga3b1muyh5l"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b4u6se3sdpoxe"
+path="res://.godot/imported/spindash-release.ogg-374a974319a5a28d499df4b25d4642c8.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/spindash-release.ogg"
+dest_files=["res://.godot/imported/spindash-release.ogg-374a974319a5a28d499df4b25d4642c8.oggvorbisstr"]
 
 [params]
 

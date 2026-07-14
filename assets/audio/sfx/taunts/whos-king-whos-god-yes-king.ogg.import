@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://uacypboma6py"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dw643g433itm8"
+path="res://.godot/imported/whos-king-whos-god-yes-king.ogg-feb7c26577a99ba66831b0ea166e2bf8.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/whos-king-whos-god-yes-king.ogg"
+dest_files=["res://.godot/imported/whos-king-whos-god-yes-king.ogg-feb7c26577a99ba66831b0ea166e2bf8.oggvorbisstr"]
 
 [params]
 

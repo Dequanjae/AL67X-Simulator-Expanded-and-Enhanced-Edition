@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://bu3sg6v1ts1w0"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://81rchkelrq1g"
+path="res://.godot/imported/hitting-that-spot.ogg-3d7d6f353fe880740fa104e3948b417c.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/hitting-that-spot.ogg"
+dest_files=["res://.godot/imported/hitting-that-spot.ogg-3d7d6f353fe880740fa104e3948b417c.oggvorbisstr"]
 
 [params]
 

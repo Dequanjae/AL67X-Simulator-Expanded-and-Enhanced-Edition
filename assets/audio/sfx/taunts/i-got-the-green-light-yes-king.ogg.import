@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://dpjkfisfn4a7d"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cl3otgi5f1tm7"
+path="res://.godot/imported/i-got-the-green-light-yes-king.ogg-2153131d8a0cec9f06ccdec7de34419b.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/i-got-the-green-light-yes-king.ogg"
+dest_files=["res://.godot/imported/i-got-the-green-light-yes-king.ogg-2153131d8a0cec9f06ccdec7de34419b.oggvorbisstr"]
 
 [params]
 

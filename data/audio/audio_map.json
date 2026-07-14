@@ -1,10 +1,10 @@
 {
   "_readme": "AGENT-ADDABLE audio map. music: key \u2192 stream path ('' = not provided yet; plumbing exists so supplying a file is a data edit \u2014 e.g. the retro shop theme goes in 'shop'). sfx: event key \u2192 stream. taunts_dir is a SHARED random pool any enemy pulls from (no per-enemy assignment). transitions_dir = scene-change stingers (clips longer than transition_max_sec are skipped at load).",
   "music": {
-    "hub": "res://assets/audio/music/background.mp3",
-    "gameplay": "res://assets/audio/music/background.mp3",
-    "death": "res://assets/audio/music/death.mp3",
-    "credits": "res://assets/audio/music/credits.mp3",
+    "hub": "res://assets/audio/music/Background.ogg",
+    "gameplay": "res://assets/audio/music/Background.ogg",
+    "death": "res://assets/audio/music/Death.ogg",
+    "credits": "res://assets/audio/music/Credits.ogg",
     "shop": ""
   },
   "sfx": {

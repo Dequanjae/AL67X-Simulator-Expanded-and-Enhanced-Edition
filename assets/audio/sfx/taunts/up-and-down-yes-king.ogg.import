@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://dv52rfotaelcj"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dj2mjy25vmitn"
+path="res://.godot/imported/up-and-down-yes-king.ogg-35f7c43ae6bd87b817d80c128fab4ee5.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/up-and-down-yes-king.ogg"
+dest_files=["res://.godot/imported/up-and-down-yes-king.ogg-35f7c43ae6bd87b817d80c128fab4ee5.oggvorbisstr"]
 
 [params]
 

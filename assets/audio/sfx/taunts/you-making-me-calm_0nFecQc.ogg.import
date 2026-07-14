@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://c56c0lk6bylpb"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d05140cl8cewi"
+path="res://.godot/imported/you-making-me-calm_0nFecQc.ogg-7c5496a0d230af2d71e3a28433ec6292.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/you-making-me-calm_0nFecQc.ogg"
+dest_files=["res://.godot/imported/you-making-me-calm_0nFecQc.ogg-7c5496a0d230af2d71e3a28433ec6292.oggvorbisstr"]
 
 [params]
 

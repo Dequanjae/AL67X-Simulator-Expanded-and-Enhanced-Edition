@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://rkxet02oc72p"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://5rgcpv21jytx"
+path="res://.godot/imported/does-loveandlighttv-like-the-big-boys-yes-king.ogg-20d0d270863b22ce74eaeb921f376356.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/does-loveandlighttv-like-the-big-boys-yes-king.ogg"
+dest_files=["res://.godot/imported/does-loveandlighttv-like-the-big-boys-yes-king.ogg-20d0d270863b22ce74eaeb921f376356.oggvorbisstr"]
 
 [params]
 

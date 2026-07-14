@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://c1v4b88a25wr2"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dsj0kq1qjfmy7"
+path="res://.godot/imported/solo-yes-king.ogg-a53bae48f1146e36e314029b4cac4747.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/solo-yes-king.ogg"
+dest_files=["res://.godot/imported/solo-yes-king.ogg-a53bae48f1146e36e314029b4cac4747.oggvorbisstr"]
 
 [params]
 

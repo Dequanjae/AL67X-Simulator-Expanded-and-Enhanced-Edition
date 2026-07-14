@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://ci4oll7n85m7o"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cw3qlerdu4hoc"
+path="res://.godot/imported/family-guy-transition-cutaway.ogg-6a7357009780baf4d2d097c0661ca0fb.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/transitions/family-guy-transition-cutaway.ogg"
+dest_files=["res://.godot/imported/family-guy-transition-cutaway.ogg-6a7357009780baf4d2d097c0661ca0fb.oggvorbisstr"]
 
 [params]
 

@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://dmlgqfbwprwrr"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://cfkephnonkce2"
+path="res://.godot/imported/south-transition.ogg-10c7b6049fd411d2891dd22b58d22966.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/transitions/south-transition.ogg"
+dest_files=["res://.godot/imported/south-transition.ogg-10c7b6049fd411d2891dd22b58d22966.oggvorbisstr"]
 
 [params]
 

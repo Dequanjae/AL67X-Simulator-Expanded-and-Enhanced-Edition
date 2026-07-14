@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://dr6aktjla6qc7"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://w5cwy77kypuw"
+path="res://.godot/imported/deitrik-nack.ogg-f5f7b32123952bb57d1e29b42b4a831a.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/deitrik-nack.ogg"
+dest_files=["res://.godot/imported/deitrik-nack.ogg-f5f7b32123952bb57d1e29b42b4a831a.oggvorbisstr"]
 
 [params]
 

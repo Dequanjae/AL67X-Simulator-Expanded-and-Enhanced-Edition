@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://b4yw5qqtwkanx"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dnjyjpha1i3v"
+path="res://.godot/imported/yes-king-teach-me.ogg-881f776a81ce25a46c0090f4499b2f61.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yes-king-teach-me.ogg"
+dest_files=["res://.godot/imported/yes-king-teach-me.ogg-881f776a81ce25a46c0090f4499b2f61.oggvorbisstr"]
 
 [params]
 

@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://dt4oewvktci4"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dxocjbwnmth6t"
+path="res://.godot/imported/it-hurts-when-you-go-deep-yes-king.ogg-f6c3f5d24b6ce670865ccc7874c45b4b.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/it-hurts-when-you-go-deep-yes-king.ogg"
+dest_files=["res://.godot/imported/it-hurts-when-you-go-deep-yes-king.ogg-f6c3f5d24b6ce670865ccc7874c45b4b.oggvorbisstr"]
 
 [params]
 

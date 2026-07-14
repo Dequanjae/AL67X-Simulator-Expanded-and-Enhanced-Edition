@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://smkpaarh1eya"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://byxopw8314wpv"
+path="res://.godot/imported/you-love-your-king-yes.ogg-5d6c4ed46e26db44effec269cd069d6e.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/you-love-your-king-yes.ogg"
+dest_files=["res://.godot/imported/you-love-your-king-yes.ogg-5d6c4ed46e26db44effec269cd069d6e.oggvorbisstr"]
 
 [params]
 

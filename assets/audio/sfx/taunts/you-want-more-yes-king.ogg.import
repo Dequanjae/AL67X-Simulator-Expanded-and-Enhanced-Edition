@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://bu10nu47tx0y8"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://couayjr5uvlmg"
+path="res://.godot/imported/you-want-more-yes-king.ogg-6c900217ee14a607815c29a5426fc9f2.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/you-want-more-yes-king.ogg"
+dest_files=["res://.godot/imported/you-want-more-yes-king.ogg-6c900217ee14a607815c29a5426fc9f2.oggvorbisstr"]
 
 [params]
 

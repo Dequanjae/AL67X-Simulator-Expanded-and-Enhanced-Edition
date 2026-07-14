@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://btbtuqub67wkx"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dhwvryhhmxubn"
+path="res://.godot/imported/yup-just-let-it-in-yes-king.ogg-02613d09a1a32911af99a5e56e4b1221.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yup-just-let-it-in-yes-king.ogg"
+dest_files=["res://.godot/imported/yup-just-let-it-in-yes-king.ogg-02613d09a1a32911af99a5e56e4b1221.oggvorbisstr"]
 
 [params]
 

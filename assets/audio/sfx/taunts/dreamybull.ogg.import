@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://ddw2v6nhprrf6"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://uuv851snsrmj"
+path="res://.godot/imported/dreamybull.ogg-182dd390b2237412fad6712aee1ca8ae.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/dreamybull.ogg"
+dest_files=["res://.godot/imported/dreamybull.ogg-182dd390b2237412fad6712aee1ca8ae.oggvorbisstr"]
 
 [params]
 

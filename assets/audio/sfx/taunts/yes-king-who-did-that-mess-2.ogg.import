@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://cyk51qpxjnik1"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://ba5ngfmlxf2rb"
+path="res://.godot/imported/yes-king-who-did-that-mess-2.ogg-52cdf5d652d42ead3fc04b19e6295b62.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yes-king-who-did-that-mess-2.ogg"
+dest_files=["res://.godot/imported/yes-king-who-did-that-mess-2.ogg-52cdf5d652d42ead3fc04b19e6295b62.oggvorbisstr"]
 
 [params]
 

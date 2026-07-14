@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://nxvr07lijkhf"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dxrxpr5olchwl"
+path="res://.godot/imported/yes-king-alvin-and-the-chipmunk-version.ogg-1cf9afd2ee899395a05f22d0d4478b2d.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/taunts/yes-king-alvin-and-the-chipmunk-version.ogg"
+dest_files=["res://.godot/imported/yes-king-alvin-and-the-chipmunk-version.ogg-1cf9afd2ee899395a05f22d0d4478b2d.oggvorbisstr"]
 
 [params]
 

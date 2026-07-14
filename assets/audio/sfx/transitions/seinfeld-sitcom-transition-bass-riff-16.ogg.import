@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://cq0mut3w6jcwy"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://disnn8js2clxs"
+path="res://.godot/imported/seinfeld-sitcom-transition-bass-riff-16.ogg-6c2a1e62ae9b2f2d4e0b8d0541b37c07.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/transitions/seinfeld-sitcom-transition-bass-riff-16.ogg"
+dest_files=["res://.godot/imported/seinfeld-sitcom-transition-bass-riff-16.ogg-6c2a1e62ae9b2f2d4e0b8d0541b37c07.oggvorbisstr"]
 
 [params]
 

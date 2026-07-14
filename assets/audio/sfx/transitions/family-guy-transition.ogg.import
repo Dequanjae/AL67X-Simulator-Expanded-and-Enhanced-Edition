@@ -1,13 +1,14 @@
 [remap]
 
-importer="mp3"
-type="AudioStreamMP3"
-uid="uid://bi5hujdw0ug24"
-valid=false
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bsnccdgh2sdjx"
+path="res://.godot/imported/family-guy-transition.ogg-14e5b9173736a46db060de0d7e203142.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/audio/sfx/transitions/family-guy-transition.ogg"
+dest_files=["res://.godot/imported/family-guy-transition.ogg-14e5b9173736a46db060de0d7e203142.oggvorbisstr"]
 
 [params]
 
