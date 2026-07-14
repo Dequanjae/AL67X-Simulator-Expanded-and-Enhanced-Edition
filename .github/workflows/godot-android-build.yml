@@ -25,29 +25,11 @@ jobs:
           mkdir -p ~/.local/share/godot
           ln -sf /root/.local/share/godot/export_templates ~/.local/share/godot/export_templates
 
-      - name: Install Android build template
+      - name: Verify Android build template
         run: |
-          TEMPLATES="/root/.local/share/godot/export_templates/4.3.stable"
-          ls -la "$TEMPLATES"
-          if [ -f "$TEMPLATES/android_source.zip" ]; then
-            echo "Found android_source.zip in export templates"
-            unzip -o "$TEMPLATES/android_source.zip" -d ./android/
-          else
-            echo "android_source.zip not found, downloading from GitHub..."
-            wget -q https://github.com/godotengine/godot-builds/releases/download/4.3-stable/Godot_v4.3-stable_export_templates.tpz \
-              -O /tmp/templates.tpz
-            unzip -q /tmp/templates.tpz -d /tmp/_templates
-            if [ -f /tmp/_templates/templates/android_source.zip ]; then
-              unzip -o /tmp/_templates/templates/android_source.zip -d ./android/
-            else
-              echo "FATAL: android_source.zip not found in templates package"
-              ls -la /tmp/_templates/templates/
-              exit 1
-            fi
-            rm -rf /tmp/templates.tpz /tmp/_templates
-          fi
           ls -la ./android/
           ls -la ./android/build/
+          test -f ./android/build/build.gradle || { echo "Missing build template"; exit 1; }
 
       - name: Decode keystore
         env:
