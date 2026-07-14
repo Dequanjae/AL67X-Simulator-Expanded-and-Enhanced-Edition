@@ -1,0 +1,71 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+env:
+  GODOT_VERSION: "4.3"
+  EXPORT_NAME: "game"          # base name of the exported apk (no extension)
+  EXPORT_PRESET: "Android"     # must match the preset name in export_presets.cfg
+
+jobs:
+  build-android:
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.3
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare export templates
+        run: |
+          mkdir -v -p ~/.local/share/godot/export_templates
+          mv /root/.local/share/godot/export_templates/${GODOT_VERSION}.stable \
+             ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable
+
+      - name: Decode keystore
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          mkdir -p android-keystore
+          echo "$KEYSTORE_BASE64" | base64 -d > android-keystore/release.keystore
+
+      - name: Configure Godot Android signing (editor settings)
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
+        run: |
+          mkdir -pv ~/.config/godot
+          cat > ~/.config/godot/editor_settings-4.tres <<EOF
+          [gd_resource type="EditorSettings" format=3]
+
+          [resource]
+          export/android/android_sdk_path = "/root/android-sdk"
+          export/android/debug_keystore = "android-keystore/release.keystore"
+          export/android/debug_keystore_user = "${KEYSTORE_ALIAS}"
+          export/android/debug_keystore_pass = "${KEYSTORE_PASSWORD}"
+          export/android/release_keystore = "android-keystore/release.keystore"
+          export/android/release_keystore_user = "${KEYSTORE_ALIAS}"
+          export/android/release_keystore_pass = "${KEYSTORE_PASSWORD}"
+          EOF
+
+      - name: Create output directory
+        run: mkdir -v -p build/android
+
+      - name: Import project (generates .godot cache, required before export)
+        run: godot --headless --verbose --import
+
+      - name: Export APK
+        run: |
+          godot --headless --verbose --export-release "${EXPORT_PRESET}" \
+            build/android/${EXPORT_NAME}.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-apk
+          path: build/android/*.apk
+          if-no-files-found: error
