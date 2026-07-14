@@ -25,6 +25,13 @@ jobs:
           mkdir -p ~/.local/share/godot
           ln -sf /root/.local/share/godot/export_templates ~/.local/share/godot/export_templates
 
+      - name: Extract Android build template (AARs are gitignored)
+        run: |
+          rm -rf android/build/
+          unzip -o ~/.local/share/godot/export_templates/${GODOT_VERSION}.stable/android_source.zip \
+            -d android/build/
+          git checkout android/build/google-services.json
+
       - name: Decode keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}

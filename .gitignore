@@ -1,10 +1,11 @@
 # Godot 4+ specific ignores
 .godot/
 
-# Android Gradle build template (track the source, ignore Gradle output)
+# Android Gradle build template (track the source, ignore Gradle output + AARs)
 android/build/.gradle/
 android/build/build/
 android/build/local.properties
+android/build/libs/
 
 # Godot-specific ignores
 .import/
