@@ -25,9 +25,6 @@ jobs:
           mkdir -p ~/.local/share/godot
           ln -sf /root/.local/share/godot/export_templates ~/.local/share/godot/export_templates
 
-      - name: Save Firebase config (before template install overwrites it)
-        run: cp android/build/google-services.json /tmp/
-
       - name: Decode keystore
         env:
           KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
@@ -64,9 +61,6 @@ jobs:
 
       - name: Install Android build template (writes version marker)
         run: godot --headless --install-android-build-template
-
-      - name: Restore Firebase config
-        run: cp /tmp/google-services.json android/build/google-services.json
 
       - name: Export APK
         run: |
