@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-SceneManager="*uid://j20v4cg7v8m1"
-Firebase="*uid://ds3yu6o0npkjn"
+SceneManager="*res://addons/scene_manager/SceneManager.tscn"
+Firebase="*res://addons/GodotFirebaseAndroid/Firebase.gd"
 EventBus="*res://src/autoload/event_bus.gd"
 SaveService="*res://src/autoload/save_service.gd"
 EconomyService="*res://src/autoload/economy_service.gd"
