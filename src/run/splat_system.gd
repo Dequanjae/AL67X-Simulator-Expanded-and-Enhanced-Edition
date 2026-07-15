@@ -60,5 +60,8 @@ func _splat(pos: Vector2, size: float) -> void:
 	_mm.set_instance_transform(_write, Transform3D(basis, Vector3(pos.x, y, pos.y)))
 	_write = (_write + 1) % MAX_SPLATS
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 15a0c3c7a9b935fe02eb9a250f2e9b6ef1ba64e9

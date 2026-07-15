@@ -1,11 +1,5 @@
 shader_type spatial;
 render_mode unshaded, cull_disabled, depth_prepass_alpha;
-// Batched billboard sprite shader for MultiMesh actor groups (enemy horde,
-// blob swarm). One draw call per group. Per-instance data:
-//   INSTANCE_CUSTOM.x = horizontal flip (0/1)
-//   INSTANCE_CUSTOM.y = white hit-flash amount (0..1)
-//   COLOR (instance color) = tint/modulate
-// uv_rect = atlas sub-region (offset.xy, scale.zw) for sheet-based sprites.
 
 uniform sampler2D sprite_tex : source_color, filter_linear_mipmap;
 uniform vec4 uv_rect = vec4(0.0, 0.0, 1.0, 1.0);
@@ -18,7 +12,10 @@ void vertex() {
 	v_flip = INSTANCE_CUSTOM.x;
 	v_flash = INSTANCE_CUSTOM.y;
 	v_telegraph = INSTANCE_CUSTOM.z;
+<<<<<<< HEAD
 	// Billboard (keep instance scale).
+=======
+>>>>>>> 15a0c3c7a9b935fe02eb9a250f2e9b6ef1ba64e9
 	MODELVIEW_MATRIX = VIEW_MATRIX * mat4(INV_VIEW_MATRIX[0], INV_VIEW_MATRIX[1], INV_VIEW_MATRIX[2], MODEL_MATRIX[3]);
 	MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(
 		vec4(length(MODEL_MATRIX[0].xyz), 0.0, 0.0, 0.0),

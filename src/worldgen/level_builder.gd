@@ -1,12 +1,9 @@
 class_name LevelBuilder
 extends Node3D
 ## Turns a LevelGenerator layout + theme into 3D nodes:
-##  - floor: one MultiMeshInstance3D of tile boxes (single draw call),
-##    checker-shaded with theme colors — the "3D tile" isometric look,
+##  - floor: one MeshInstance3D with procedural shader (checker + accent),
 ##  - boundary walls with collision,
-##  - props: StaticBody3D + primitive mesh + collision shape (counts are
-##    low enough per arena that individual bodies are fine; the swarm and
-##    hordes are the MultiMesh-scale systems, not props).
+##  - props: StaticBody3D + primitive mesh + collision shape.
 ##
 ## Physics layers: 1 = world (walls/props), 2 = player, pickups mask 2.
 
@@ -107,17 +104,14 @@ func _build_prop(prop: Dictionary) -> void:
 	var shape := CollisionShape3D.new()
 	var shape_name := str(prop.get("shape", "box"))
 	if shape_name == "mesh":
-		# 3D model prop (e.g. the Blender electric motor). Scaled so its
-		# height matches size[1]; collision box from size.
 		var scene := _mesh_scene_for(str(prop.get("mesh", "")))
 		if scene != null:
 			var model: Node3D = scene.instantiate()
-			var model_scale := size.y / 1.2  # motor native height ≈ 1.2m
+			var model_scale := size.y / 1.2
 			model.scale = Vector3.ONE * model_scale
 			body.add_child(model)
-			model.position.y = -size.y * 0.5  # model origin at its base
+			model.position.y = -size.y * 0.5
 		else:
-			# NEVER leave an invisible collider: fall back to a visible box.
 			push_warning("LevelBuilder: mesh prop missing model '%s' — box fallback" % prop.get("mesh", ""))
 			var fallback := BoxMesh.new()
 			fallback.size = size

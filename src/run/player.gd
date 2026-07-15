@@ -1,21 +1,14 @@
 class_name RunPlayer
 extends CharacterBody3D
-## Allan in a run. Movement from InputService (touch-first), animation from
-## the shared data-driven sheet pipeline (AllanSprites — same states across
-## every skin): idle/walk cycle, eat on shawarma pickup, front-facing turn
-## frame before horizontal flips, cry on death.
 
 const BASE_SPEED := 7.0
 const IDLE_FPS := 9.0
 const EAT_DURATION := 0.28
 const TURN_DURATION := 0.09
 
-## Momentum tuning (agar.io mass feel): how quickly Allan reaches the
-## target velocity and how quickly he coasts to a stop.
 @export var acceleration := 6.5
 @export var deceleration := 3.5
 
-## Assigned by RunController.
 var camera: Camera3D
 var stats: PlayerStats
 
@@ -38,7 +31,6 @@ func _ready() -> void:
 	_make_shield_ring()
 
 
-## Aura Shield indicator — cyan ring around Allan while charges remain.
 func _make_shield_ring() -> void:
 	_shield_ring = MeshInstance3D.new()
 	var mesh := TorusMesh.new()
@@ -58,7 +50,6 @@ func set_shield_visible(active: bool) -> void:
 		_shield_ring.visible = active
 
 
-## SUCC powerup: hold the vacuum face while the magnet runs.
 func play_succ(duration: float) -> void:
 	_succ_timer = maxf(_succ_timer, duration)
 
@@ -97,7 +88,6 @@ func _physics_process(delta: float) -> void:
 		var forward := Vector3(-cam_basis.z.x, 0.0, -cam_basis.z.z).normalized()
 		dir = right * mv.x + forward * -mv.y
 	var speed := BASE_SPEED * (stats.speed_mult if stats != null else 1.0)
-	# Momentum: ease toward the target velocity, coast when input stops.
 	var target := dir * speed
 	var rate := acceleration if dir != Vector3.ZERO else deceleration
 	velocity = velocity.lerp(target, minf(1.0, rate * delta))
@@ -106,7 +96,6 @@ func _physics_process(delta: float) -> void:
 
 
 func _animate(delta: float, dir: Vector3) -> void:
-	# Turn frame: brief front-facing frame before the flip commits.
 	if absf(dir.x) > 0.05:
 		var moving_left := dir.x < 0.0
 		if moving_left != _facing_left:
@@ -126,7 +115,7 @@ func _animate(delta: float, dir: Vector3) -> void:
 		_set_frame("eat", mini(index, eat_frames.size() - 1))
 	elif _turn_timer > 0.0:
 		_set_frame("turn", 0)
-		_sprite.flip_h = false  # front-facing frame is symmetric
+		_sprite.flip_h = false
 		return
 	elif dir != Vector3.ZERO:
 		var idle_frames: Array = _regions.get("idle", [])
