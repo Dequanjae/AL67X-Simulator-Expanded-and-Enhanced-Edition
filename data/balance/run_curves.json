@@ -21,8 +21,8 @@
     "victory_loot_box": "basic_box"
   },
   "player_xp": {
-    "base_kills_to_level": 8,
-    "kills_growth_per_level": 1.35,
+    "base_kills_to_level": 6,
+    "kills_growth_per_level": 1.25,
     "blob_xp_value": 0.25
   },
   "player_base": {

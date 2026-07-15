@@ -1,0 +1,14 @@
+{
+  "id": "fleece_johns",
+  "name": "Fleece Johns",
+  "sprite": "res://assets/sprites/enemies/fleece-johns.png",
+  "hp": 15,
+  "speed": 4.2,
+  "damage": 8,
+  "radius": 0.4,
+  "xp": 2,
+  "weight": 6,
+  "min_level": 3,
+  "size_m": 1.2,
+  "behavior": { "type": "chase" }
+}

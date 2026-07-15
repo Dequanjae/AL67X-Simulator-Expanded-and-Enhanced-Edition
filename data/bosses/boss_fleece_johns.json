@@ -1,0 +1,29 @@
+{
+  "id": "boss_fleece_johns",
+  "name": "FLEECE JOHNS GOAT",
+  "enemy_base": "fleece_johns",
+  "hp_mult": 1.2,
+  "patterns": [
+    {
+      "type": "summon_minions",
+      "interval": 4.5,
+      "count": 3
+    },
+    {
+      "type": "aimed_volley",
+      "interval": 2.0,
+      "count": 4,
+      "spread_deg": 20,
+      "proj_speed": 9.0,
+      "damage": 7
+    },
+    {
+      "type": "radial_burst",
+      "interval": 5.0,
+      "count": 12,
+      "proj_speed": 6.0,
+      "damage": 8
+    }
+  ],
+  "order": 4
+}

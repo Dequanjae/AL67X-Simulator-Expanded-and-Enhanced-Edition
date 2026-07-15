@@ -1,0 +1,14 @@
+{
+  "id": "love_life_tv",
+  "name": "LOveLIfeTv",
+  "sprite": "res://assets/sprites/enemies/LOveLIfeTv.png",
+  "hp": 25,
+  "speed": 2.8,
+  "damage": 12,
+  "radius": 0.5,
+  "xp": 2,
+  "weight": 5,
+  "min_level": 4,
+  "size_m": 1.4,
+  "behavior": { "type": "chase" }
+}

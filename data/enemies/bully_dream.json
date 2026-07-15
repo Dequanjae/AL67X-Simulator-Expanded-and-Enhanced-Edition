@@ -1,0 +1,14 @@
+{
+  "id": "bully_dream",
+  "name": "BullyDream",
+  "sprite": "res://assets/sprites/enemies/BullyDream.png",
+  "hp": 50,
+  "speed": 2.0,
+  "damage": 18,
+  "radius": 0.6,
+  "xp": 3,
+  "weight": 3,
+  "min_level": 5,
+  "size_m": 1.6,
+  "behavior": { "type": "charge", "interval": 4.0, "windup_sec": 0.9, "dash_speed_mult": 3.5, "dash_sec": 0.6, "trigger_range": 7.0 }
+}
