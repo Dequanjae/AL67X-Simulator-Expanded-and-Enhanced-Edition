@@ -33,7 +33,7 @@ jobs:
       - name: Install template + Export debug APK
         run: |
           godot --headless --install-android-build-template \
-            --export-debug "${EXPORT_PRESET}" build/android/${EXPORT_NAME}.apk
+            --export-debug "${EXPORT_PRESET}" "build/android/${EXPORT_NAME}.apk"
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
