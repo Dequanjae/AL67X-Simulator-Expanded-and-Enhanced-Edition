@@ -3,6 +3,10 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch: {}
+
+permissions:
+  contents: write
+
 env:
   GODOT_VERSION: "4.7"
   EXPORT_NAME: "AL67X Simulator Expanded and Enhanced Edition"
