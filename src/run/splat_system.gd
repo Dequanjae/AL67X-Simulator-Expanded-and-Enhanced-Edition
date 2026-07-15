@@ -2,10 +2,9 @@ class_name SplatSystem
 extends Node3D
 ## White "goo blood": enemies leak white liquid when hit and burst when
 ## killed. Persistent floor splats in one MultiMesh (ring buffer — the map
-## slowly fills up), procedural blob texture, zero art dependencies.
+## slowly fills up), procedural blob shader, zero art dependencies.
 
 const MAX_SPLATS := 1000
-const SPLAT_TEXTURE_SIZE := 96
 
 var _mm: MultiMesh
 var _write := 0
@@ -17,15 +16,9 @@ func _ready() -> void:
 	var mesh := QuadMesh.new()
 	mesh.size = Vector2(1, 1)
 	mesh.orientation = PlaneMesh.FACE_Y
-	var material := StandardMaterial3D.new()
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	material.albedo_texture = _make_splat_texture()
-	material.albedo_color = Color(0.96, 0.96, 0.94, 0.92)
-	# Ground decals must draw UNDER actors: transparent geometry doesn't
-	# write depth, so force the splats to render first among transparents.
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://src/shaders/splat_decals.gdshader")
 	material.render_priority = -20
-	material.no_depth_test = false
 	mesh.material = material
 
 	_mm = MultiMesh.new()
@@ -67,20 +60,3 @@ func _splat(pos: Vector2, size: float) -> void:
 	_mm.set_instance_transform(_write, Transform3D(basis, Vector3(pos.x, y, pos.y)))
 	_write = (_write + 1) % MAX_SPLATS
 
-
-## Irregular soft-edged blob (few sine harmonics on the radius).
-func _make_splat_texture() -> ImageTexture:
-	var size := SPLAT_TEXTURE_SIZE
-	var image := Image.create(size, size, false, Image.FORMAT_RGBA8)
-	var p1 := _rng.randf_range(0.0, TAU)
-	var p2 := _rng.randf_range(0.0, TAU)
-	for py in range(size):
-		for px in range(size):
-			var v := Vector2(float(px) / size - 0.5, float(py) / size - 0.5)
-			var angle := v.angle()
-			var edge := 0.34 + 0.08 * sin(angle * 3.0 + p1) + 0.05 * sin(angle * 7.0 + p2)
-			var d := v.length()
-			if d < edge:
-				var alpha: float = clampf((edge - d) / 0.06, 0.0, 1.0)
-				image.set_pixel(px, py, Color(1, 1, 1, alpha))
-	return ImageTexture.create_from_image(image)

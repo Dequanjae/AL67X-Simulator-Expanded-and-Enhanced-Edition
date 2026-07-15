@@ -351,8 +351,6 @@ func _make_projectile_pools() -> void:
 	_orbital_mm = _make_goop_pool("Orbitals", 12, Vector2(0.9, 0.9), Color(0.95, 1.0, 0.98), Color(0.35, 0.8, 1.0))
 
 
-## MultiMesh quad pool running the goop projectile shader (adapted from
-## Erich_L's MIT "Goop Projectile" — see src/shaders/goop_projectile.gdshader).
 func _make_goop_pool(pool_name: String, capacity: int, size: Vector2, color1: Color, color2: Color) -> MultiMesh:
 	var mesh := QuadMesh.new()
 	mesh.size = size
@@ -579,10 +577,10 @@ func _update_enemies(delta: float, player_pos: Vector2) -> void:
 				vel[slot] = _boss_dash_dir * _boss_dash_speed
 				p += vel[slot] * delta
 			elif is_boss and _boss_telegraph:
-				# Winding up: brake and pulse.
+				# Winding up: brake and pulse (pulse computed in billboard shader).
 				vel[slot] = vel[slot].lerp(Vector2.ZERO, minf(1.0, 12.0 * delta))
 				p += vel[slot] * delta
-				telegraph = 0.5 + 0.5 * sin(_time * 20.0)
+				telegraph = 0.0
 			elif behavior_type == "charge" and not is_boss:
 				telegraph = _update_charge_behavior(delta, type, slot, player_pos, speed, behavior)
 				p = pos[slot] + vel[slot] * delta
@@ -612,7 +610,7 @@ func _update_enemies(delta: float, player_pos: Vector2) -> void:
 			var s := scale[slot]
 			var basis := Basis().scaled(Vector3(s, s, s))
 			multimesh.set_instance_transform(slot, Transform3D(basis, Vector3(p.x, half_height * s, p.y)))
-			multimesh.set_instance_custom_data(slot, Color(1.0 if vel[slot].x < 0.0 else 0.0, render_flash, 0, 0))
+			multimesh.set_instance_custom_data(slot, Color(1.0 if vel[slot].x < 0.0 else 0.0, render_flash, 1.0 if is_boss and _boss_telegraph else 0.0, 0))
 
 
 ## Chase steering: seek + neighbor separation. Returns new velocity.
@@ -752,8 +750,6 @@ func _spawn_projectile(from: Vector2, dir: Vector2) -> void:
 	_proj_count += 1
 
 
-## Wall/prop collision for projectiles. Returns the surface normal if the
-## point is inside an obstacle or outside the arena, else Vector2.ZERO.
 func _projectile_wall_normal(p: Vector2, radius: float) -> Vector2:
 	if p.x < -_arena_half.x + radius:
 		return Vector2.RIGHT
@@ -853,7 +849,6 @@ func _update_projectiles(delta: float) -> void:
 			_proj_mm.set_instance_transform(j, zero)
 
 
-## Orbiting goop satellites (Stator Satellites card).
 func _update_orbitals(delta: float, player_pos: Vector2) -> void:
 	var count := mini(_stats.orbital_count, 12)
 	_orbital_angle += delta * 2.4
@@ -891,7 +886,6 @@ func _orbital_damage_at(p: Vector2, radius: float, damage: float) -> void:
 			return
 
 
-## Edging Nova card: periodic all-directions release.
 func _update_nova(delta: float) -> void:
 	if _stats.nova_interval <= 0.0:
 		return

@@ -1,12 +1,9 @@
 class_name LevelBuilder
 extends Node3D
 ## Turns a LevelGenerator layout + theme into 3D nodes:
-##  - floor: one MultiMeshInstance3D of tile boxes (single draw call),
-##    checker-shaded with theme colors — the "3D tile" isometric look,
+##  - floor: one MeshInstance3D with procedural shader (checker + accent),
 ##  - boundary walls with collision,
-##  - props: StaticBody3D + primitive mesh + collision shape (counts are
-##    low enough per arena that individual bodies are fine; the swarm and
-##    hordes are the MultiMesh-scale systems, not props).
+##  - props: StaticBody3D + primitive mesh + collision shape.
 ##
 ## Physics layers: 1 = world (walls/props), 2 = player, pickups mask 2.
 
@@ -36,41 +33,24 @@ func _build_floor(arena: Vector2, colors: Dictionary, textures: Dictionary) -> v
 	var accent := Color.html(str(colors.get("accent", "#c9a86a")))
 	var nx := maxi(1, int(arena.x))
 	var nz := maxi(1, int(arena.y))
-	var half := arena * 0.5
 
 	var mesh := BoxMesh.new()
-	mesh.size = Vector3(0.98, 0.12, 0.98)
-	var material := StandardMaterial3D.new()
-	material.vertex_color_use_as_albedo = true
-	material.roughness = 1.0
-	# Shop floor texture (theme data, tinted by the checker vertex colors).
+	mesh.size = Vector3(maxf(0.98, arena.x), 0.12, maxf(0.98, arena.y))
+	var material := ShaderMaterial.new()
+	material.shader = preload("res://src/shaders/floor_checker.gdshader")
+	material.set_shader_parameter("color1", floor_color)
+	material.set_shader_parameter("color2", alt_color)
+	material.set_shader_parameter("accent", accent)
+	material.set_shader_parameter("tile_count", maxf(nx, nz))
 	var floor_tex_path := str(textures.get("floor", ""))
 	if ResourceLoader.exists(floor_tex_path):
-		material.albedo_texture = load(floor_tex_path)
+		material.set_shader_parameter("floor_tex", load(floor_tex_path))
+		material.set_shader_parameter("tex_strength", 0.5)
 	mesh.material = material
 
-	var multimesh := MultiMesh.new()
-	multimesh.transform_format = MultiMesh.TRANSFORM_3D
-	multimesh.use_colors = true
-	multimesh.mesh = mesh
-	multimesh.instance_count = nx * nz
-
-	var idx := 0
-	for i in range(nx):
-		for j in range(nz):
-			var x := -half.x + (float(i) + 0.5)
-			var z := -half.y + (float(j) + 0.5)
-			multimesh.set_instance_transform(idx, Transform3D(Basis(), Vector3(x, -0.06, z)))
-			var color := floor_color if (i + j) % 2 == 0 else alt_color
-			# Sparse deterministic accent tiles for visual texture.
-			if (i * 31 + j * 17) % 23 == 0:
-				color = color.lerp(accent, 0.25)
-			multimesh.set_instance_color(idx, color)
-			idx += 1
-
-	var instance := MultiMeshInstance3D.new()
+	var instance := MeshInstance3D.new()
 	instance.name = "FloorTiles"
-	instance.multimesh = multimesh
+	instance.mesh = mesh
 	add_child(instance)
 
 
@@ -124,17 +104,14 @@ func _build_prop(prop: Dictionary) -> void:
 	var shape := CollisionShape3D.new()
 	var shape_name := str(prop.get("shape", "box"))
 	if shape_name == "mesh":
-		# 3D model prop (e.g. the Blender electric motor). Scaled so its
-		# height matches size[1]; collision box from size.
 		var scene := _mesh_scene_for(str(prop.get("mesh", "")))
 		if scene != null:
 			var model: Node3D = scene.instantiate()
-			var model_scale := size.y / 1.2  # motor native height ≈ 1.2m
+			var model_scale := size.y / 1.2
 			model.scale = Vector3.ONE * model_scale
 			body.add_child(model)
-			model.position.y = -size.y * 0.5  # model origin at its base
+			model.position.y = -size.y * 0.5
 		else:
-			# NEVER leave an invisible collider: fall back to a visible box.
 			push_warning("LevelBuilder: mesh prop missing model '%s' — box fallback" % prop.get("mesh", ""))
 			var fallback := BoxMesh.new()
 			fallback.size = size
