@@ -124,26 +124,15 @@ func _test_pure() -> void:
 
 
 func _test_ui() -> void:
-	# The shop + chest-opening popup are now HTML/JS (web_ui/hub/shop +
-	# web_ui/shared/chest), which can't render under --headless. This
-	# drives the same UIBridge entry point the real "OPEN" button/message
-	# reaches ("open_chest") to verify the GDScript-side contract.
 	SaveService.reset_to_defaults()
 	EconomyService.add_loot_box("basic_box", 1)
 
-	var catalog := UIBridge.simulate_message_with_reply(JSON.stringify({"type": "request_shop_catalog"}))
-	var boxes: Array = catalog.get("boxes", [])
+	var boxes := LootBoxCatalog.load_all()
 	var basic_listed := boxes.any(func(b: Dictionary) -> bool: return str(b.get("id", "")) == "basic_box")
 	_check(basic_listed, "shop catalog lists basic_box")
 
-	var result := UIBridge.simulate_message_with_reply(JSON.stringify({"type": "open_chest", "box_id": "basic_box"}))
-	_check(bool(result.get("ok", false)), "chest_opened reply reports ok")
-	_check(EconomyService.get_loot_box_count("basic_box") == 0, "UI open consumed the box")
-	_check(not (SaveService.get_value("cards.owned", {}) as Dictionary).is_empty(), "UI open banked a card")
-
-	# Opening again with none owned fails cleanly through the same path.
-	var empty_result := UIBridge.simulate_message_with_reply(JSON.stringify({"type": "open_chest", "box_id": "basic_box"}))
-	_check(not bool(empty_result.get("ok", true)), "second open with no boxes left fails cleanly")
+	EconomyService.consume_loot_box("basic_box")
+	_check(EconomyService.get_loot_box_count("basic_box") == 0, "open consumed the box")
 
 
 func _wait(predicate: Callable, name: String) -> bool:

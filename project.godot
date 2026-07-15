@@ -25,8 +25,7 @@ EconomyService="*res://src/autoload/economy_service.gd"
 AmpsService="*res://src/autoload/amps_service.gd"
 InputService="*res://src/autoload/input_service.gd"
 AudioDirector="*res://src/autoload/audio_director.gd"
-UIBridge="*res://src/autoload/ui_bridge.gd"
-CefManager="*res://src/autoload/cef_manager.gd"
+
 
 [display]
 

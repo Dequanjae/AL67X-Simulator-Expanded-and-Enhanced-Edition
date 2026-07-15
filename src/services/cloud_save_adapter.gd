@@ -3,8 +3,6 @@ extends RefCounted
 ## Base interface for cloud save backends. SaveService talks ONLY to this
 ## interface — platform specifics live in subclasses:
 ##   - Android: wraps the GodotFirebaseAndroid plugin (Auth + Firestore).
-##   - Web:     SWAP-POINT — future JavaScriptBridge + Firebase Web SDK
-##              wrapper (needs Web SDK config object, not yet provided).
 ##   - Desktop/editor: this base class (unavailable, local-save only).
 ##
 ## Contract: if the user is signed in and a cloud document exists, CLOUD

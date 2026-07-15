@@ -12,7 +12,7 @@
 [ext_resource type="Script" path="res://src/run/run_camera.gd" id="10_camera"]
 [ext_resource type="Script" path="res://src/run/damage_numbers.gd" id="11_dmgnum"]
 [ext_resource type="Script" path="res://src/run/splat_system.gd" id="12_splats"]
-[ext_resource type="Script" path="res://src/services/webview_host.gd" id="13_webview"]
+[ext_resource type="Script" path="res://src/ui/run_hud.gd" id="13_hud"]
 
 [sub_resource type="ShaderMaterial" id="spotlight_mat"]
 shader = ExtResource("9_spotlight")
@@ -79,6 +79,7 @@ process_mode = 3
 script = ExtResource("8_levelup")
 
 [node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("13_hud")
 
 [node name="DeathSpotlight" type="ColorRect" parent="HUD"]
 visible = false
@@ -89,15 +90,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-
-[node name="WebViewHost" type="Control" parent="HUD"]
-process_mode = 3
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 1
-script = ExtResource("13_webview")
-page_path = "res://web_ui/hud/index.html"

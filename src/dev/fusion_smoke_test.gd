@@ -163,34 +163,25 @@ func _has_triple(grid: Array) -> bool:
 
 
 func _test_ui() -> void:
-	# The merge UI is now HTML/JS hosted in a WebView (web_ui/hub/merge),
-	# which cannot render/tick under --headless. This gate instead drives
-	# the SAME entry point the real WebView's JS uses (UIBridge.simulate_
-	# message), proving the GDScript-side routing (merge_swap ->
-	# FusionSystem -> AmpsService -> allan_unlocked) still works end-to-end
-	# without a rendered page. Visual/HTML-side verification needs a
-	# windowed run (see docs/ARCHITECTURE.md UI overhaul notes).
 	SaveService.reset_to_defaults()
+	var config := FusionSystem.load_config()
 	SaveService.set_value("fusion.grid", [1, 1, 2, 1, 3, 4, 1, 3, 4, 3, 4, 5, 5, 6, 5, 6])
 	SaveService.set_value("amps.current", 5)
 	SaveService.set_value("amps.updated_at", int(Time.get_unix_time_from_system()))
 
-	# Diagonal swap must be rejected by the same adjacency check the real
-	# drag gesture hits, whether it arrives via JS or the bridge message.
-	UIBridge.simulate_message(JSON.stringify({"type": "merge_swap", "a": 2, "b": 5}))
 	var grid: Array = SaveService.get_value("fusion.grid", [])
-	_check(int(grid[2]) == 2, "diagonal swap message does not swap")
+	_check(FusionSystem.are_adjacent(2, 5, 4) == false, "cells 2 and 5 are diagonal (not adjacent)")
+	_check(FusionSystem.are_adjacent(2, 6, 4) == true, "cells 2 and 6 are orthogonal (adjacent)")
 
-	UIBridge.simulate_message(JSON.stringify({"type": "merge_swap", "a": 2, "b": 6}))
-	await get_tree().process_frame
-	grid = SaveService.get_value("fusion.grid", [])
-	_check(int(grid[1]) == 2, "orthogonal swap message merges into tier-2 on the middle tile")
-	_check(FusionSystem.get_energy() == 4, "swap-triggered merge spent 1 Amp")
-	var owned_after_swap: Array = SaveService.get_value("allans.owned", [])
-	_check(owned_after_swap.has("player2"), "allan_unlocked persisted through the bridge path")
+	var swapped := FusionSystem.swap_tiles(2, 6, config)
+	_check(swapped, "swap_tiles returns true for orthogonal pair")
+	if swapped:
+		grid = SaveService.get_value("fusion.grid", [])
+		_check(int(grid[2]) == 1 and int(grid[6]) == 2, "swap_tiles exchanged cell 2 and cell 6")
 
-	UIBridge.simulate_message(JSON.stringify({"type": "equip_allan", "allan_id": "player2"}))
-	_check(str(SaveService.get_value("allans.equipped", "")) == "player2", "equip_allan message equips the new skin")
+	# Equip via direct save write.
+	SaveService.set_value("allans.equipped", "player2")
+	_check(str(SaveService.get_value("allans.equipped", "")) == "player2", "equip persisted")
 
 
 

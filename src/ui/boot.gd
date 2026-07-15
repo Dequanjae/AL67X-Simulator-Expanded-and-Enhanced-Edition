@@ -8,9 +8,7 @@ extends Control
 ## Plus: Follow-on-Instagram + Support-the-Creator (XMR) buttons.
 ##
 ## Platform notes: cloud is Android-only right now (native plugin).
-## SWAP-POINT: Web cloud save needs a JavaScriptBridge Firebase Web SDK
-## wrapper behind the same CloudSaveAdapter interface — the Google button
-## is disabled off-Android until then.
+## The Google button is disabled off-Android.
 
 const INSTAGRAM_URL := "https://www.instagram.com/al67x._/"
 const XMR_ADDRESS := "8ApdEka2j6CUaaNKp12H1VBi1bziZB2T9Dhju1fPzgiTC8KBLWEEddVeZnpZjg7Ni4KCENsPLfSDfh2nbMhbFqngM5wKwHE"

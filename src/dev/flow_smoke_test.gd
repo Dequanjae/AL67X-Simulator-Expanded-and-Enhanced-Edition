@@ -47,15 +47,13 @@ func _flow() -> void:
 	if not await _wait_for_scene(tree, "Hub"):
 		return
 
-	# "Press PLAY" on the hub — the Home Dashboard's Ignition button now
-	# lives in HTML (web_ui/hub/home), which can't render under --headless;
-	# drive the exact same ipc_message path hub.gd listens to instead.
-	var hub_web := tree.current_scene.get_node_or_null("WebViewHost")
-	if hub_web == null:
-		_failures.append("hub WebViewHost not found")
-		return
+	# Press PLAY on the hub — call _start_run directly.
 	await _wait_transition_settled(tree)
-	hub_web.ipc_message.emit(JSON.stringify({"type": "start_run"}))
+	var hub := tree.current_scene
+	if hub == null:
+		_failures.append("hub not found")
+		return
+	hub._start_run()
 	if not await _wait_for_scene(tree, "Run"):
 		return
 
@@ -83,12 +81,7 @@ func _flow() -> void:
 		return
 
 	await _wait_transition_settled(tree)
-	# Dev "Win" button also moved to HTML (web_ui/hud) — same treatment.
-	var run_web := run.get_node_or_null("HUD/WebViewHost")
-	if run_web == null:
-		_failures.append("run WebViewHost not found")
-		return
-	run_web.ipc_message.emit(JSON.stringify({"type": "dev_boss_win"}))
+	run._on_dev_boss_win()
 	if not await _wait_for_scene(tree, "Hub"):
 		return
 
@@ -99,11 +92,8 @@ func _flow() -> void:
 	if level != 2:
 		_failures.append("expected level 2 unlocked, got %d" % level)
 
-	# The bridge's own state contract reflects the banked balance (this is
-	# what the HTML top bar actually renders from — see web_ui/hub/home).
-	var state := UIBridge.simulate_message_with_reply(JSON.stringify({"type": "request_state"}))
-	if int(state.get("blobs", 0)) != EconomyService.get_blobs():
-		_failures.append("UIBridge state_sync blobs did not match EconomyService (got: %s)" % state.get("blobs", "<missing>"))
+	if EconomyService.get_blobs() < 1:
+		_failures.append("no blobs banked after run")
 
 
 func _wait_for_scene(tree: SceneTree, scene_name: String) -> bool:

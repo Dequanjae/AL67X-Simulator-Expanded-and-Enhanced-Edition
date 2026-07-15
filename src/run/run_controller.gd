@@ -10,13 +10,6 @@ extends Node3D
 ## Contract responsibilities (Section 10): banks blobs via EconomyService
 ## and writes level unlocks BEFORE emitting run_ended. In-run state is
 ## never persisted.
-##
-## HUD: presentation lives in web_ui/hud (HTML/CSS/JS), hosted by the
-## WebViewHost below. This controller owns ALL gameplay state same as
-## before the UI overhaul — it just broadcasts it via UIBridge instead of
-## writing into Control nodes. The death spotlight stays a native Godot
-## shader effect (it darkens the 3D world, not UI chrome, so it can't move
-## into the webview) — everything else HUD-shaped moved to HTML.
 
 const ZOOM_MIN := 9.0
 const ZOOM_MAX := 26.0
@@ -36,7 +29,7 @@ var _xp_by_enemy: Dictionary = {}
 var _blob_xp := 0.25
 var _ended := false
 var _powerup_defs: Array = []
-var _timed_boosts: Array = []  # [{"type": String, "multiplier": float, "remaining": float}]
+var _timed_boosts: Array = []
 
 @onready var _player: RunPlayer = $Player
 @onready var _camera_rig: RunCamera = $CameraRig
@@ -48,7 +41,7 @@ var _timed_boosts: Array = []  # [{"type": String, "multiplier": float, "remaini
 @onready var _damage_numbers: DamageNumbers = $DamageNumbers
 @onready var _splats: SplatSystem = $Splats
 @onready var _level_up: LevelUpController = $LevelUpController
-@onready var _web: WebViewHost = $HUD/WebViewHost
+@onready var _hud: RunHud = $HUD
 @onready var _spotlight: ColorRect = $HUD/DeathSpotlight
 
 
@@ -57,7 +50,6 @@ func _ready() -> void:
 	_start_msec = Time.get_ticks_msec()
 	_config = RunBalance.load_config()
 	_stats = PlayerStats.from_config(_config)
-	# Equipped 6-card stack applies its effects + shop upgrades at run start.
 	CardUpgrades.apply_loadout(_stats, CardUpgrades.load_config())
 	_blob_xp = float(_config.get("player_xp", {}).get("blob_xp_value", 0.25))
 	_xp_by_enemy = EnemyCatalog.xp_map(EnemyCatalog.load_all())
@@ -82,9 +74,8 @@ func _ready() -> void:
 	_horde.setup(_player, _swarm, _stats, layout, _level, _config)
 	_horde.boss_killed.connect(_on_boss_killed)
 	_level_up.stats = _stats
-	_level_up.bind_web_view(_web)
 
-	# --- Camera (iso ortho, trailing follow, zoomable, shake + boss pan) -----
+	# --- Camera ---------------------------------------------------------------
 	_camera.projection = Camera3D.PROJECTION_ORTHOGONAL
 	_camera.size = 16.0
 	_camera.look_at_from_position(Vector3(10.0, 10.0, 10.0), Vector3.ZERO)
@@ -95,9 +86,18 @@ func _ready() -> void:
 	EventBus.enemy_killed.connect(func(_id: String, _pos: Vector3) -> void: _camera_rig.shake(0.15))
 	EventBus.boss_spawned.connect(_on_boss_spawned_camera)
 
-	# --- HUD + contract wiring ----------------------------------------------
+	# --- HUD signals ----------------------------------------------------------
 	_spotlight.visible = false
-	_web.ipc_message.connect(_on_web_ipc_message)
+	_hud.pause_toggled.connect(func(paused: bool) -> void: get_tree().paused = paused)
+	_hud.ad_continue_pressed.connect(_on_ad_continue)
+	_hud.ascend_pressed.connect(func() -> void: _end_run(false, "ascend"))
+	_hud.quit_to_hub_pressed.connect(func() -> void: _end_run(false, "quit"))
+	_hud.dev_boss_win_pressed.connect(_on_dev_boss_win)
+	_hud.dev_die_pressed.connect(func() -> void:
+		_stats.shield = 0
+		_stats.hearts = 1
+		_apply_player_damage(1.0))
+
 	EventBus.blob_collected.connect(_on_blob_collected)
 	EventBus.blob_lost.connect(_on_blob_lost)
 	EventBus.player_hit.connect(_apply_player_damage)
@@ -112,7 +112,6 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	# Zoom: scroll wheel / pinch (InputService accumulates).
 	var zoom := InputService.consume_zoom_delta()
 	if zoom != 0.0:
 		_camera.size = clampf(_camera.size + zoom, ZOOM_MIN, ZOOM_MAX)
@@ -132,33 +131,6 @@ func _process(delta: float) -> void:
 
 
 # ---------------------------------------------------------------------------
-# HUD inbound (dev buttons, ad continue, ascend/quit, pause — see
-# web_ui/hud/hud.js). Card-choice picks are handled by LevelUpController
-# directly (needs PlayerStats.apply_effect, which UIBridge doesn't own).
-# ---------------------------------------------------------------------------
-
-func _on_web_ipc_message(message: String) -> void:
-	var data: Variant = JSON.parse_string(message)
-	if not (data is Dictionary):
-		return
-	match str(data.get("type", "")):
-		"dev_boss_win":
-			_on_dev_boss_win()
-		"dev_die":
-			_stats.shield = 0
-			_stats.hearts = 1
-			_apply_player_damage(1.0)
-		"ad_continue":
-			_on_ad_continue()
-		"ascend_continue":
-			_end_run(false, "ascend")
-		"pause_toggle":
-			get_tree().paused = bool(data.get("paused", false))
-		"quit_to_hub":
-			_end_run(false, "quit")
-
-
-# ---------------------------------------------------------------------------
 # Survival timer → boss phase
 # ---------------------------------------------------------------------------
 
@@ -170,8 +142,6 @@ func _start_boss_warning() -> void:
 	EventBus.boss_incoming.emit(_level)
 
 
-## Boss intro: pan the camera to the spawn point, hold, come back — shows
-## the player where the boss came in.
 func _on_boss_spawned_camera(_boss_id: String) -> void:
 	var boss_pos := _horde.boss_position()
 	_camera_rig.intro_pan(Vector3(boss_pos.x, 0, boss_pos.y), 0.9)
@@ -190,7 +160,6 @@ func _unlock_next_level() -> void:
 	EventBus.level_unlocked.emit(next_level)
 
 
-## DEV shortcut (debug builds only; used by automated gates).
 func _on_dev_boss_win() -> void:
 	EventBus.boss_incoming.emit(_level)
 	EventBus.boss_spawned.emit("dev_boss")
@@ -228,8 +197,6 @@ func debug_grant_xp(amount: float) -> void:
 	_grant_xp(amount)
 
 
-## Powerup effects (pool in data/powerups/powerups.json). Each pickup shows
-## its big popup word over Allan.
 func _on_powerup_picked_up(effect_id: String) -> void:
 	for def in _powerup_defs:
 		if str(def.get("id", "")) != effect_id:
@@ -245,7 +212,6 @@ func _on_powerup_picked_up(effect_id: String) -> void:
 				_stats.speed_mult *= float(def.get("multiplier", 1.3))
 				_timed_boosts.append({"type": "speed", "multiplier": float(def.get("multiplier", 1.3)), "remaining": float(def.get("duration_sec", 8))})
 			"succ":
-				# Allan Vacuum: shawarmas fly to him, succ face engaged.
 				var duration := float(def.get("duration_sec", 10))
 				_pickups.start_vacuum(duration)
 				_player.play_succ(duration)
@@ -281,8 +247,6 @@ func _tick_timed_boosts(delta: float) -> void:
 # Hearts / shield / death / revive
 # ---------------------------------------------------------------------------
 
-## HIT-BASED: any hit costs 1 heart — unless an Aura Shield charge absorbs
-## it (one-time, breaks permanently).
 func _apply_player_damage(_damage: float) -> void:
 	if _ended or _stats.hearts <= 0:
 		return
@@ -300,14 +264,11 @@ func _apply_player_damage(_damage: float) -> void:
 
 
 func _on_player_died() -> void:
-	# Freeze everything, spotlight Allan, dramatic panel (spec Section 4).
 	EventBus.player_died.emit()
 	_player.set_dead(true)
 	_show_death_spotlight()
-	var equipped := str(SaveService.get_value("allans.equipped", "player1"))
-	UIBridge.broadcast("player_died", {"allan_id": equipped})
+	_hud.show_death_panel(_ad_continue_used)
 	get_tree().paused = true
-	_refresh_hud()
 
 
 func _show_death_spotlight() -> void:
@@ -326,8 +287,6 @@ func _show_death_spotlight() -> void:
 
 
 func _on_ad_continue() -> void:
-	# SWAP-POINT: real rewarded ad via AppLovin MAX plugin (mobile only;
-	# Web hides this button or uses the debug-grant stub). Once per run.
 	_ad_continue_used = true
 	_spotlight.visible = false
 	get_tree().paused = false
@@ -335,12 +294,12 @@ func _on_ad_continue() -> void:
 	_stats.hearts = _stats.max_hearts
 	_horde.grant_player_iframes(2.0)
 	EventBus.player_revived.emit()
-	UIBridge.broadcast("player_revived", {})
-	_refresh_hud()
+	_hud.hide_death_panel()
+	_hud.set_hearts(_stats.hearts, _stats.max_hearts)
 
 
 # ---------------------------------------------------------------------------
-# Run end + banking (with the over-the-top count-up)
+# Run end + banking
 # ---------------------------------------------------------------------------
 
 func _end_run(victory: bool, reason: String) -> void:
@@ -348,7 +307,6 @@ func _end_run(victory: bool, reason: String) -> void:
 		return
 	_ended = true
 	get_tree().paused = false
-	# BANKING: player keeps all soft currency earned this run, win or lose.
 	EconomyService.add_blobs(_run_blobs)
 	SaveService.save_now()
 	EventBus.run_ended.emit({
@@ -362,21 +320,11 @@ func _end_run(victory: bool, reason: String) -> void:
 	SceneManager.change_scene("res://scenes/hub/hub.tscn", {"pattern": "circle", "speed": 2.5})
 
 
-## Over-the-top animated blob count-up into the total balance (spec
-## Section 4 step 7). The count-up ANIMATION itself now runs in HTML
-## (web_ui/hud's ascend overlay, mirrors this exact easing/duration
-## formula) — this just broadcasts the numbers and waits long enough for
-## it to finish before swapping scenes.
 func _play_ascend_countup(victory: bool) -> void:
 	var total_after := EconomyService.get_blobs()
 	var total_before := total_after - _run_blobs
-	UIBridge.broadcast("run_ascend", {
-		"victory": victory,
-		"level": _level,
-		"run_blobs": _run_blobs,
-		"total_before": total_before,
-		"total_after": total_after,
-	})
+	var title := "VICTORY!" if victory else "ASCENDING..."
+	_hud.show_ascend(title, _run_blobs, total_after)
 	var duration := clampf(0.3 + float(_run_blobs) * 0.012, 0.5, 1.6)
 	await get_tree().create_timer(0.25 + duration + 0.5).timeout
 
@@ -393,20 +341,13 @@ func _refresh_hud() -> void:
 		timer_text = "%d:%02d" % [total / 60, total % 60]
 
 	var boss_active := _horde.has_boss()
-	UIBridge.broadcast("run_hud_state", {
-		"timer_text": timer_text,
-		"boss_warning": _boss_warning_active,
-		"blobs": _run_blobs,
-		"hearts": _stats.hearts,
-		"max_hearts": _stats.max_hearts,
-		"shield": _stats.shield,
-		"xp": _stats.xp,
-		"xp_max": _stats.xp_threshold(),
-		"level": _stats.level,
-		"ad_used": _ad_continue_used,
-		"boss_active": boss_active,
-		"boss_name": (_horde.boss_name().to_upper().replace("BOSS_", "").replace("_", " ") if boss_active else ""),
-		"boss_hp_ratio": (_horde.boss_hp_ratio() if boss_active else 1.0),
-		"dev_mode": OS.is_debug_build(),
-		"day": _level,
-	})
+	_hud.set_hearts(_stats.hearts, _stats.max_hearts)
+	_hud.set_timer(timer_text)
+	_hud.set_blobs(_run_blobs)
+	_hud.set_xp(_stats.level, _stats.xp, _stats.xp_threshold())
+	_hud.show_boss_warning(_boss_warning_active)
+	_hud.show_boss_bar(boss_active)
+	if boss_active:
+		_hud.set_boss_health(
+			_horde.boss_name().to_upper().replace("BOSS_", "").replace("_", " "),
+			_horde.boss_hp_ratio())

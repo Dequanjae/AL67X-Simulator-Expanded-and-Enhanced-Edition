@@ -63,10 +63,7 @@ func _flow() -> void:
 	if not await _wait(func() -> bool: return "enemy_killed" in _events, "auto-attack kills an enemy"):
 		return
 
-	# 3. Forced level-up → menu appears, tree pauses. Presentation moved to
-	# HTML (web_ui/hud) which can't render under --headless; drive the
-	# LevelUpController directly (same object the real HTML popup's
-	# "card_choice" message reaches via WebViewHost.ipc_message).
+	# 3. Forced level-up → menu appears, tree pauses.
 	run.debug_grant_xp(999.0)
 	var level_up: LevelUpController = run.get_node("LevelUpController")
 	if not await _wait(func() -> bool: return tree.paused and not level_up._options.is_empty(), "level-up menu presents + pauses"):
@@ -81,7 +78,7 @@ func _flow() -> void:
 	for i in range(64):
 		if level_up._options.is_empty():
 			break
-		level_up._on_card_choice_message(str(level_up._options[0].get("id", "")))
+		level_up._on_card_chosen(str(level_up._options[0].get("id", "")))
 		await tree.process_frame
 	if not await _wait(func() -> bool: return not tree.paused, "menu closes + unpauses"):
 		return
@@ -105,9 +102,8 @@ func _flow() -> void:
 	if not await _wait(func() -> bool: return "player_died" in _events and tree.paused, "death freezes + shows panel"):
 		return
 
-	# 5. Ad-continue revives (once per run). Drives the same ipc_message
-	# path the real HTML button uses.
-	run._on_web_ipc_message(JSON.stringify({"type": "ad_continue"}))
+	# 5. Ad-continue revives (once per run).
+	run._on_ad_continue()
 	if not await _wait(func() -> bool: return "player_revived" in _events and not tree.paused, "ad continue revives"):
 		return
 	_check(stats.hearts > 0, "revive restores hearts")

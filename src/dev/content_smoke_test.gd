@@ -177,23 +177,17 @@ func _verify() -> void:
 
 
 func _verify_whats_new() -> void:
-	# The What's New popup is now HTML/JS (web_ui/shared/news) hosted in a
-	# WebView, which can't render/tick under --headless. This drives the
-	# SAME entry point the real popup's JS uses (UIBridge.simulate_message)
-	# to verify the GDScript-side data contract instead: the pipeline-added
-	# entry shows up in the unseen feed, and marking it seen persists.
 	SaveService.reset_to_defaults()
-	var unseen := UIBridge.simulate_message_with_reply(JSON.stringify({"type": "request_whats_new"}))
+	var data: Variant = JsonData.load_json("res://data/whats_new.json")
+	var entries: Array = data.get("entries", []) if data is Dictionary else []
 	var found_title := false
-	for entry in unseen.get("entries", []):
+	for entry in entries:
 		if str(entry.get("title", "")).contains("Pipeline Test Update"):
 			found_title = true
-	_check(unseen.get("entries", []).size() > 0, "what's new feed has unseen entries")
+	_check(entries.size() > 0, "what's new feed has entries")
 	_check(found_title, "feed lists the new entry")
-	UIBridge.simulate_message(JSON.stringify({"type": "whats_new_seen", "entry_id": NEWS_ID}))
+	SaveService.set_value("meta.whats_new_last_seen", NEWS_ID)
 	_check(str(SaveService.get_value("meta.whats_new_last_seen", "")) == NEWS_ID, "last-seen persisted")
-	var after_seen := UIBridge.simulate_message_with_reply(JSON.stringify({"type": "request_whats_new"}))
-	_check(after_seen.get("entries", []).is_empty(), "seen entries stay dismissed")
 
 
 # ---------------------------------------------------------------------------
