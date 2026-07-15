@@ -164,7 +164,12 @@ func _make_pickup(type: int, payload: String, amount: int) -> RunPickup:
 func _make_sprite(texture_path: String, pixel_size: float, y_offset: float) -> Sprite3D:
 	var sprite := Sprite3D.new()
 	if ResourceLoader.exists(texture_path):
-		sprite.texture = load(texture_path)
+		var tex: Texture2D = load(texture_path)
+		sprite.texture = tex
+		var mat := ShaderMaterial.new()
+		mat.shader = preload("res://src/shaders/passthrough_sprite.gdshader")
+		mat.set_shader_parameter("sprite_tex", tex)
+		sprite.material_override = mat
 	sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	sprite.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR
 	sprite.pixel_size = pixel_size

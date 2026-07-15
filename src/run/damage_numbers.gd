@@ -17,6 +17,7 @@ func _ready() -> void:
 		var label := Label3D.new()
 		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 		label.no_depth_test = true
+		label.alpha_cut = 1
 		label.fixed_size = false
 		label.font_size = 64
 		label.outline_size = 14

@@ -60,6 +60,10 @@ func setup_skin(allan_id: String) -> void:
 		return
 	_sprite.texture = sheet
 	_sprite.region_enabled = true
+	var mat := ShaderMaterial.new()
+	mat.shader = preload("res://src/shaders/passthrough_sprite.gdshader")
+	mat.set_shader_parameter("sprite_tex", sheet)
+	_sprite.material_override = mat
 	_regions = AllanSprites.state_regions()
 	_set_frame("idle", 0)
 

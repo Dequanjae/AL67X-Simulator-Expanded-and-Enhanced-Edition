@@ -1,5 +1,5 @@
 shader_type spatial;
-render_mode unshaded, blend_mix, cull_disabled;
+render_mode unshaded, cull_disabled, depth_prepass_alpha;
 
 uniform vec4 albedo_color : source_color = vec4(0.96, 0.96, 0.94, 0.92);
 
@@ -11,4 +11,5 @@ void fragment() {
 	float alpha = smoothstep(edge, edge - 0.12, d);
 	ALBEDO = albedo_color.rgb;
 	ALPHA = albedo_color.a * alpha;
+	ALPHA_SCISSOR_THRESHOLD = 0.3;
 }
