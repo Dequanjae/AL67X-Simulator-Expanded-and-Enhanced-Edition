@@ -5,7 +5,7 @@ on:
   workflow_dispatch: {}
 env:
   GODOT_VERSION: "4.7"
-  EXPORT_NAME: "game"
+  EXPORT_NAME: "AL67X Simulator Expanded and Enhanced Edition"
   EXPORT_PRESET: "Android"
 jobs:
   build-android:
