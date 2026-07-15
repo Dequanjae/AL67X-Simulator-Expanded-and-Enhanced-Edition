@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://src/run/run_controller.gd" id="1_run"]
 [ext_resource type="Script" path="res://src/worldgen/level_builder.gd" id="2_builder"]
@@ -7,12 +7,12 @@
 [ext_resource type="Texture2D" path="res://assets/sprites/allan/frames/player_idle0.png" id="5_allan"]
 [ext_resource type="Script" path="res://src/run/horde_system.gd" id="6_horde"]
 [ext_resource type="Script" path="res://src/run/blob_swarm.gd" id="7_swarm"]
-[ext_resource type="Script" path="res://src/run/level_up_controller.gd" id="8_levelup"]
+[ext_resource type="Script" path="res://src/ui/run/level_up_menu.gd" id="8_levelup"]
 [ext_resource type="Shader" path="res://src/shaders/spotlight.gdshader" id="9_spotlight"]
 [ext_resource type="Script" path="res://src/run/run_camera.gd" id="10_camera"]
 [ext_resource type="Script" path="res://src/run/damage_numbers.gd" id="11_dmgnum"]
 [ext_resource type="Script" path="res://src/run/splat_system.gd" id="12_splats"]
-[ext_resource type="Script" path="res://src/ui/run_hud.gd" id="13_hud"]
+[ext_resource type="Texture2D" path="res://assets/sprites/items/blobs/shawarma.png" id="13_blobicon"]
 
 [sub_resource type="ShaderMaterial" id="spotlight_mat"]
 shader = ExtResource("9_spotlight")
@@ -24,6 +24,28 @@ ambient_light_energy = 0.65
 
 [sub_resource type="SphereShape3D" id="player_shape"]
 radius = 0.45
+
+[sub_resource type="StyleBoxFlat" id="death_style"]
+bg_color = Color(0.08, 0.06, 0.08, 0.95)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_left = 12
+corner_radius_bottom_right = 12
+content_margin_left = 24.0
+content_margin_top = 24.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+
+[sub_resource type="StyleBoxFlat" id="hud_style"]
+bg_color = Color(0, 0, 0, 0.35)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_left = 10
+corner_radius_bottom_right = 10
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
 
 [node name="Run" type="Node3D"]
 script = ExtResource("1_run")
@@ -74,12 +96,196 @@ script = ExtResource("10_camera")
 
 [node name="Camera" type="Camera3D" parent="CameraRig"]
 
-[node name="LevelUpController" type="Node" parent="."]
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="TopMargin" type="MarginContainer" parent="HUD"]
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 16
+
+[node name="TopBox" type="PanelContainer" parent="HUD/TopMargin"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("hud_style")
+
+[node name="VBox" type="HBoxContainer" parent="HUD/TopMargin/TopBox"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="HeartsBox" type="HBoxContainer" parent="HUD/TopMargin/TopBox/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="BlobIcon" type="TextureRect" parent="HUD/TopMargin/TopBox/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(26, 26)
+texture = ExtResource("13_blobicon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="BlobsLabel" type="Label" parent="HUD/TopMargin/TopBox/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "0"
+vertical_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="HUD/TopMargin/TopBox/VBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "1:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HeaderLabel" type="Label" parent="HUD/TopMargin/TopBox/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 13
+text = "Day 1"
+vertical_alignment = 1
+modulate = Color(1, 1, 1, 0.65)
+
+[node name="LevelLabel" type="Label" parent="HUD/TopMargin/TopBox/VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Lv 0"
+vertical_alignment = 1
+
+[node name="XPBar" type="ProgressBar" parent="HUD/TopMargin/TopBox/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 8)
+size_flags_vertical = 4
+max_value = 8.0
+value = 0.0
+show_percentage = false
+modulate = Color(0.5, 0.8, 1, 1)
+
+[node name="BossWarnLabel" type="Label" parent="HUD"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -160.0
+offset_right = 300.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 44
+theme_override_colors/font_color = Color(1, 0.3, 0.25, 1)
+text = "BOSS INCOMING"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BossBarMargin" type="MarginContainer" parent="HUD"]
+visible = false
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 130
+
+[node name="BossBarBox" type="VBoxContainer" parent="HUD/BossBarMargin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="BossNameLabel" type="Label" parent="HUD/BossBarMargin/BossBarBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+theme_override_colors/font_color = Color(1, 0.45, 0.4, 1)
+text = "BOSS"
+horizontal_alignment = 1
+
+[node name="BossBar" type="ProgressBar" parent="HUD/BossBarMargin/BossBarBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 16)
+max_value = 1.0
+value = 1.0
+show_percentage = false
+modulate = Color(1, 0.35, 0.3, 1)
+
+[node name="LevelUpMenu" type="PanelContainer" parent="HUD"]
 process_mode = 3
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -280.0
+offset_right = 300.0
+offset_bottom = 280.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("death_style")
 script = ExtResource("8_levelup")
 
-[node name="HUD" type="CanvasLayer" parent="."]
-script = ExtResource("13_hud")
+[node name="Box" type="VBoxContainer" parent="HUD/LevelUpMenu"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Title" type="Label" parent="HUD/LevelUpMenu/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "LEVEL UP!"
+horizontal_alignment = 1
+
+[node name="Option1" type="Button" parent="HUD/LevelUpMenu/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 110)
+theme_override_font_sizes/font_size = 24
+text = "Option 1"
+
+[node name="Option2" type="Button" parent="HUD/LevelUpMenu/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 110)
+theme_override_font_sizes/font_size = 24
+text = "Option 2"
+
+[node name="Option3" type="Button" parent="HUD/LevelUpMenu/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 110)
+theme_override_font_sizes/font_size = 24
+text = "Option 3"
+
+[node name="DevMargin" type="MarginContainer" parent="HUD"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 40
+
+[node name="DevBox" type="HBoxContainer" parent="HUD/DevMargin"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="BossButton" type="Button" parent="HUD/DevMargin/DevBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 64)
+theme_override_font_sizes/font_size = 20
+text = "DEV: Win"
+
+[node name="DieButton" type="Button" parent="HUD/DevMargin/DevBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 64)
+theme_override_font_sizes/font_size = 20
+text = "DEV: Die"
 
 [node name="DeathSpotlight" type="ColorRect" parent="HUD"]
 visible = false
@@ -90,3 +296,100 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+
+[node name="DeathPanel" type="PanelContainer" parent="HUD"]
+process_mode = 3
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -310.0
+offset_right = 300.0
+offset_bottom = 310.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("death_style")
+
+[node name="DeathBox" type="VBoxContainer" parent="HUD/DeathPanel"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="DeathLabel" type="Label" parent="HUD/DeathPanel/DeathBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+theme_override_colors/font_color = Color(1, 0.22, 0.2, 1)
+text = "ALLAN DIED"
+horizontal_alignment = 1
+
+[node name="CryPortrait" type="TextureRect" parent="HUD/DeathPanel/DeathBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 220)
+expand_mode = 1
+stretch_mode = 5
+
+[node name="AdContinueButton" type="Button" parent="HUD/DeathPanel/DeathBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 88)
+theme_override_font_sizes/font_size = 26
+text = "Watch ad to continue"
+
+[node name="AscendButton" type="Button" parent="HUD/DeathPanel/DeathBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 88)
+theme_override_font_sizes/font_size = 26
+text = "Ascend to Base"
+
+[node name="AscendOverlay" type="Control" parent="HUD"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Dim" type="ColorRect" parent="HUD/AscendOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.02, 0.02, 0.05, 0.92)
+
+[node name="Center" type="CenterContainer" parent="HUD/AscendOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Box" type="VBoxContainer" parent="HUD/AscendOverlay/Center"]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="HUD/AscendOverlay/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 46
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+text = "ASCENDING TO HEAVEN..."
+horizontal_alignment = 1
+
+[node name="BlobCountLabel" type="Label" parent="HUD/AscendOverlay/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+theme_override_colors/font_color = Color(0.55, 1, 0.6, 1)
+text = "+0 Blobs"
+horizontal_alignment = 1
+
+[node name="TotalLabel" type="Label" parent="HUD/AscendOverlay/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Total: 0"
+horizontal_alignment = 1

@@ -1,15 +1,4 @@
 extends Node3D
-## RunController — orchestrates a run:
-##  worldgen build → survival timer (curve-driven) → horde combat → boss →
-##  death/ascend or victory → animated blob count-up banking → hub.
-##
-## Health is HIT-BASED: hearts (3 base). Aura Shield charges absorb hits
-## first and break permanently (no regen). Powerups apply here (heart
-## restore + timed boosts). Camera zoom: scroll wheel / pinch.
-##
-## Contract responsibilities (Section 10): banks blobs via EconomyService
-## and writes level unlocks BEFORE emitting run_ended. In-run state is
-## never persisted.
 
 const ZOOM_MIN := 9.0
 const ZOOM_MAX := 26.0
@@ -24,7 +13,6 @@ var _start_msec := 0
 var _survival_remaining := 60.0
 var _boss_phase := false
 var _boss_warning_timer := -1.0
-var _boss_warning_active := false
 var _xp_by_enemy: Dictionary = {}
 var _blob_xp := 0.25
 var _ended := false
@@ -40,9 +28,29 @@ var _timed_boosts: Array = []
 @onready var _swarm: BlobSwarm = $Swarm
 @onready var _damage_numbers: DamageNumbers = $DamageNumbers
 @onready var _splats: SplatSystem = $Splats
-@onready var _level_up: LevelUpController = $LevelUpController
-@onready var _hud: RunHud = $HUD
+@onready var _header_label: Label = $HUD/TopMargin/TopBox/VBox/HeaderLabel
+@onready var _timer_label: Label = $HUD/TopMargin/TopBox/VBox/TimerLabel
+@onready var _blobs_label: Label = $HUD/TopMargin/TopBox/VBox/BlobsLabel
+@onready var _hearts_box: HBoxContainer = $HUD/TopMargin/TopBox/VBox/HeartsBox
+@onready var _xp_bar: ProgressBar = $HUD/TopMargin/TopBox/VBox/XPBar
+@onready var _level_label: Label = $HUD/TopMargin/TopBox/VBox/LevelLabel
+@onready var _boss_warn_label: Label = $HUD/BossWarnLabel
+@onready var _boss_bar_margin: MarginContainer = $HUD/BossBarMargin
+@onready var _boss_name_label: Label = $HUD/BossBarMargin/BossBarBox/BossNameLabel
+@onready var _boss_bar: ProgressBar = $HUD/BossBarMargin/BossBarBox/BossBar
+@onready var _level_up_menu: PanelContainer = $HUD/LevelUpMenu
+@onready var _dev_margin: MarginContainer = $HUD/DevMargin
+@onready var _boss_button: Button = $HUD/DevMargin/DevBox/BossButton
+@onready var _die_button: Button = $HUD/DevMargin/DevBox/DieButton
 @onready var _spotlight: ColorRect = $HUD/DeathSpotlight
+@onready var _death_panel: PanelContainer = $HUD/DeathPanel
+@onready var _death_portrait: TextureRect = $HUD/DeathPanel/DeathBox/CryPortrait
+@onready var _ad_button: Button = $HUD/DeathPanel/DeathBox/AdContinueButton
+@onready var _ascend_button: Button = $HUD/DeathPanel/DeathBox/AscendButton
+@onready var _ascend_overlay: Control = $HUD/AscendOverlay
+@onready var _ascend_title: Label = $HUD/AscendOverlay/Center/Box/TitleLabel
+@onready var _ascend_blobs_label: Label = $HUD/AscendOverlay/Center/Box/BlobCountLabel
+@onready var _ascend_total_label: Label = $HUD/AscendOverlay/Center/Box/TotalLabel
 
 
 func _ready() -> void:
@@ -57,7 +65,6 @@ func _ready() -> void:
 	var powerups_data: Variant = JsonData.load_json("res://data/powerups/powerups.json")
 	_powerup_defs = powerups_data.get("effects", []) if powerups_data is Dictionary else []
 
-	# --- Worldgen ----------------------------------------------------------
 	var themes := LevelGenerator.load_themes()
 	_theme = LevelGenerator.theme_for_level(_level, themes)
 	var layout := LevelGenerator.generate(_level, _theme)
@@ -68,14 +75,12 @@ func _ready() -> void:
 	_player.set_shield_visible(_stats.shield > 0)
 	_pickups.configure(layout["walkable_points"], _theme.get("spawns", {}), _player)
 
-	# --- Combat systems ----------------------------------------------------
 	var equipped := str(SaveService.get_value("allans.equipped", "player1"))
 	_swarm.setup(_player, equipped)
 	_horde.setup(_player, _swarm, _stats, layout, _level, _config)
 	_horde.boss_killed.connect(_on_boss_killed)
-	_level_up.stats = _stats
+	_level_up_menu.stats = _stats
 
-	# --- Camera ---------------------------------------------------------------
 	_camera.projection = Camera3D.PROJECTION_ORTHOGONAL
 	_camera.size = 16.0
 	_camera.look_at_from_position(Vector3(10.0, 10.0, 10.0), Vector3.ZERO)
@@ -86,18 +91,20 @@ func _ready() -> void:
 	EventBus.enemy_killed.connect(func(_id: String, _pos: Vector3) -> void: _camera_rig.shake(0.15))
 	EventBus.boss_spawned.connect(_on_boss_spawned_camera)
 
-	# --- HUD signals ----------------------------------------------------------
+	_header_label.text = "Day %d" % _level
+	_header_label.tooltip_text = str(_theme.get("name", "The Shop"))
+	_death_panel.visible = false
 	_spotlight.visible = false
-	_hud.pause_toggled.connect(func(paused: bool) -> void: get_tree().paused = paused)
-	_hud.ad_continue_pressed.connect(_on_ad_continue)
-	_hud.ascend_pressed.connect(func() -> void: _end_run(false, "ascend"))
-	_hud.quit_to_hub_pressed.connect(func() -> void: _end_run(false, "quit"))
-	_hud.dev_boss_win_pressed.connect(_on_dev_boss_win)
-	_hud.dev_die_pressed.connect(func() -> void:
+	_ascend_overlay.visible = false
+	_boss_warn_label.visible = false
+	_dev_margin.visible = OS.is_debug_build()
+	_boss_button.pressed.connect(_on_dev_boss_win)
+	_die_button.pressed.connect(func() -> void:
 		_stats.shield = 0
 		_stats.hearts = 1
 		_apply_player_damage(1.0))
-
+	_ad_button.pressed.connect(_on_ad_continue)
+	_ascend_button.pressed.connect(func() -> void: _end_run(false, "ascend"))
 	EventBus.blob_collected.connect(_on_blob_collected)
 	EventBus.blob_lost.connect(_on_blob_lost)
 	EventBus.player_hit.connect(_apply_player_damage)
@@ -125,20 +132,16 @@ func _process(delta: float) -> void:
 	elif _boss_warning_timer > 0.0:
 		_boss_warning_timer -= delta
 		if _boss_warning_timer <= 0.0:
-			_boss_warning_active = false
+			_boss_warn_label.visible = false
 			_horde.spawn_boss()
 	_refresh_hud()
 
-
-# ---------------------------------------------------------------------------
-# Survival timer → boss phase
-# ---------------------------------------------------------------------------
 
 func _start_boss_warning() -> void:
 	_boss_phase = true
 	_survival_remaining = 0.0
 	_boss_warning_timer = float(_config.get("boss", {}).get("warning_seconds", 2.5))
-	_boss_warning_active = true
+	_boss_warn_label.visible = true
 	EventBus.boss_incoming.emit(_level)
 
 
@@ -167,10 +170,6 @@ func _on_dev_boss_win() -> void:
 	_unlock_next_level()
 	_end_run(true, "boss_defeated")
 
-
-# ---------------------------------------------------------------------------
-# Blobs + XP + powerups
-# ---------------------------------------------------------------------------
 
 func _on_blob_collected(amount: int) -> void:
 	_run_blobs += amount
@@ -243,10 +242,6 @@ func _tick_timed_boosts(delta: float) -> void:
 			i += 1
 
 
-# ---------------------------------------------------------------------------
-# Hearts / shield / death / revive
-# ---------------------------------------------------------------------------
-
 func _apply_player_damage(_damage: float) -> void:
 	if _ended or _stats.hearts <= 0:
 		return
@@ -267,8 +262,9 @@ func _on_player_died() -> void:
 	EventBus.player_died.emit()
 	_player.set_dead(true)
 	_show_death_spotlight()
-	_hud.show_death_panel(_ad_continue_used)
+	_show_death_panel()
 	get_tree().paused = true
+	_refresh_hud()
 
 
 func _show_death_spotlight() -> void:
@@ -286,21 +282,37 @@ func _show_death_spotlight() -> void:
 		0.0, 0.94, 0.9).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
 
 
+func _show_death_panel() -> void:
+	var equipped := str(SaveService.get_value("allans.equipped", "player1"))
+	var cry_frames: Array = AllanSprites.state_regions().get("cry", [])
+	if not cry_frames.is_empty():
+		var atlas := AtlasTexture.new()
+		atlas.atlas = AllanSprites.sheet_texture(equipped)
+		atlas.region = cry_frames[0]
+		_death_portrait.texture = atlas
+	_death_panel.visible = true
+	_death_panel.pivot_offset = _death_panel.size * 0.5
+	_death_panel.scale = Vector2(0.1, 0.1)
+	_death_panel.modulate = Color(1, 1, 1, 0)
+	var tween := create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
+	tween.set_parallel(true)
+	tween.tween_property(_death_panel, "modulate", Color.WHITE, 0.5).set_delay(0.55)
+	tween.tween_property(_death_panel, "scale", Vector2(1.15, 1.15), 0.55).set_delay(0.55).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.chain().tween_property(_death_panel, "scale", Vector2.ONE, 0.15)
+
+
 func _on_ad_continue() -> void:
 	_ad_continue_used = true
+	_death_panel.visible = false
 	_spotlight.visible = false
 	get_tree().paused = false
 	_player.set_dead(false)
 	_stats.hearts = _stats.max_hearts
 	_horde.grant_player_iframes(2.0)
 	EventBus.player_revived.emit()
-	_hud.hide_death_panel()
-	_hud.set_hearts(_stats.hearts, _stats.max_hearts)
+	_refresh_hud()
 
-
-# ---------------------------------------------------------------------------
-# Run end + banking
-# ---------------------------------------------------------------------------
 
 func _end_run(victory: bool, reason: String) -> void:
 	if _ended:
@@ -321,33 +333,70 @@ func _end_run(victory: bool, reason: String) -> void:
 
 
 func _play_ascend_countup(victory: bool) -> void:
+	_death_panel.visible = false
+	_ascend_title.text = ("DAY %d COMPLETE!" % _level) if victory else "ASCENDING TO HEAVEN..."
 	var total_after := EconomyService.get_blobs()
 	var total_before := total_after - _run_blobs
-	var title := "VICTORY!" if victory else "ASCENDING..."
-	_hud.show_ascend(title, _run_blobs, total_after)
+	_ascend_blobs_label.text = "+0 Blobs"
+	_ascend_total_label.text = "Total: %d" % total_before
+	_ascend_overlay.visible = true
+	_ascend_overlay.modulate = Color(1, 1, 1, 0)
+	var box: Control = _ascend_overlay.get_node("Center/Box")
+	var update_count := func(v: float) -> void:
+		var counted := int(v)
+		_ascend_blobs_label.text = "+%d Blobs" % counted
+		_ascend_total_label.text = "Total: %d" % (total_before + counted)
+		box.scale = Vector2.ONE * (1.0 + 0.06 * sin(v * 2.2))
+	var finish_count := func() -> void:
+		_ascend_blobs_label.text = "+%d Blobs" % _run_blobs
+		_ascend_total_label.text = "Total: %d" % total_after
+		box.scale = Vector2.ONE
 	var duration := clampf(0.3 + float(_run_blobs) * 0.012, 0.5, 1.6)
-	await get_tree().create_timer(0.25 + duration + 0.5).timeout
+	var tween := create_tween()
+	tween.tween_property(_ascend_overlay, "modulate", Color.WHITE, 0.25)
+	tween.tween_method(update_count, 0.0, float(_run_blobs), duration)
+	tween.tween_callback(finish_count)
+	tween.tween_interval(0.5)
+	await tween.finished
 
-
-# ---------------------------------------------------------------------------
 
 func _refresh_hud() -> void:
-	var timer_text: String
 	if _boss_phase:
-		timer_text = "BOSS!" if _boss_warning_timer <= 0.0 else "INCOMING..."
+		_timer_label.text = "BOSS!" if _boss_warning_timer <= 0.0 else "INCOMING..."
 	else:
 		var total := int(maxf(0.0, _survival_remaining))
 		@warning_ignore("integer_division")
-		timer_text = "%d:%02d" % [total / 60, total % 60]
-
+		_timer_label.text = "%d:%02d" % [total / 60, total % 60]
+	_blobs_label.text = "%d" % _run_blobs
+	_refresh_hearts()
+	_xp_bar.max_value = _stats.xp_threshold()
+	_xp_bar.value = _stats.xp
+	_level_label.text = "Lv %d" % _stats.level
+	_ad_button.disabled = _ad_continue_used
+	_ad_button.text = "Watch ad to continue" if not _ad_continue_used else "Ad continue used"
 	var boss_active := _horde.has_boss()
-	_hud.set_hearts(_stats.hearts, _stats.max_hearts)
-	_hud.set_timer(timer_text)
-	_hud.set_blobs(_run_blobs)
-	_hud.set_xp(_stats.level, _stats.xp, _stats.xp_threshold())
-	_hud.show_boss_warning(_boss_warning_active)
-	_hud.show_boss_bar(boss_active)
+	_boss_bar_margin.visible = boss_active
 	if boss_active:
-		_hud.set_boss_health(
-			_horde.boss_name().to_upper().replace("BOSS_", "").replace("_", " "),
-			_horde.boss_hp_ratio())
+		_boss_name_label.text = _horde.boss_name().to_upper().replace("BOSS_", "").replace("_", " ")
+		_boss_bar.value = _horde.boss_hp_ratio()
+
+
+func _refresh_hearts() -> void:
+	var wanted := _stats.max_hearts + _stats.shield
+	var rebuild := _hearts_box.get_child_count() != wanted
+	if rebuild:
+		for child in _hearts_box.get_children():
+			_hearts_box.remove_child(child)
+			child.queue_free()
+		for i in range(wanted):
+			var icon := TextureRect.new()
+			icon.custom_minimum_size = Vector2(34, 34)
+			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			_hearts_box.add_child(icon)
+	for i in range(_hearts_box.get_child_count()):
+		var icon := _hearts_box.get_child(i) as TextureRect
+		if i < _stats.max_hearts:
+			icon.texture = IconFactory.heart(i < _stats.hearts)
+		else:
+			icon.texture = IconFactory.shield()

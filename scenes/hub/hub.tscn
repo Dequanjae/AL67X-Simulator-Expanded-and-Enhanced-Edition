@@ -1,11 +1,660 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://src/ui/hub/hub.gd" id="1_hub"]
+[ext_resource type="Script" path="res://src/ui/hub/tab_play.gd" id="2_play"]
+[ext_resource type="Script" path="res://src/ui/hub/tab_allans.gd" id="3_allans"]
+[ext_resource type="Script" path="res://src/ui/hub/tab_deck.gd" id="4_deck"]
+[ext_resource type="Script" path="res://src/ui/hub/tab_shop.gd" id="5_shop"]
+[ext_resource type="Texture2D" path="res://assets/sprites/npc/allan_shopkeeper.png" id="6_keeper"]
+[ext_resource type="Script" path="res://src/ui/hub/allan_reveal.gd" id="7_reveal"]
+[ext_resource type="Script" path="res://src/ui/hub/card_reveal.gd" id="8_cardreveal"]
+[ext_resource type="Script" path="res://src/ui/hub/whats_new_popup.gd" id="9_whatsnew"]
+[ext_resource type="Script" path="res://src/ui/hub/settings_panel.gd" id="10_settings"]
 
 [node name="Hub" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_hub")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.09, 0.09, 0.12, 1)
+
+[node name="SafeArea" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Layout" type="VBoxContainer" parent="SafeArea"]
+layout_mode = 2
+
+[node name="TopBar" type="PanelContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 52)
+
+[node name="TopBarBox" type="HBoxContainer" parent="SafeArea/Layout/TopBar"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="BlobsLabel" type="Label" parent="SafeArea/Layout/TopBar/TopBarBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "Blobs: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TokensLabel" type="Label" parent="SafeArea/Layout/TopBar/TopBarBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "AL67X: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SettingsButton" type="Button" parent="SafeArea/Layout/TopBar/TopBarBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 0)
+theme_override_font_sizes/font_size = 17
+text = "SETTINGS"
+
+[node name="Content" type="MarginContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 12
+
+[node name="PlayTab" type="VBoxContainer" parent="SafeArea/Layout/Content"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+script = ExtResource("2_play")
+
+[node name="Title" type="Label" parent="SafeArea/Layout/Content/PlayTab"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "AL67X SIMULATOR"
+horizontal_alignment = 1
+
+[node name="LevelLabel" type="Label" parent="SafeArea/Layout/Content/PlayTab"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Day 1 at the Electric Motor Shop"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="PlayButton" type="Button" parent="SafeArea/Layout/Content/PlayTab"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 120)
+theme_override_font_sizes/font_size = 44
+text = "PLAY"
+
+[node name="AllansTab" type="HBoxContainer" parent="SafeArea/Layout/Content"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 24
+script = ExtResource("3_allans")
+
+[node name="LeftBox" type="VBoxContainer" parent="SafeArea/Layout/Content/AllansTab"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+
+[node name="Header" type="HBoxContainer" parent="SafeArea/Layout/Content/AllansTab/LeftBox"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="Portrait" type="TextureRect" parent="SafeArea/Layout/Content/AllansTab/LeftBox/Header"]
+layout_mode = 2
+custom_minimum_size = Vector2(88, 112)
+expand_mode = 1
+stretch_mode = 5
+
+[node name="HeaderBox" type="VBoxContainer" parent="SafeArea/Layout/Content/AllansTab/LeftBox/Header"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="SafeArea/Layout/Content/AllansTab/LeftBox/Header/HeaderBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "ALLANS"
+
+[node name="EquippedLabel" type="Label" parent="SafeArea/Layout/Content/AllansTab/LeftBox/Header/HeaderBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Allan (Tier 1)"
+
+[node name="OwnedLabel" type="Label" parent="SafeArea/Layout/Content/AllansTab/LeftBox/Header/HeaderBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Owned: 1 / 10"
+
+[node name="EnergyRow" type="HBoxContainer" parent="SafeArea/Layout/Content/AllansTab/LeftBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="EnergyLabel" type="Label" parent="SafeArea/Layout/Content/AllansTab/LeftBox/EnergyRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 17
+text = "Energy: 5 / 5"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="RefillButton" type="Button" parent="SafeArea/Layout/Content/AllansTab/LeftBox/EnergyRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(170, 52)
+theme_override_font_sizes/font_size = 16
+text = "Refill — 20 AL67X"
+
+[node name="StatusLabel" type="Label" parent="SafeArea/Layout/Content/AllansTab/LeftBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 34)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="OwnedScroll" type="ScrollContainer" parent="SafeArea/Layout/Content/AllansTab/LeftBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 76)
+vertical_scroll_mode = 0
+
+[node name="OwnedRow" type="HBoxContainer" parent="SafeArea/Layout/Content/AllansTab/LeftBox/OwnedScroll"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Grid" type="GridContainer" parent="SafeArea/Layout/Content/AllansTab"]
+layout_mode = 2
+custom_minimum_size = Vector2(430, 0)
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 4
+
+[node name="DeckTab" type="VBoxContainer" parent="SafeArea/Layout/Content"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 16
+script = ExtResource("4_deck")
+
+[node name="Title" type="Label" parent="SafeArea/Layout/Content/DeckTab"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 44
+text = "DECK"
+horizontal_alignment = 1
+
+[node name="EquippedLabel" type="Label" parent="SafeArea/Layout/Content/DeckTab"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Equipped: 0 / 6"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="SafeArea/Layout/Content/DeckTab"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="CardList" type="VBoxContainer" parent="SafeArea/Layout/Content/DeckTab/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="ShopTab" type="VBoxContainer" parent="SafeArea/Layout/Content"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+script = ExtResource("5_shop")
+
+[node name="TitleRow" type="HBoxContainer" parent="SafeArea/Layout/Content/ShopTab"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="Keeper" type="TextureRect" parent="SafeArea/Layout/Content/ShopTab/TitleRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 128)
+texture = ExtResource("6_keeper")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TitleBox" type="VBoxContainer" parent="SafeArea/Layout/Content/ShopTab/TitleRow"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="SafeArea/Layout/Content/ShopTab/TitleRow/TitleBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 44
+text = "SHOP"
+
+[node name="KeeperLabel" type="Label" parent="SafeArea/Layout/Content/ShopTab/TitleRow/TitleBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Allan the shop bender"
+
+[node name="Scroll" type="ScrollContainer" parent="SafeArea/Layout/Content/ShopTab"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="Content" type="VBoxContainer" parent="SafeArea/Layout/Content/ShopTab/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
+
+[node name="BoxTitle" type="Label" parent="SafeArea/Layout/Content/ShopTab/Scroll/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "LOOT BOXES"
+horizontal_alignment = 1
+
+[node name="BoxList" type="VBoxContainer" parent="SafeArea/Layout/Content/ShopTab/Scroll/Content"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="UpgradeTitle" type="Label" parent="SafeArea/Layout/Content/ShopTab/Scroll/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "CARD UPGRADES"
+horizontal_alignment = 1
+
+[node name="CardSelect" type="OptionButton" parent="SafeArea/Layout/Content/ShopTab/Scroll/Content"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 72)
+theme_override_font_sizes/font_size = 22
+
+[node name="UpgradeList" type="VBoxContainer" parent="SafeArea/Layout/Content/ShopTab/Scroll/Content"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="TokenTitle" type="Label" parent="SafeArea/Layout/Content/ShopTab/Scroll/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "AL67X TOKENS"
+horizontal_alignment = 1
+
+[node name="DebugTokensButton" type="Button" parent="SafeArea/Layout/Content/ShopTab/Scroll/Content"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+theme_override_font_sizes/font_size = 24
+text = "DEBUG: +100 AL67X Tokens"
+
+[node name="ResultLabel" type="Label" parent="SafeArea/Layout/Content/ShopTab/Scroll/Content"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 56)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="NavBar" type="PanelContainer" parent="SafeArea/Layout"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+
+[node name="NavBox" type="HBoxContainer" parent="SafeArea/Layout/NavBar"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="NavPlay" type="Button" parent="SafeArea/Layout/NavBar/NavBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+theme_override_font_sizes/font_size = 20
+text = "PLAY"
+
+[node name="NavAllans" type="Button" parent="SafeArea/Layout/NavBar/NavBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+theme_override_font_sizes/font_size = 20
+text = "ALLANS"
+
+[node name="NavDeck" type="Button" parent="SafeArea/Layout/NavBar/NavBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+theme_override_font_sizes/font_size = 20
+text = "DECK"
+
+[node name="NavShop" type="Button" parent="SafeArea/Layout/NavBar/NavBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+toggle_mode = true
+theme_override_font_sizes/font_size = 20
+text = "SHOP"
+
+[node name="AllanReveal" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_reveal")
+
+[node name="Dim" type="ColorRect" parent="AllanReveal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.82)
+
+[node name="Center" type="CenterContainer" parent="AllanReveal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Box" type="VBoxContainer" parent="AllanReveal/Center"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="AllanReveal/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+text = "NEW ALLAN!"
+horizontal_alignment = 1
+
+[node name="Portrait" type="TextureRect" parent="AllanReveal/Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(320, 420)
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NameLabel" type="Label" parent="AllanReveal/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Allan II — Tier 2"
+horizontal_alignment = 1
+
+[node name="EquipButton" type="Button" parent="AllanReveal/Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 92)
+theme_override_font_sizes/font_size = 28
+text = "EQUIP NOW!"
+
+[node name="LaterButton" type="Button" parent="AllanReveal/Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 72)
+theme_override_font_sizes/font_size = 22
+text = "Later"
+
+[node name="CardReveal" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_cardreveal")
+
+[node name="Dim" type="ColorRect" parent="CardReveal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.82)
+
+[node name="Center" type="CenterContainer" parent="CardReveal"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Box" type="VBoxContainer" parent="CardReveal/Center"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="CardReveal/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+text = "CARD UNLOCKED!"
+horizontal_alignment = 1
+
+[node name="NameLabel" type="Label" parent="CardReveal/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Goon Launcher (epic)"
+horizontal_alignment = 1
+
+[node name="DescLabel" type="Label" parent="CardReveal/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "+2 projectiles"
+horizontal_alignment = 1
+
+[node name="CountLabel" type="Label" parent="CardReveal/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Owned: x1"
+horizontal_alignment = 1
+modulate = Color(1, 1, 1, 0.7)
+
+[node name="CloseButton" type="Button" parent="CardReveal/Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 88)
+theme_override_font_sizes/font_size = 26
+text = "NICE!"
+
+[node name="WhatsNewPopup" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_whatsnew")
+
+[node name="Dim" type="ColorRect" parent="WhatsNewPopup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.78)
+
+[node name="Center" type="CenterContainer" parent="WhatsNewPopup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Box" type="VBoxContainer" parent="WhatsNewPopup/Center"]
+layout_mode = 2
+custom_minimum_size = Vector2(560, 0)
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="WhatsNewPopup/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 44
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+text = "WHAT'S NEW"
+horizontal_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="WhatsNewPopup/Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 420)
+horizontal_scroll_mode = 0
+
+[node name="EntriesBox" type="VBoxContainer" parent="WhatsNewPopup/Center/Box/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="IGButton" type="Button" parent="WhatsNewPopup/Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 64)
+theme_override_font_sizes/font_size = 20
+text = "See more on Instagram — @al67x._"
+
+[node name="GotItButton" type="Button" parent="WhatsNewPopup/Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 88)
+theme_override_font_sizes/font_size = 26
+text = "GOT IT!"
+
+[node name="SettingsPanel" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_settings")
+
+[node name="Dim" type="ColorRect" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+
+[node name="Center" type="CenterContainer" parent="SettingsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Box" type="VBoxContainer" parent="SettingsPanel/Center"]
+layout_mode = 2
+custom_minimum_size = Vector2(520, 0)
+theme_override_constants/separation = 10
+
+[node name="Title" type="Label" parent="SettingsPanel/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "SETTINGS"
+horizontal_alignment = 1
+
+[node name="MusicRow" type="HBoxContainer" parent="SettingsPanel/Center/Box"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="MusicLabel" type="Label" parent="SettingsPanel/Center/Box/MusicRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+theme_override_font_sizes/font_size = 19
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="SettingsPanel/Center/Box/MusicRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 36)
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="SFXRow" type="HBoxContainer" parent="SettingsPanel/Center/Box"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="SFXLabel" type="Label" parent="SettingsPanel/Center/Box/SFXRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+theme_override_font_sizes/font_size = 19
+text = "Sound FX"
+
+[node name="SFXSlider" type="HSlider" parent="SettingsPanel/Center/Box/SFXRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 36)
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="ShakeRow" type="HBoxContainer" parent="SettingsPanel/Center/Box"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="ShakeLabel" type="Label" parent="SettingsPanel/Center/Box/ShakeRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+theme_override_font_sizes/font_size = 19
+text = "Screen shake"
+
+[node name="ShakeSlider" type="HSlider" parent="SettingsPanel/Center/Box/ShakeRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 36)
+max_value = 1.0
+step = 0.1
+value = 1.0
+
+[node name="SmoothingCheck" type="CheckButton" parent="SettingsPanel/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+button_pressed = true
+text = "Camera smoothing"
+
+[node name="SplatsCheck" type="CheckButton" parent="SettingsPanel/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+button_pressed = true
+text = "Goo splats"
+
+[node name="NumbersCheck" type="CheckButton" parent="SettingsPanel/Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+button_pressed = true
+text = "Damage numbers"
+
+[node name="AccountRow" type="HBoxContainer" parent="SettingsPanel/Center/Box"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="AccountLabel" type="Label" parent="SettingsPanel/Center/Box/AccountRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 18
+text = "Local save"
+vertical_alignment = 1
+
+[node name="AccountButton" type="Button" parent="SettingsPanel/Center/Box/AccountRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 56)
+theme_override_font_sizes/font_size = 17
+text = "Sign in with Google"
+
+[node name="CloseButton" type="Button" parent="SettingsPanel/Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 64)
+theme_override_font_sizes/font_size = 22
+text = "DONE"
