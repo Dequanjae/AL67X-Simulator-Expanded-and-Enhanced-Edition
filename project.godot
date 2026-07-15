@@ -26,7 +26,6 @@ AmpsService="*res://src/autoload/amps_service.gd"
 InputService="*res://src/autoload/input_service.gd"
 AudioDirector="*res://src/autoload/audio_director.gd"
 
-
 [display]
 
 window/size/viewport_width=1280
