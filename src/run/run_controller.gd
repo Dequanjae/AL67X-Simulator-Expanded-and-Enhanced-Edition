@@ -54,8 +54,10 @@ var _timed_boosts: Array = []
 
 
 func _ready() -> void:
+	print("--- RUN _ready: start ---")
 	_level = int(SaveService.get_value("progress.highest_level_unlocked", 1))
 	_start_msec = Time.get_ticks_msec()
+	print("RUN: level=%d" % _level)
 	_config = RunBalance.load_config()
 	_stats = PlayerStats.from_config(_config)
 	CardUpgrades.apply_loadout(_stats, CardUpgrades.load_config())
@@ -64,11 +66,15 @@ func _ready() -> void:
 	_survival_remaining = RunBalance.survival_seconds(_level, _config)
 	var powerups_data: Variant = JsonData.load_json("res://data/powerups/powerups.json")
 	_powerup_defs = powerups_data.get("effects", []) if powerups_data is Dictionary else []
+	print("RUN: config+stats done")
 
 	var themes := LevelGenerator.load_themes()
 	_theme = LevelGenerator.theme_for_level(_level, themes)
+	print("RUN: themes loaded, theme=%s" % _theme.get("id", "?"))
 	var layout := LevelGenerator.generate(_level, _theme)
+	print("RUN: layout generated, arena=%s props=%d ok=%s" % [str(layout.get("arena_size", "?")), layout.get("props", []).size(), layout.get("ok", false)])
 	_level_root.build(layout, _theme)
+	print("RUN: level built")
 	_player.position = layout["player_spawn"]
 	_player.camera = _camera
 	_player.stats = _stats
@@ -81,6 +87,7 @@ func _ready() -> void:
 	_horde.boss_killed.connect(_on_boss_killed)
 	_level_up_menu.stats = _stats
 
+	print("RUN: camera setup...")
 	_camera.projection = Camera3D.PROJECTION_ORTHOGONAL
 	_camera.size = 16.0
 	_camera.look_at_from_position(Vector3(10.0, 10.0, 10.0), Vector3.ZERO)
@@ -91,6 +98,7 @@ func _ready() -> void:
 	EventBus.enemy_killed.connect(func(_id: String, _pos: Vector3) -> void: _camera_rig.shake(0.15))
 	EventBus.boss_spawned.connect(_on_boss_spawned_camera)
 
+	print("RUN: HUD visibility...")
 	_header_label.text = "Day %d" % _level
 	_header_label.tooltip_text = str(_theme.get("name", "The Shop"))
 	_death_panel.visible = false
@@ -116,6 +124,7 @@ func _ready() -> void:
 
 	EventBus.run_started.emit(_level)
 	_refresh_hud()
+	print("--- RUN _ready: done ---")
 
 
 func _process(delta: float) -> void:
