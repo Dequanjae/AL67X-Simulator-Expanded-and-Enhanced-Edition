@@ -1,0 +1,10 @@
+[package]
+name = "my_extension"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"] # Crucial for generating a dynamic library Godot can read
+
+[dependencies]
+godot = { version = "0.1", features = ["experimental-threads"] } # Check crates.io for the latest gdext version
