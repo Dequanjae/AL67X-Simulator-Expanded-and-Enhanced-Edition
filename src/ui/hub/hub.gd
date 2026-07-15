@@ -17,6 +17,7 @@ func _ready() -> void:
 	if Engine.is_editor_hint():
 		return
 	_refresh_pills()
+	_current_tab = ""
 	_switch_tab("home")
 	AudioDirector.play_music("hub")
 
