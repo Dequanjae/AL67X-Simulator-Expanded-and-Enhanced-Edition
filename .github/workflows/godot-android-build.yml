@@ -15,59 +15,16 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Setup export templates
         run: |
           mkdir -p ~/.local/share/godot
           ln -sf /root/.local/share/godot/export_templates ~/.local/share/godot/export_templates
-
-      - name: Decode keystore
-        env:
-          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-        run: |
-          mkdir -p android-keystore
-          echo "$KEYSTORE_BASE64" | base64 -d > android-keystore/release.keystore
-
-      - name: Verify keystore
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-        run: |
-          echo "Trying default keystore type..."
-          keytool -list -v -keystore android-keystore/release.keystore \
-            -storepass "$KEYSTORE_PASSWORD" || {
-            echo "Default detection failed, trying JKS explicitly..."
-            keytool -list -v -keystore android-keystore/release.keystore \
-              -storepass "$KEYSTORE_PASSWORD" -storetype JKS
-          }
-
-      - name: Configure Godot Android signing (editor settings)
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          KEYSTORE_ALIAS: ${{ secrets.ANDROID_KEYSTORE_ALIAS }}
-        run: |
-          SETTINGS="$HOME/.config/godot/editor_settings-4.7.tres"
-          mkdir -pv "$(dirname "$SETTINGS")"
-          cat > "$SETTINGS" <<EOF
-          [gd_resource type="EditorSettings" format=3]
-          [resource]
-          export/android/android_sdk_path = "/usr/lib/android-sdk"
-          export/android/java_sdk_path = "/usr/lib/jvm/java-17-openjdk-amd64"
-          export/android/release_keystore = "$GITHUB_WORKSPACE/android-keystore/release.keystore"
-          export/android/release_keystore_user = "${KEYSTORE_ALIAS}"
-          export/android/release_keystore_pass = "${KEYSTORE_PASSWORD}"
-          EOF
-
       - name: Create output directory
         run: mkdir -v -p build/android
-
-      - name: Import project
-        run: godot --headless --verbose --import
-
-      - name: Install template + Export APK
+      - name: Install template + Export debug APK
         run: |
           godot --headless --install-android-build-template \
-            --export-release "${EXPORT_PRESET}" build/android/${EXPORT_NAME}.apk
-
+            --export-debug "${EXPORT_PRESET}" build/android/${EXPORT_NAME}.apk
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
