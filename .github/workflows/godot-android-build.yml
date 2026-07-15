@@ -34,9 +34,13 @@ jobs:
         run: |
           godot --headless --install-android-build-template \
             --export-debug "${EXPORT_PRESET}" build/android/${EXPORT_NAME}.apk
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v4
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
         with:
-          name: android-apk
-          path: build/android/*.apk
-          if-no-files-found: error
+          tag_name: beta-${{ github.run_number }}
+          name: Beta build #${{ github.run_number }}
+          body: |
+            Auto-built debug APK for testing.
+            Install on your phone via Obtain or sideload.
+          files: build/android/*.apk
+          prerelease: true
