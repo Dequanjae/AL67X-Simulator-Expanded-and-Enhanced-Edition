@@ -1,3 +1,4 @@
+@tool
 extends Control
 ## Hub — native Godot UI (replacing the old HTML/WebView hub).
 ## All nodes built in _ready(); Home + Settings functional, Shop/Merge/Deck
@@ -13,6 +14,8 @@ var _level_label: Label
 
 func _ready() -> void:
 	_build_views()
+	if Engine.is_editor_hint():
+		return
 	_refresh_pills()
 	_switch_tab("home")
 	AudioDirector.play_music("hub")
@@ -64,7 +67,9 @@ func _build_home(ink: Color, paper: Color) -> void:
 	add_child(view)
 	_views["home"] = view
 
-	var highest := int(SaveService.get_value("progress.highest_level_unlocked", 1))
+	var highest := 1
+	if not Engine.is_editor_hint():
+		highest = int(SaveService.get_value("progress.highest_level_unlocked", 1))
 
 	_level_label = Label.new()
 	_level_label.text = "LV %d\nSHOP TECH" % highest
@@ -142,7 +147,7 @@ func _build_settings(ink: Color, paper: Color) -> void:
 		slider.custom_minimum_size = Vector2(160, 0)
 		slider.min_value = 0.0
 		slider.max_value = 1.0
-		slider.value = GameSettings.get_value(key)
+		slider.value = GameSettings.get_value(key) if not Engine.is_editor_hint() else 0.5
 		slider.value_changed.connect(func(v: float, k: String = key) -> void: GameSettings.set_value(k, v))
 		hbox.add_child(slider)
 
@@ -178,7 +183,7 @@ func _build_settings(ink: Color, paper: Color) -> void:
 		hbox.add_child(lbl)
 
 		var check := CheckButton.new()
-		check.button_pressed = GameSettings.get_value(key)
+		check.button_pressed = GameSettings.get_value(key) if not Engine.is_editor_hint() else true
 		check.toggled.connect(func(v: bool, k: String = key) -> void: GameSettings.set_value(k, v))
 		hbox.add_child(check)
 
@@ -222,7 +227,8 @@ func _switch_tab(tab: String) -> void:
 	_current_tab = tab
 	for id in _tab_btns:
 		_tab_btns[id].disabled = (id == tab)
-	AudioDirector.on_hub_tab_changed(tab)
+	if not Engine.is_editor_hint():
+		AudioDirector.on_hub_tab_changed(tab)
 
 
 func _start_run() -> void:
@@ -236,6 +242,8 @@ func _start_run() -> void:
 
 
 func _refresh_pills() -> void:
+	if Engine.is_editor_hint():
+		return
 	_blob_label.text = str(EconomyService.get_blobs())
 	_token_label.text = str(EconomyService.get_tokens())
 

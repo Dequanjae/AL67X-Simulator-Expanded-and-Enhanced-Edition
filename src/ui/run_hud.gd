@@ -1,3 +1,4 @@
+@tool
 class_name RunHud
 extends CanvasLayer
 ## Native Godot HUD replacing web_ui/hud. Built in _ready so layout is
