@@ -19,6 +19,15 @@ jobs:
         run: |
           mkdir -p ~/.local/share/godot
           ln -sf /root/.local/share/godot/export_templates ~/.local/share/godot/export_templates
+      - name: Configure Android SDK paths
+        run: |
+          mkdir -pv "$HOME/.config/godot"
+          cat > "$HOME/.config/godot/editor_settings-4.7.tres" <<EOF
+          [gd_resource type="EditorSettings" format=3]
+          [resource]
+          export/android/android_sdk_path = "/usr/lib/android-sdk"
+          export/android/java_sdk_path = "/usr/lib/jvm/java-17-openjdk-amd64"
+          EOF
       - name: Create output directory
         run: mkdir -v -p build/android
       - name: Install template + Export debug APK
