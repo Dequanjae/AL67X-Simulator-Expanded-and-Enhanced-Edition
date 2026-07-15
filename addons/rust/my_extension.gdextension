@@ -10,4 +10,4 @@ windows.release.x86_64 = "res://addons/rust/target/release/my_extension.dll"
 macos.debug.x86_64 = "res://addons/rust/target/debug/libmy_extension.dylib"
 macos.release.x86_64 = "res://addons/rust/target/release/libmy_extension.dylib"
 macos.debug.arm64 = "res://addons/rust/target/debug/libmy_extension.dylib"
-macos.release.arm64 = "res://addons/rust/target/release/libmy_extension.dylib
+macos.release.arm64 = "res://addons/rust/target/release/libmy_extension.dylib"
