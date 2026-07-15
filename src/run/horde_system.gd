@@ -579,10 +579,10 @@ func _update_enemies(delta: float, player_pos: Vector2) -> void:
 				vel[slot] = _boss_dash_dir * _boss_dash_speed
 				p += vel[slot] * delta
 			elif is_boss and _boss_telegraph:
-				# Winding up: brake and pulse.
+				# Winding up: brake and pulse (pulse computed in billboard shader).
 				vel[slot] = vel[slot].lerp(Vector2.ZERO, minf(1.0, 12.0 * delta))
 				p += vel[slot] * delta
-				telegraph = 0.5 + 0.5 * sin(_time * 20.0)
+				telegraph = 0.0
 			elif behavior_type == "charge" and not is_boss:
 				telegraph = _update_charge_behavior(delta, type, slot, player_pos, speed, behavior)
 				p = pos[slot] + vel[slot] * delta
@@ -612,7 +612,7 @@ func _update_enemies(delta: float, player_pos: Vector2) -> void:
 			var s := scale[slot]
 			var basis := Basis().scaled(Vector3(s, s, s))
 			multimesh.set_instance_transform(slot, Transform3D(basis, Vector3(p.x, half_height * s, p.y)))
-			multimesh.set_instance_custom_data(slot, Color(1.0 if vel[slot].x < 0.0 else 0.0, render_flash, 0, 0))
+			multimesh.set_instance_custom_data(slot, Color(1.0 if vel[slot].x < 0.0 else 0.0, render_flash, 1.0 if is_boss and _boss_telegraph else 0.0, 0))
 
 
 ## Chase steering: seek + neighbor separation. Returns new velocity.
