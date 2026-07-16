@@ -68,10 +68,15 @@ func _ready() -> void:
 	_powerup_defs = powerups_data.get("effects", []) if powerups_data is Dictionary else []
 	print("RUN: config+stats done")
 
-	var themes := LevelGenerator.load_themes()
-	_theme = LevelGenerator.theme_for_level(_level, themes)
+	var themes := _load_themes()
+	_theme = themes[(_level - 1) % themes.size()] if not themes.is_empty() else {}
 	print("RUN: themes loaded, theme=%s" % _theme.get("id", "?"))
-	var layout := LevelGenerator.generate(_level, _theme)
+	var layout: Dictionary
+	if ClassDB.class_exists("LevelGeneratorRs"):
+		layout = ClassDB.instantiate("LevelGeneratorRs").generate(_level, _theme)
+	else:
+		push_error("LevelGeneratorRs not available")
+		layout = {"ok": false}
 	print("RUN: layout generated, arena=%s props=%d ok=%s" % [str(layout.get("arena_size", "?")), layout.get("props", []).size(), layout.get("ok", false)])
 	_level_root.build(layout, _theme)
 	print("RUN: level built")
@@ -409,3 +414,18 @@ func _refresh_hearts() -> void:
 			icon.texture = IconFactory.heart(i < _stats.hearts)
 		else:
 			icon.texture = IconFactory.shield()
+
+
+static func _load_themes() -> Array:
+	var themes: Array = []
+	for path in JsonData.list_files("res://data/levels", "json"):
+		var t: Variant = JsonData.load_json(path)
+		if t is Dictionary and t.has("generation"):
+			themes.append(t)
+	themes.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var oa := int(a.get("order", 9999))
+		var ob := int(b.get("order", 9999))
+		if oa != ob:
+			return oa < ob
+		return str(a.get("id", "")) < str(b.get("id", "")))
+	return themes

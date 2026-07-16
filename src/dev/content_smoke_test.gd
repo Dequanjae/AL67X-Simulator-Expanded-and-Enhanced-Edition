@@ -141,14 +141,22 @@ func _verify() -> void:
 	_check(str(result.get("rarity", "")) == "common", "loot box honors its own drop table")
 
 	# Level theme → loaded + generates a valid dodge-able layout.
-	var themes := LevelGenerator.load_themes()
+	var themes: Array = []
+	for path in JsonData.list_files("res://data/levels", "json"):
+		var t: Variant = JsonData.load_json(path)
+		if t is Dictionary and t.has("generation"):
+			themes.append(t)
 	var theme: Dictionary = {}
 	for t in themes:
 		if str(t.get("id", "")) == "shop_throwaway":
 			theme = t
 	_check(not theme.is_empty(), "level theme appears in rotation")
 	if not theme.is_empty():
-		var layout := LevelGenerator.generate(3, theme)
+		var layout: Dictionary
+		if ClassDB.class_exists("LevelGeneratorRs"):
+			layout = ClassDB.instantiate("LevelGeneratorRs").generate(3, theme)
+		else:
+			layout = {"ok": false}
 		_check(bool(layout["ok"]), "throwaway theme generates a valid layout")
 
 	# Boss → loaded, ordered last, composable.
