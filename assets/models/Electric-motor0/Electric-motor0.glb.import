@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cnev77nql1l47"
-path="res://.godot/imported/electric_motor.glb-6a7a4be2b63d6e52ae3c68a54aaa8f23.scn"
+uid="uid://dfyv66tb2uvq3"
+path="res://.godot/imported/Electric-motor0.glb-7c995cddaeb6cd166dd4a7849197bc09.scn"
 
 [deps]
 
-source_file="res://assets/models/electric_motor.glb"
-dest_files=["res://.godot/imported/electric_motor.glb-6a7a4be2b63d6e52ae3c68a54aaa8f23.scn"]
+source_file="res://assets/models/Electric-motor0/Electric-motor0.glb"
+dest_files=["res://.godot/imported/Electric-motor0.glb-7c995cddaeb6cd166dd4a7849197bc09.scn"]
 
 [params]
 

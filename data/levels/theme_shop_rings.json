@@ -31,7 +31,7 @@
     },
     {
       "shape": "mesh",
-      "mesh": "res://assets/models/electric_motor.glb",
+      "mesh": "res://assets/models/Electric-motor0/Electric-motor0.glb",
       "size": [
         1.9,
         1.2,
