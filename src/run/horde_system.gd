@@ -389,7 +389,15 @@ func _build_obstacles(layout: Dictionary) -> void:
 	_obstacles.clear()
 	_obstacle_grid.clear()
 	for prop in layout["props"]:
-		var half := LevelGenerator._half_extents(prop) + Vector2(0.35, 0.35)
+		var sx := float(prop["size"][0]) * 0.5
+		var sz := float(prop["size"][2]) * 0.5
+		var r := fposmod(float(prop.get("rot", 0.0)), 180.0)
+		var he := Vector2(sx, sz)
+		if absf(r - 90.0) < 1.0:
+			he = Vector2(sz, sx)
+		elif r >= 1.0 and r <= 179.0:
+			he = Vector2(maxf(sx, sz), maxf(sx, sz))
+		var half := he + Vector2(0.35, 0.35)
 		var obstacle := {"pos": Vector2(float(prop["pos"][0]), float(prop["pos"][1])), "half": half}
 		var index := _obstacles.size()
 		_obstacles.append(obstacle)
