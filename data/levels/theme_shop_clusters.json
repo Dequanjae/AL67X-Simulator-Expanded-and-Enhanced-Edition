@@ -10,8 +10,7 @@
   },
   "props": [
     {
-      "shape": "mesh",
-      "mesh": "res://assets/models/shipping_box0/shipping_box0.glb",
+      "shape": "box",
       "size": [
         1.3,
         1.2,
@@ -34,9 +33,9 @@
       "shape": "mesh",
       "mesh": "res://assets/models/fan-motor0/fan-motor0.glb",
       "size": [
-        0.9,
-        0.9,
-        0.9
+        0.55,
+        0.55,
+        0.55
       ],
       "color": "#a09484",
       "weight": 2

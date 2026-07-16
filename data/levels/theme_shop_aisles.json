@@ -24,9 +24,9 @@
       "shape": "mesh",
       "mesh": "res://assets/models/fan-motor0/fan-motor0.glb",
       "size": [
-        1.1,
-        1.0,
-        1.1
+        0.6,
+        0.55,
+        0.6
       ],
       "color": "#9a8f78",
       "weight": 2
