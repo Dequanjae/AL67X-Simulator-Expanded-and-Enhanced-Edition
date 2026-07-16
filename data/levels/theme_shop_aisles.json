@@ -21,7 +21,8 @@
       "role": "shelf"
     },
     {
-      "shape": "cylinder",
+      "shape": "mesh",
+      "mesh": "res://assets/models/fan-motor0/fan-motor0.glb",
       "size": [
         1.1,
         1.0,
