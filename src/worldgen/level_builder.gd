@@ -4,8 +4,7 @@ extends Node3D
 ##  - floor: one MeshInstance3D with procedural shader (checker + accent),
 ##  - boundary walls with collision,
 ##  - props: StaticBody3D + primitive mesh + collision shape,
-##  - pallets: low platform with 60% chance of a motor stacked on top
-##    (Electric-motor0 or fan-motor0, randomly chosen).
+##  - pallets: low platform with 60% chance of a motor stacked on top.
 ##
 ## Physics layers: 1 = world (walls/props), 2 = player, pickups mask 2.
 
@@ -15,12 +14,9 @@ const MOTOR_HEIGHT := 0.5
 const STACK_CHANCE := 0.6
 const PALLET_MESHES := [
 	"res://assets/models/pallet0/pallet0.glb",
-	"res://assets/models/pallet1/pallet1.glb",
-	"res://assets/models/pallet2/pallet2.glb",
 ]
 const MOTOR_MESHES := [
 	"res://assets/models/Electric-motor0/Electric-motor0.glb",
-	"res://assets/models/fan-motor0/fan-motor0.glb",
 ]
 
 var _material_cache: Dictionary = {}

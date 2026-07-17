@@ -10,42 +10,8 @@
   },
   "props": [
     {
-      "shape": "box",
-      "size": [
-        1.3,
-        1.2,
-        1.3
-      ],
-      "color": "#8c6a3f",
-      "weight": 5
-    },
-    {
-      "shape": "box",
-      "size": [
-        1.0,
-        2.0,
-        1.0
-      ],
-      "color": "#5a7d74",
-      "weight": 2
-    },
-    {
       "shape": "mesh",
       "mesh": "res://assets/models/pallet0/pallet0.glb",
-      "size": [0.9, 0.15, 1.1],
-      "color": "#8B7355",
-      "weight": 2
-    },
-    {
-      "shape": "mesh",
-      "mesh": "res://assets/models/pallet1/pallet1.glb",
-      "size": [0.9, 0.15, 1.1],
-      "color": "#8B7355",
-      "weight": 2
-    },
-    {
-      "shape": "mesh",
-      "mesh": "res://assets/models/pallet2/pallet2.glb",
       "size": [0.9, 0.15, 1.1],
       "color": "#8B7355",
       "weight": 2
@@ -57,7 +23,7 @@
       46,
       42
     ],
-    "prop_density": 0.032,
+    "prop_density": 0.006,
     "min_clearance": 3.2,
     "spawn_clear_radius": 4.5
   },
@@ -72,7 +38,7 @@
   },
   "order": 4,
   "textures": {
-    "floor": "res://assets/textures/concrete_floor_1k.jpg",
+    "floor": "res://assets/textures/concrete_floor.jpg",
     "wall": "res://assets/textures/concrete_block_wall_1k.jpg"
   }
 }

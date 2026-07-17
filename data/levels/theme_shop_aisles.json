@@ -10,33 +10,8 @@
   },
   "props": [
     {
-      "shape": "box",
-      "size": [
-        0.9,
-        1.5,
-        3.0
-      ],
-      "color": "#6e5b8c",
-      "weight": 5,
-      "role": "shelf"
-    },
-    {
       "shape": "mesh",
       "mesh": "res://assets/models/pallet0/pallet0.glb",
-      "size": [0.9, 0.15, 1.1],
-      "color": "#8B7355",
-      "weight": 2
-    },
-    {
-      "shape": "mesh",
-      "mesh": "res://assets/models/pallet1/pallet1.glb",
-      "size": [0.9, 0.15, 1.1],
-      "color": "#8B7355",
-      "weight": 2
-    },
-    {
-      "shape": "mesh",
-      "mesh": "res://assets/models/pallet2/pallet2.glb",
       "size": [0.9, 0.15, 1.1],
       "color": "#8B7355",
       "weight": 2
@@ -48,7 +23,7 @@
       44,
       40
     ],
-    "prop_density": 0.03,
+    "prop_density": 0.006,
     "min_clearance": 3.4,
     "spawn_clear_radius": 4.5
   },
@@ -63,7 +38,7 @@
   },
   "order": 2,
   "textures": {
-    "floor": "res://assets/textures/concrete_floor_1k.jpg",
+    "floor": "res://assets/textures/concrete_floor.jpg",
     "wall": "res://assets/textures/concrete_block_wall_1k.jpg"
   }
 }

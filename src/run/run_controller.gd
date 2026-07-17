@@ -371,7 +371,12 @@ func _play_ascend_countup(victory: bool) -> void:
 	tween.tween_method(update_count, 0.0, float(_run_blobs), duration)
 	tween.tween_callback(finish_count)
 	tween.tween_interval(0.5)
-	await tween.finished
+	var ascend_done := false
+	tween.finished.connect(func(): ascend_done = true)
+	var safety := get_tree().create_timer(5.0)
+	safety.timeout.connect(func(): ascend_done = true)
+	while not ascend_done:
+		await get_tree().process_frame
 
 
 func _refresh_hud() -> void:

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://v6ta4ej1venn"
-path="res://.godot/imported/fan-motor0_1.png-1bb60905a82bfc50ef6e6145481ebd17.ctex"
+uid="uid://bdcf216pf6d7u"
+path="res://.godot/imported/concrete_floor.jpg-88c99f2a6f993d030f0bac7218ec7a7e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/models/fan-motor0/fan-motor0_1.png"
-dest_files=["res://.godot/imported/fan-motor0_1.png-1bb60905a82bfc50ef6e6145481ebd17.ctex"]
+source_file="res://assets/textures/concrete_floor.jpg"
+dest_files=["res://.godot/imported/concrete_floor.jpg-88c99f2a6f993d030f0bac7218ec7a7e.ctex"]
 
 [params]
 
