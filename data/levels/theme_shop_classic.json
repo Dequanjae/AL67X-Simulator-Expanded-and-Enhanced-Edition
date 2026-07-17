@@ -20,17 +20,6 @@
       "weight": 4
     },
     {
-      "shape": "mesh",
-      "mesh": "res://assets/models/fan-motor0/fan-motor0.glb",
-      "size": [
-        0.6,
-        0.8,
-        0.6
-      ],
-      "color": "#8a8f98",
-      "weight": 3
-    },
-    {
       "shape": "box",
       "size": [
         1.0,
@@ -42,14 +31,24 @@
     },
     {
       "shape": "mesh",
-      "mesh": "res://assets/models/Electric-motor0/Electric-motor0.glb",
-      "size": [
-        1.9,
-        1.2,
-        0.95
-      ],
-      "color": "#2a5a60",
-      "weight": 4
+      "mesh": "res://assets/models/pallet0/pallet0.glb",
+      "size": [0.9, 0.15, 1.1],
+      "color": "#8B7355",
+      "weight": 2
+    },
+    {
+      "shape": "mesh",
+      "mesh": "res://assets/models/pallet1/pallet1.glb",
+      "size": [0.9, 0.15, 1.1],
+      "color": "#8B7355",
+      "weight": 2
+    },
+    {
+      "shape": "mesh",
+      "mesh": "res://assets/models/pallet2/pallet2.glb",
+      "size": [0.9, 0.15, 1.1],
+      "color": "#8B7355",
+      "weight": 2
     }
   ],
   "generation": {

@@ -3,12 +3,25 @@ extends Node3D
 ## Turns a LevelGenerator layout + theme into 3D nodes:
 ##  - floor: one MeshInstance3D with procedural shader (checker + accent),
 ##  - boundary walls with collision,
-##  - props: StaticBody3D + primitive mesh + collision shape.
+##  - props: StaticBody3D + primitive mesh + collision shape,
+##  - pallets: low platform with 60% chance of a motor stacked on top
+##    (Electric-motor0 or fan-motor0, randomly chosen).
 ##
 ## Physics layers: 1 = world (walls/props), 2 = player, pickups mask 2.
 
 const WALL_HEIGHT := 2.2
 const WALL_THICKNESS := 1.0
+const MOTOR_HEIGHT := 0.5
+const STACK_CHANCE := 0.6
+const PALLET_MESHES := [
+	"res://assets/models/pallet0/pallet0.glb",
+	"res://assets/models/pallet1/pallet1.glb",
+	"res://assets/models/pallet2/pallet2.glb",
+]
+const MOTOR_MESHES := [
+	"res://assets/models/Electric-motor0/Electric-motor0.glb",
+	"res://assets/models/fan-motor0/fan-motor0.glb",
+]
 
 var _material_cache: Dictionary = {}
 var _mesh_scene_cache: Dictionary = {}
@@ -103,16 +116,19 @@ func _build_prop(prop: Dictionary) -> void:
 	var mesh_instance := MeshInstance3D.new()
 	var shape := CollisionShape3D.new()
 	var shape_name := str(prop.get("shape", "box"))
+	var mesh_path := str(prop.get("mesh", ""))
 	if shape_name == "mesh":
-		var scene := _mesh_scene_for(str(prop.get("mesh", "")))
+		var scene := _mesh_scene_for(mesh_path)
 		if scene != null:
 			var model: Node3D = scene.instantiate()
-			var model_scale := size.y / 1.2
-			model.scale = Vector3.ONE * model_scale
+			if _is_pallet(mesh_path):
+				model.scale = Vector3.ONE
+			else:
+				model.scale = Vector3.ONE * (size.y / 1.2)
 			body.add_child(model)
 			model.position.y = -size.y * 0.5
 		else:
-			push_warning("LevelBuilder: mesh prop missing model '%s' — box fallback" % prop.get("mesh", ""))
+			push_warning("LevelBuilder: mesh prop missing model '%s' — box fallback" % mesh_path)
 			var fallback := BoxMesh.new()
 			fallback.size = size
 			fallback.material = _material_for(color)
@@ -120,6 +136,8 @@ func _build_prop(prop: Dictionary) -> void:
 		var box := BoxShape3D.new()
 		box.size = size
 		shape.shape = box
+		if _is_pallet(mesh_path):
+			_stack_motor_on(body, size)
 	elif shape_name == "cylinder":
 		var mesh := CylinderMesh.new()
 		mesh.top_radius = size.x * 0.5
@@ -160,3 +178,30 @@ func _material_for(color: Color) -> StandardMaterial3D:
 		material.roughness = 0.9
 		_material_cache[key] = material
 	return _material_cache[key]
+
+
+func _is_pallet(mesh_path: String) -> bool:
+	for p in PALLET_MESHES:
+		if mesh_path == p:
+			return true
+	return false
+
+
+func _stack_motor_on(body: StaticBody3D, pallet_size: Vector3) -> void:
+	if randf() >= STACK_CHANCE:
+		return
+	var motor_path: String = MOTOR_MESHES[randi() % MOTOR_MESHES.size()]
+	var scene := _mesh_scene_for(motor_path)
+	if scene == null:
+		return
+	var model := scene.instantiate()
+	var motor_scale := MOTOR_HEIGHT / 1.2
+	model.scale = Vector3.ONE * motor_scale
+	model.position.y = pallet_size.y * 0.5 + MOTOR_HEIGHT * 0.5
+	body.add_child(model)
+	var motor_shape := CollisionShape3D.new()
+	var box := BoxShape3D.new()
+	box.size = Vector3(pallet_size.x * 0.6, MOTOR_HEIGHT, pallet_size.z * 0.6)
+	motor_shape.shape = box
+	motor_shape.position.y = pallet_size.y * 0.5 + MOTOR_HEIGHT * 0.5
+	body.add_child(motor_shape)

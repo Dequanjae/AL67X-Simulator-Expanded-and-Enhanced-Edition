@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://kgwyemvjcjnh"
-path="res://.godot/imported/fan-motor0.glb-b2aa68af9517031dd1021fc2dcab43c0.scn"
+uid="uid://2aqw5cyb3dpx"
+path="res://.godot/imported/pallet2.glb-233777dad06c4804a79adb8b5fbfebb3.scn"
 
 [deps]
 
-source_file="res://assets/models/fan-motor0/fan-motor0.glb"
-dest_files=["res://.godot/imported/fan-motor0.glb-b2aa68af9517031dd1021fc2dcab43c0.scn"]
+source_file="res://assets/models/pallet2/pallet2.glb"
+dest_files=["res://.godot/imported/pallet2.glb-233777dad06c4804a79adb8b5fbfebb3.scn"]
 
 [params]
 
@@ -19,7 +19,7 @@ nodes/root_script=null
 mesh_library/use_node_names_as_mesh_names=false
 array_mesh/deduplicate_surfaces=true
 nodes/apply_root_scale=true
-nodes/root_scale=1.0
+nodes/root_scale=0.03
 nodes/import_as_skeleton_bones=false
 nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
