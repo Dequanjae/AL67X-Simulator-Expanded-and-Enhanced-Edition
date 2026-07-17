@@ -1,6 +1,5 @@
 extends Control
-## Boot — Godot splash video (Kenney splash pack animation, tap to skip,
-## paired with a synthesized cinematic sting) → save-path choice
+## Boot — loading screen wallpaper + progress bar → save-path choice
 ## (spec Section 9):
 ##  - "Play Now"            → local save only.
 ##  - "Sign in with Google" → Firebase Auth + Firestore cloud save; if a
@@ -12,11 +11,12 @@ extends Control
 
 const INSTAGRAM_URL := "https://www.instagram.com/al67x._/"
 const XMR_ADDRESS := "8ApdEka2j6CUaaNKp12H1VBi1bziZB2T9Dhju1fPzgiTC8KBLWEEddVeZnpZjg7Ni4KCENsPLfSDfh2nbMhbFqngM5wKwHE"
-const SPLASH_SECONDS := 3.4
+const LOADING_DURATION := 1.2
 
-var _splash_done := false
+var _load_done := false
 
 @onready var _splash: TextureRect = $Splash
+@onready var _loading_bar: ProgressBar = $LoadingBar
 @onready var _title: Label = $TitleLabel
 @onready var _menu: VBoxContainer = $Menu
 @onready var _play_now_button: Button = $Menu/PlayNowButton
@@ -43,48 +43,38 @@ func _ready() -> void:
 		_copy_button.text = "COPIED! <3")
 	_close_support_button.pressed.connect(func() -> void: _support_panel.visible = false)
 	_xmr_label.text = XMR_ADDRESS
-	_play_splash()
+	_play_load()
 
 
-func _play_splash() -> void:
-	# Headless (tests/CI): skip straight to the menu.
+func _play_load() -> void:
 	if _splash.texture == null or DisplayServer.get_name() == "headless":
-		_finish_splash()
+		_finish_load()
 		return
 	_splash.visible = true
-	# Over-the-top: punch-in with overshoot, slow drift zoom, then fade.
-	_splash.pivot_offset = get_viewport().get_visible_rect().size * 0.5
-	_splash.scale = Vector2(0.25, 0.25)
-	_splash.modulate = Color(1, 1, 1, 0)
-	AudioDirector.play_sfx("splash_sting", 0.0)
+	_loading_bar.visible = true
+	_loading_bar.value = 0.0
+	var player := AudioStreamPlayer.new()
+	player.stream = load("res://assets/audio/music/Credits.ogg")
+	player.volume_db = -8.0
+	add_child(player)
+	player.play()
 	var tween := create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(_splash, "modulate", Color.WHITE, 0.5)
-	tween.tween_property(_splash, "scale", Vector2(1.06, 1.06), 0.9).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.chain().tween_property(_splash, "scale", Vector2(1.12, 1.12), SPLASH_SECONDS - 1.4)
-	tween.chain().tween_property(_splash, "modulate", Color(1, 1, 1, 0), 0.5)
-	tween.chain().tween_callback(_finish_splash)
+	tween.tween_property(_loading_bar, "value", 100.0, LOADING_DURATION)
+	tween.tween_callback(func() -> void:
+		player.stop()
+		player.queue_free()
+		_finish_load()
+	)
 
 
-func _input(event: InputEvent) -> void:
-	# Tap/click/any key skips the splash.
-	if _splash_done:
+func _finish_load() -> void:
+	if _load_done:
 		return
-	if (event is InputEventScreenTouch and event.pressed) \
-			or (event is InputEventMouseButton and event.pressed) \
-			or event is InputEventKey:
-		_finish_splash()
-
-
-func _finish_splash() -> void:
-	if _splash_done:
-		return
-	_splash_done = true
+	_load_done = true
 	_splash.visible = false
+	_loading_bar.visible = false
 	_title.visible = true
-	# Main menu music starts AFTER the splash, not under it.
 	AudioDirector.play_music("hub")
-	# SceneManager (addon) needs its first _process before any change_scene.
 	await get_tree().create_timer(0.2).timeout
 	_decide()
 
