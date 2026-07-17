@@ -11,7 +11,7 @@ extends Control
 
 const INSTAGRAM_URL := "https://www.instagram.com/al67x._/"
 const XMR_ADDRESS := "8ApdEka2j6CUaaNKp12H1VBi1bziZB2T9Dhju1fPzgiTC8KBLWEEddVeZnpZjg7Ni4KCENsPLfSDfh2nbMhbFqngM5wKwHE"
-const LOADING_DURATION := 1.2
+
 
 var _load_done := false
 
@@ -46,7 +46,21 @@ func _ready() -> void:
 	_play_load()
 
 
+func _ensure_splash_texture() -> void:
+	if _splash.texture != null:
+		return
+	var f := FileAccess.open("res://assets/video/Loading-screen.png", FileAccess.READ)
+	if f == null:
+		return
+	var bytes := f.get_buffer(f.get_length())
+	var img := Image.new()
+	if img.load_png_from_buffer(bytes) != OK:
+		return
+	_splash.texture = ImageTexture.create_from_image(img)
+
+
 func _play_load() -> void:
+	_ensure_splash_texture()
 	if _splash.texture == null or DisplayServer.get_name() == "headless":
 		_finish_load()
 		return
@@ -58,13 +72,25 @@ func _play_load() -> void:
 	player.volume_db = -8.0
 	add_child(player)
 	player.play()
-	var tween := create_tween()
-	tween.tween_property(_loading_bar, "value", 100.0, LOADING_DURATION)
-	tween.tween_callback(func() -> void:
-		player.stop()
-		player.queue_free()
-		_finish_load()
-	)
+	await _fake_load()
+	player.stop()
+	player.queue_free()
+	_finish_load()
+
+
+func _fake_load() -> void:
+	var rng := RandomNumberGenerator.new()
+	rng.randomize()
+	var bar := 0.0
+	while bar < 100.0:
+		var chunk := rng.randf_range(4.0, 14.0)
+		bar = minf(bar + chunk, 100.0)
+		var step_time := rng.randf_range(0.08, 0.22)
+		if rng.randf() < 0.25:
+			step_time += rng.randf_range(0.15, 0.45)
+		var tween := create_tween()
+		tween.tween_property(_loading_bar, "value", bar, step_time).set_ease(Tween.EASE_IN)
+		await tween.finished
 
 
 func _finish_load() -> void:
