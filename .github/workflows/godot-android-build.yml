@@ -1,50 +1,54 @@
-name: Build Android APK
+name: Android APK
+
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch: {}
-
-permissions:
-  contents: write
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
 
 env:
-  GODOT_VERSION: "4.7"
-  EXPORT_NAME: "AL67X Simulator Expanded and Enhanced Edition"
-  EXPORT_PRESET: "Android"
+  CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
+
 jobs:
-  build-android:
+  build:
     runs-on: ubuntu-latest
-    container:
-      image: barichello/godot-ci:4.7
+    container: barichello/godot-ci:4.7
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Setup export templates
-        run: |
-          mkdir -p ~/.local/share/godot
-          ln -sf /root/.local/share/godot/export_templates ~/.local/share/godot/export_templates
-      - name: Configure Android SDK paths
-        run: |
-          mkdir -pv "$HOME/.config/godot"
-          cat > "$HOME/.config/godot/editor_settings-4.7.tres" <<EOF
-          [gd_resource type="EditorSettings" format=3]
-          [resource]
-          export/android/android_sdk_path = "/usr/lib/android-sdk"
-          export/android/java_sdk_path = "/usr/lib/jvm/java-17-openjdk-amd64"
-          EOF
-      - name: Create output directory
-        run: mkdir -v -p build/android
-      - name: Install template + Export debug APK
-        run: |
-          godot --headless --install-android-build-template \
-            --export-debug "${EXPORT_PRESET}" "build/android/${EXPORT_NAME}.apk"
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+      - uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
         with:
-          tag_name: beta-${{ github.run_number }}
-          name: Beta build #${{ github.run_number }}
-          body: |
-            Auto-built debug APK for testing.
-            Install on your phone via Obtain or sideload.
-          files: build/android/*.apk
-          prerelease: true
+          targets: aarch64-linux-android
+
+      - name: Install cargo-ndk
+        run: cargo install cargo-ndk
+
+      - name: Cross-compile Rust GDExtension for Android (arm64)
+        working-directory: addons/rust
+        run: |
+          cargo ndk \
+            -t arm64-v8a \
+            -o target/android \
+            build --release
+        env:
+          ANDROID_NDK_HOME: ${{ env.ANDROID_NDK_HOME }}
+
+      - name: Verify .so was produced
+        run: |
+          ls -lh addons/rust/target/android/arm64-v8a/libmy_extension.so
+
+      - name: Export debug APK
+        run: |
+          mkdir -p export
+          godot --headless \
+            --export-debug Android export/AL67X-debug.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AL67X-android-debug
+          path: export/AL67X-debug.apk

@@ -47,6 +47,7 @@ var _timed_boosts: Array = []
 @onready var _death_portrait: TextureRect = $HUD/DeathPanel/DeathBox/CryPortrait
 @onready var _ad_button: Button = $HUD/DeathPanel/DeathBox/AdContinueButton
 @onready var _ascend_button: Button = $HUD/DeathPanel/DeathBox/AscendButton
+@onready var _blackout: ColorRect = $HUD/Blackout
 @onready var _ascend_overlay: Control = $HUD/AscendOverlay
 @onready var _ascend_title: Label = $HUD/AscendOverlay/Center/Box/TitleLabel
 @onready var _ascend_blobs_label: Label = $HUD/AscendOverlay/Center/Box/BlobCountLabel
@@ -78,6 +79,19 @@ func _ready() -> void:
 		push_error("LevelGeneratorRs not available")
 		layout = {"ok": false}
 	print("RUN: layout generated, arena=%s props=%d ok=%s" % [str(layout.get("arena_size", "?")), layout.get("props", []).size(), layout.get("ok", false)])
+	if not layout.get("ok", false):
+		push_error("Level generation failed — missing native extension on this platform")
+		var msg := Label.new()
+		msg.text = "Level generation unavailable on this platform.\n\nTry restarting the game."
+		msg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		msg.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		msg.add_theme_font_size_override("font_size", 32)
+		msg.autowrap_mode = AUTOWRAP_WORD_SMART
+		msg.set_anchors_and_offsets_preset(PRESET_FULL_RECT)
+		msg.add_theme_color_override("font_color", Color.WHITE)
+		$HUD.add_child(msg)
+		$HUD.move_child(msg, $HUD.get_child_count())
+		return
 	_level_root.build(layout, _theme)
 	print("RUN: level built")
 	_player.position = layout["player_spawn"]
@@ -129,6 +143,9 @@ func _ready() -> void:
 
 	EventBus.run_started.emit(_level)
 	_refresh_hud()
+	var fade := create_tween()
+	fade.tween_property(_blackout, "color", Color(0, 0, 0, 0), 0.4)
+	fade.tween_callback(_blackout.queue_free)
 	print("--- RUN _ready: done ---")
 
 

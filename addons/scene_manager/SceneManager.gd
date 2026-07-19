@@ -90,6 +90,8 @@ func _get_final_options(initial_options: Dictionary) -> Dictionary:
 	return options
 
 func _process(_delta: float) -> void:
+	if is_transitioning:
+		return
 	if not is_instance_valid(_previous_scene) and _tree.current_scene:
 		_previous_scene = _tree.current_scene
 		_current_scene = _tree.current_scene
@@ -105,9 +107,9 @@ func change_scene(path: Variant, setted_options: Dictionary = {}) -> void:
 		await fade_out(setted_options)
 	if not options["skip_scene_change"]:
 		if path == null:
-			_reload_scene()
+			await _reload_scene()
 		else:
-			_replace_scene(path, options)
+			await _replace_scene(path, options)
 	await _tree.create_timer(options["wait_time"]).timeout
 	if not options["skip_fade_in"]:
 		await fade_in(setted_options)
