@@ -49,14 +49,12 @@ func _ready() -> void:
 func _ensure_splash_texture() -> void:
 	if _splash.texture != null:
 		return
-	var f := FileAccess.open("res://assets/video/Loading-screen.png", FileAccess.READ)
-	if f == null:
-		return
-	var bytes := f.get_buffer(f.get_length())
-	var img := Image.new()
-	if img.load_png_from_buffer(bytes) != OK:
-		return
-	_splash.texture = ImageTexture.create_from_image(img)
+	# load() follows the .remap in exported builds (raw PNG is not packed),
+	# so this works in the editor AND on Android. FileAccess.open() does not
+	# remap, which silently skipped the splash in every export.
+	var tex: Texture2D = load("res://assets/video/Loading-screen.png")
+	if tex != null:
+		_splash.texture = tex
 
 
 func _play_load() -> void:

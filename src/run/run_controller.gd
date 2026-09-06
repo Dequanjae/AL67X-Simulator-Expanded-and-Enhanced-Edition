@@ -79,6 +79,9 @@ func _ready() -> void:
 		push_error("LevelGeneratorRs not available")
 		layout = {"ok": false}
 	print("RUN: layout generated, arena=%s props=%d ok=%s" % [str(layout.get("arena_size", "?")), layout.get("props", []).size(), layout.get("ok", false)])
+	var fade := create_tween()
+	fade.tween_property(_blackout, "color", Color(0, 0, 0, 0), 0.4)
+	fade.tween_callback(_blackout.queue_free)
 	if not layout.get("ok", false):
 		push_error("Level generation failed — missing native extension on this platform")
 		var msg := Label.new()
@@ -86,8 +89,8 @@ func _ready() -> void:
 		msg.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		msg.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		msg.add_theme_font_size_override("font_size", 32)
-		msg.autowrap_mode = AUTOWRAP_WORD_SMART
-		msg.set_anchors_and_offsets_preset(PRESET_FULL_RECT)
+		msg.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+		msg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		msg.add_theme_color_override("font_color", Color.WHITE)
 		$HUD.add_child(msg)
 		$HUD.move_child(msg, $HUD.get_child_count())
@@ -143,9 +146,6 @@ func _ready() -> void:
 
 	EventBus.run_started.emit(_level)
 	_refresh_hud()
-	var fade := create_tween()
-	fade.tween_property(_blackout, "color", Color(0, 0, 0, 0), 0.4)
-	fade.tween_callback(_blackout.queue_free)
 	print("--- RUN _ready: done ---")
 
 

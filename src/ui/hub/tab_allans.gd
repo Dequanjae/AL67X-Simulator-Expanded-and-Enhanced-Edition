@@ -30,7 +30,7 @@ func _ready() -> void:
 	EventBus.save_loaded.connect(_refresh_all)
 	EventBus.allan_equipped.connect(func(_id: String) -> void: _refresh_all())
 	EventBus.allan_unlocked.connect(func(_id: String) -> void: _refresh_all())
-	EventBus.fusion_energy_changed.connect(func(_c: int, _m: int) -> void: _refresh_energy())
+	EventBus.amps_changed.connect(func(_c: int, _m: int) -> void: _refresh_energy())
 	FusionSystem.sync_energy(_config)
 	_status_label.text = "Drag to swap — line up 3 matching Allans!"
 	_refresh_all()
