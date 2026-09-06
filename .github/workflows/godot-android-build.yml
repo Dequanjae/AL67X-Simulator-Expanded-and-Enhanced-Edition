@@ -13,8 +13,8 @@ env:
   RUST_BACKTRACE: 1
 
 jobs:
-  # Rust cross-compile runs on the BARE runner (curl/rustup available).
-  # The godot-ci container has no curl -> rustup install dies with exit 127 (run #51).
+  # Rust cross-compile on the BARE runner (curl/rustup available).
+  # The godot-ci container has no curl -> rustup dies with exit 127 (run #51).
   rust-android:
     runs-on: ubuntu-latest
     steps:
@@ -58,6 +58,22 @@ jobs:
           mkdir -p ~/.local/share/godot
           ln -sf /root/.local/share/godot/export_templates ~/.local/share/godot/export_templates
 
+      - name: Configure Android SDK paths
+        run: |
+          mkdir -pv "$HOME/.config/godot"
+          cat > "$HOME/.config/godot/editor_settings-4.7.tres" <<EOF
+          [gd_resource type="EditorSettings" format=3]
+          [resource]
+          export/android/android_sdk_path = "/usr/lib/android-sdk"
+          export/android/java_sdk_path = "/usr/lib/jvm/java-17-openjdk-amd64"
+          EOF
+
+      - name: Strip dev-only MCP autoload (godot_ai not shipped)
+        run: |
+          sed -i '/_mcp_game_helper/d' project.godot
+          sed -i 's|, "res://addons/godot_ai/plugin.cfg"||' project.godot
+          grep -n "godot_ai\|_mcp_game_helper" project.godot || echo "godot_ai references stripped"
+
       - name: Download Rust .so
         uses: actions/download-artifact@v4
         with:
@@ -70,6 +86,7 @@ jobs:
       - name: Export debug APK
         run: |
           mkdir -p export
+          ls -lh addons/godot-rust/target/android/arm64-v8a/libmy_extension.so
           godot --headless --export-debug Android export/AL67X-debug.apk
           ls -lh export/AL67X-debug.apk
 
