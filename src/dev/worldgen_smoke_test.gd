@@ -66,8 +66,10 @@ func _run_tests() -> void:
 		var tag := "L%d/%s" % [level, theme.get("id", "?")]
 		var layout := _generate(level, theme)
 
-		_check(layout["ok"], "%s: generation validated (ratio %.3f, attempts %d)" % [tag, layout["reachable_ratio"], layout["attempts"]])
-		_check(layout["reachable_ratio"] >= MIN_REACHABLE_RATIO, "%s: reachable ratio %.3f" % [tag, layout["reachable_ratio"]])
+		if not layout.get("ok", false):
+			_failures.append("%s: generation FAILED (LevelGeneratorRs missing or returned ok=false)" % tag)
+			continue
+		_check(layout.get("reachable_ratio", 0.0) >= MIN_REACHABLE_RATIO, "%s: reachable ratio %.3f" % [tag, layout.get("reachable_ratio", 0.0)])
 		_check(layout["walkable_points"].size() >= 200, "%s: ample walkable space (%d cells)" % [tag, layout["walkable_points"].size()])
 		_check(layout["props"].size() > 0, "%s: has props" % tag)
 

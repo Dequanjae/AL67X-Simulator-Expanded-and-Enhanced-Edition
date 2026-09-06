@@ -3,9 +3,10 @@ name: Android APK
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 env:
   CARGO_TERM_COLOR: always
@@ -14,41 +15,53 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: barichello/godot-ci:4.7
-
     steps:
       - uses: actions/checkout@v4
 
+      # Rust cross-compile runs on the BARE runner (curl/rustup available),
+      # NOT inside the godot-ci container (no curl -> exit 127, run #51).
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: aarch64-linux-android
 
       - name: Install cargo-ndk
-        run: cargo install cargo-ndk
+        uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-ndk
 
       - name: Cross-compile Rust GDExtension for Android (arm64)
-        working-directory: addons/rust
+        working-directory: addons/godot-rust
         run: |
           cargo ndk \
             -t arm64-v8a \
             -o target/android \
             build --release
-        env:
-          ANDROID_NDK_HOME: ${{ env.ANDROID_NDK_HOME }}
+          ls -lh target/android/arm64-v8a/libmy_extension.so
 
-      - name: Verify .so was produced
-        run: |
-          ls -lh addons/rust/target/android/arm64-v8a/libmy_extension.so
-
+      # Godot export runs INSIDE the container (Godot + export templates + SDK).
       - name: Export debug APK
+        shell: 'script -q -e -c "bash -e -o pipefail {0}"'
         run: |
-          mkdir -p export
-          godot --headless \
-            --export-debug Android export/AL67X-debug.apk
+          mkdir -p ~/.local/share/godot
+          ln -sf /root/.local/share/godot/export_templates ~/.local/share/godot/export_templates
+          godot --headless --import || true
+          godot --headless --export-debug Android export/AL67X-debug.apk
+          ls -lh export/AL67X-debug.apk
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: AL67X-android-debug
           path: export/AL67X-debug.apk
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: beta-${{ github.run_number }}
+          name: Beta build #${{ github.run_number }}
+          body: |
+            Auto-built debug APK for testing.
+            Install on your phone via Obtain or sideload.
+          files: export/AL67X-debug.apk
+          prerelease: true

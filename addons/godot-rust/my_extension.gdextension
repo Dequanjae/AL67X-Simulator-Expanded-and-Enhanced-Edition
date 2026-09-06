@@ -1,0 +1,19 @@
+[configuration]
+entry_symbol = "gdext_rust_init"
+compatibility_minimum = "4.2"
+
+[libraries]
+linux.debug.x86_64 = "res://addons/godot-rust/target/release/libmy_extension.so"
+linux.release.x86_64 = "res://addons/godot-rust/target/release/libmy_extension.so"
+windows.debug.x86_64 = "res://addons/godot-rust/target/debug/my_extension.dll"
+windows.release.x86_64 = "res://addons/godot-rust/target/release/my_extension.dll"
+macos.debug.x86_64 = "res://addons/godot-rust/target/debug/libmy_extension.dylib"
+macos.release.x86_64 = "res://addons/godot-rust/target/release/libmy_extension.dylib"
+macos.debug.arm64 = "res://addons/godot-rust/target/debug/libmy_extension.dylib"
+macos.release.arm64 = "res://addons/godot-rust/target/release/libmy_extension.dylib"
+android.debug.arm64 = "res://addons/godot-rust/target/android/arm64-v8a/libmy_extension.so"
+android.release.arm64 = "res://addons/godot-rust/target/android/arm64-v8a/libmy_extension.so"
+android.debug.arm32 = "res://addons/godot-rust/target/android/armeabi-v7a/libmy_extension.so"
+android.release.arm32 = "res://addons/godot-rust/target/android/armeabi-v7a/libmy_extension.so"
+android.debug.x86_64 = "res://addons/godot-rust/target/android/x86_64/libmy_extension.so"
+android.release.x86_64 = "res://addons/godot-rust/target/android/x86_64/libmy_extension.so"
