@@ -13,13 +13,13 @@ env:
   RUST_BACKTRACE: 1
 
 jobs:
-  build:
+  # Rust cross-compile runs on the BARE runner (curl/rustup available).
+  # The godot-ci container has no curl -> rustup install dies with exit 127 (run #51).
+  rust-android:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      # Rust cross-compile runs on the BARE runner (curl/rustup available),
-      # NOT inside the godot-ci container (no curl -> exit 127, run #51).
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -39,13 +39,37 @@ jobs:
             build --release
           ls -lh target/android/arm64-v8a/libmy_extension.so
 
-      # Godot export runs INSIDE the container (Godot + export templates + SDK).
-      - name: Export debug APK
-        shell: 'script -q -e -c "bash -e -o pipefail {0}"'
+      - name: Upload .so artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-android-so
+          path: addons/godot-rust/target/android/arm64-v8a/libmy_extension.so
+
+  godot-export:
+    needs: rust-android
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.7
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup export templates
         run: |
           mkdir -p ~/.local/share/godot
           ln -sf /root/.local/share/godot/export_templates ~/.local/share/godot/export_templates
-          godot --headless --import || true
+
+      - name: Download Rust .so
+        uses: actions/download-artifact@v4
+        with:
+          name: rust-android-so
+          path: addons/godot-rust/target/android/arm64-v8a
+
+      - name: Import project resources
+        run: godot --headless --import
+
+      - name: Export debug APK
+        run: |
+          mkdir -p export
           godot --headless --export-debug Android export/AL67X-debug.apk
           ls -lh export/AL67X-debug.apk
 
