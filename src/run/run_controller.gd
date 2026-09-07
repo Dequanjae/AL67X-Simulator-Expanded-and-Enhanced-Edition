@@ -54,11 +54,27 @@ var _timed_boosts: Array = []
 @onready var _ascend_total_label: Label = $HUD/AscendOverlay/Center/Box/TotalLabel
 
 
+func debug_regen_same_seed() -> void:
+	## Package req 12: re-roll the current level with the same world seed.
+	## Reloading the run scene re-runs _ready -> same meta.world_seed ->
+	## identical layout (separate RNG streams, no wall-clock entropy).
+	print("REGEN same seed=%d level=%d" % [int(SaveService.get_value("meta.world_seed", 0)), _level])
+	get_tree().reload_current_scene()
+
+
+func debug_new_seed() -> void:
+	## Package req 13: roll a fresh world seed, then regenerate.
+	SaveService.set_value("meta.world_seed", randi() % 100000000)
+	print("REGEN new seed=%d level=%d" % [int(SaveService.get_value("meta.world_seed", 0)), _level])
+	get_tree().reload_current_scene()
+
+
 func _ready() -> void:
 	print("--- RUN _ready: start ---")
 	_level = int(SaveService.get_value("progress.highest_level_unlocked", 1))
 	_start_msec = Time.get_ticks_msec()
 	print("RUN: level=%d" % _level)
+	print("RUN seed=%d theme=%s" % [int(SaveService.get_value("meta.world_seed", 0)), str(_theme.get("id", "?"))])
 	_config = RunBalance.load_config()
 	_stats = PlayerStats.from_config(_config)
 	CardUpgrades.apply_loadout(_stats, CardUpgrades.load_config())
@@ -69,6 +85,11 @@ func _ready() -> void:
 	_powerup_defs = powerups_data.get("effects", []) if powerups_data is Dictionary else []
 	print("RUN: config+stats done")
 
+	# Deterministic world seed: created once per save, reused so the same
+	# run/level always generates the same map (package determinism rule).
+	if str(SaveService.get_value("meta.world_seed", "")) == "":
+		SaveService.set_value("meta.world_seed", randi() % 100000000)
+	var world_seed := int(SaveService.get_value("meta.world_seed", 0))
 	var themes := _load_themes()
 	_theme = themes[(_level - 1) % themes.size()] if not themes.is_empty() else {}
 	print("RUN: themes loaded, theme=%s" % _theme.get("id", "?"))
@@ -95,6 +116,8 @@ func _ready() -> void:
 		$HUD.add_child(msg)
 		$HUD.move_child(msg, $HUD.get_child_count())
 		return
+	if layout.has("dungeon"):
+		_horde.dungeon_spawn_points = layout["dungeon"]
 	_level_root.build(layout, _theme)
 	print("RUN: level built")
 	_player.position = layout["player_spawn"]

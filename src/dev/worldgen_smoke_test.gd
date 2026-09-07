@@ -76,10 +76,15 @@ func _run_tests() -> void:
 		var spawn_clear := float(theme["generation"].get("spawn_clear_radius", 4.5))
 		var arena: Vector2 = layout["arena_size"]
 		var half := arena * 0.5
+		# Spawn clearing is around the LAYOUT's reported player spawn
+		# (dungeon algorithm spawns in the first room, not arena center).
+		var spawn_pos := Vector2(
+			float(layout["player_spawn"][0]),
+			float(layout["player_spawn"][2]))
 		for prop in layout["props"]:
 			var pos := Vector2(float(prop["pos"][0]), float(prop["pos"][1]))
-			if pos.length() < spawn_clear:
-				_failures.append("%s: prop inside spawn clearing at %s" % [tag, pos])
+			if pos.distance_to(spawn_pos) < spawn_clear:
+				_failures.append("%s: prop inside spawn clearing at %s (spawn %s)" % [tag, pos, spawn_pos])
 			if absf(pos.x) > half.x - 1.0 or absf(pos.y) > half.y - 1.0:
 				_failures.append("%s: prop out of bounds at %s (arena %s)" % [tag, pos, arena])
 

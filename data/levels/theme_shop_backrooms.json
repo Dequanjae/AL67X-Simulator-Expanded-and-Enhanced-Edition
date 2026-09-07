@@ -1,7 +1,7 @@
 {
-  "_readme": "Rooms theme — interior drywall lines split the shop into back rooms with door gaps (algorithm 'rooms'; props with role='wall' form the walls). See theme_shop_classic.json for field docs.",
+  "_readme": "Rooms theme \u2014 interior drywall lines split the shop into back rooms with door gaps (algorithm 'rooms'; props with role='wall' form the walls). See theme_shop_classic.json for field docs.",
   "id": "shop_backrooms",
-  "name": "The Shop — Back Rooms",
+  "name": "The Shop \u2014 Back Rooms",
   "order": 5,
   "colors": {
     "floor": "#514c44",
@@ -15,19 +15,131 @@
   },
   "props": [
     {
+      "shape": "box",
+      "size": [
+        0.5,
+        2.4,
+        2.6
+      ],
+      "color": "#6e6152",
+      "weight": 10,
+      "role": "wall"
+    },
+    {
       "shape": "mesh",
-      "mesh": "res://assets/models/pallet0/pallet0.glb",
+      "mesh": "res://assets/models/Electric-motor0/Electric-motor0.glb",
       "size": [
         0.9,
-        0.15,
-        1.1
+        0.8,
+        0.9
+      ],
+      "color": "#7a7d82",
+      "weight": 6,
+      "role": "main_workshop"
+    },
+    {
+      "shape": "box",
+      "size": [
+        1.6,
+        0.9,
+        0.8
+      ],
+      "color": "#8a6f4d",
+      "weight": 5,
+      "role": "main_workshop"
+    },
+    {
+      "shape": "box",
+      "size": [
+        0.8,
+        1.4,
+        0.8
+      ],
+      "color": "#6f6f6f",
+      "weight": 5,
+      "role": "motor_repair"
+    },
+    {
+      "shape": "box",
+      "size": [
+        1.2,
+        1.2,
+        1.2
+      ],
+      "color": "#9c8b64",
+      "weight": 7,
+      "role": "storage"
+    },
+    {
+      "shape": "box",
+      "size": [
+        1.4,
+        1.0,
+        0.6
+      ],
+      "color": "#7d7469",
+      "weight": 6,
+      "role": "storage"
+    },
+    {
+      "shape": "mesh",
+      "mesh": "res://assets/models/Box_Pallet_03/SRA_Box_Pallet_03.glb",
+      "size": [
+        0.95,
+        1.02,
+        0.96
       ],
       "color": "#8B7355",
-      "weight": 2
+      "weight": 6,
+      "role": "loading_bay"
+    },
+    {
+      "shape": "box",
+      "size": [
+        1.0,
+        1.5,
+        0.5
+      ],
+      "color": "#5f6b6f",
+      "weight": 5,
+      "role": "electrical_room"
+    },
+    {
+      "shape": "box",
+      "size": [
+        1.2,
+        0.75,
+        0.7
+      ],
+      "color": "#6b5d52",
+      "weight": 4,
+      "role": "office"
+    },
+    {
+      "shape": "box",
+      "size": [
+        1.0,
+        1.8,
+        0.5
+      ],
+      "color": "#707a7a",
+      "weight": 4,
+      "role": "break_room"
+    },
+    {
+      "shape": "box",
+      "size": [
+        0.9,
+        1.1,
+        0.9
+      ],
+      "color": "#857a6a",
+      "weight": 5,
+      "role": "parts_room"
     }
   ],
   "generation": {
-    "algorithm": "rooms",
+    "algorithm": "dungeon",
     "arena_size": [
       46,
       42

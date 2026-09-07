@@ -1,7 +1,7 @@
 {
-  "_readme": "Clusters theme — islands of stacked stock with open lanes between. See theme_shop_classic.json for field docs.",
+  "_readme": "Clusters theme \u2014 islands of stacked stock with open lanes between. See theme_shop_classic.json for field docs.",
   "id": "shop_clusters",
-  "name": "The Shop — Delivery Day",
+  "name": "The Shop \u2014 Delivery Day",
   "colors": {
     "floor": "#4b4650",
     "floor_alt": "#433e48",
@@ -11,14 +11,36 @@
   "props": [
     {
       "shape": "mesh",
-      "mesh": "res://assets/models/pallet0/pallet0.glb",
+      "mesh": "res://assets/models/Box_Pallet_01/SRA_Box_Pallet_01.glb",
       "size": [
-        0.9,
-        0.15,
-        1.1
+        0.95,
+        0.46,
+        0.96
       ],
       "color": "#8B7355",
-      "weight": 2
+      "weight": 1
+    },
+    {
+      "shape": "mesh",
+      "mesh": "res://assets/models/Box_Pallet_02/SRA_Box_Pallet_02.glb",
+      "size": [
+        0.95,
+        0.46,
+        0.96
+      ],
+      "color": "#8B7355",
+      "weight": 1
+    },
+    {
+      "shape": "mesh",
+      "mesh": "res://assets/models/Box_Pallet_03/SRA_Box_Pallet_03.glb",
+      "size": [
+        0.95,
+        1.02,
+        0.96
+      ],
+      "color": "#8B7355",
+      "weight": 1
     }
   ],
   "generation": {

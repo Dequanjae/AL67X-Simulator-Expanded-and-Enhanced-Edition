@@ -13,7 +13,13 @@ const WALL_THICKNESS := 1.0
 const MOTOR_HEIGHT := 0.5
 const STACK_CHANCE := 0.6
 const PALLET_MESHES := [
-	"res://assets/models/pallet0/pallet0.glb",
+	"res://assets/models/Box_Pallet_01/SRA_Box_Pallet_01.glb",
+	"res://assets/models/Box_Pallet_02/SRA_Box_Pallet_02.glb",
+	"res://assets/models/Box_Single_01/SRA_Box_Single_01.glb",
+	"res://assets/models/Box_Pallet_03/SRA_Box_Pallet_03.glb",
+	"res://assets/models/Box_Stack_01/SRA_Box_Stack_01.glb",
+	"res://assets/models/Box_Stack_02/SRA_Box_Stack_02.glb",
+	"res://assets/models/Box_Stack_03/SRA_Box_Stack_03.glb",
 ]
 const MOTOR_MESHES := [
 	"res://assets/models/Electric-motor0/Electric-motor0.glb",

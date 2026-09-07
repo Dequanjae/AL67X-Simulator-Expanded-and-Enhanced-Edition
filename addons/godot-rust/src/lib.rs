@@ -1,9 +1,82 @@
+mod dungeon;
 mod worldgen;
 
 use godot::prelude::*;
 use worldgen::{GenParams, PropDef, Theme};
 
 struct MyExtension;
+
+
+#[derive(GodotClass)]
+#[class(base=RefCounted, init)]
+struct DungeonGeneratorRs {
+    base: Base<RefCounted>,
+}
+
+#[godot_api]
+impl DungeonGeneratorRs {
+    /// Deterministic dungeon: same seed + level + generator = same layout.
+    /// Returns tiles (0=wall,1=floor,2=door), rooms with types, player
+    /// start, enemy spawn points. Grid is in TILE units; Godot converts
+    /// to world meters (tile_size baked into the returned scale).
+    #[func]
+    fn generate_dungeon(&self, level: i32, seed: i64, width: i32, height: i32) -> Dictionary {
+        use dungeon::{generate_dungeon, RoomType};
+
+        let w = width.max(24).min(160) as i32;
+        let h = height.max(24).min(120) as i32;
+        let lvl = level.max(1) as u32;
+        let s = seed as u64;
+
+        let d = generate_dungeon(w, h, lvl, s);
+
+        let mut out = Dictionary::new();
+        out.set("width", d.width);
+        out.set("height", d.height);
+        out.set("player_start", Vector2i::new(d.player_start.x, d.player_start.y));
+
+        let mut tiles = PackedByteArray::new();
+        tiles.resize(d.tiles.len());
+        for (i, t) in d.tiles.iter().enumerate() {
+            tiles[i] = *t;
+        }
+        out.set("tiles", tiles);
+
+        let mut rooms = VariantArray::new();
+        for r in &d.rooms {
+            let mut rd = Dictionary::new();
+            rd.set("x", r.x);
+            rd.set("y", r.y);
+            rd.set("width", r.width);
+            rd.set("height", r.height);
+            let (shape_s, type_s) = (
+                match r.shape { dungeon::RoomShape::Rectangle => "rect", dungeon::RoomShape::LShape => "l", dungeon::RoomShape::Cross => "cross" },
+                match r.room_type {
+                    RoomType::MainWorkshop => "main_workshop",
+                    RoomType::MotorRepair => "motor_repair",
+                    RoomType::Storage => "storage",
+                    RoomType::PartsRoom => "parts_room",
+                    RoomType::Office => "office",
+                    RoomType::ElectricalRoom => "electrical_room",
+                    RoomType::BreakRoom => "break_room",
+                    RoomType::LoadingBay => "loading_bay",
+                },
+            );
+            rd.set("shape", shape_s);
+            rd.set("type", type_s);
+            rooms.push(&rd.to_variant());
+        }
+        out.set("rooms", rooms);
+
+        let mut spawns = VariantArray::new();
+        for p in &d.enemy_spawn_points {
+            spawns.push(&Vector2i::new(p.x, p.y).to_variant());
+        }
+        out.set("enemy_spawn_points", spawns);
+        out.set("ok", true);
+        out
+    }
+}
 
 #[gdextension]
 unsafe impl ExtensionLibrary for MyExtension {}
@@ -51,6 +124,11 @@ impl LevelGeneratorRs {
                 result.player_spawn.2 as f32,
             ),
         );
+        let mut spawns = PackedVector2Array::new();
+        for (sx, sy) in &result.enemy_spawns {
+            spawns.push(Vector2::new(*sx as f32, *sy as f32));
+        }
+        out.set("enemy_spawn_points", spawns);
         out.set("attempts", result.attempts);
 
         out

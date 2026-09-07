@@ -29,3 +29,4 @@ addons/block_code/
 addons/godot_ai/
 addons/godot-wasm/
 addons/block_code/
+build/

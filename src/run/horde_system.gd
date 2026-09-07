@@ -96,6 +96,9 @@ var _eproj_mm: MultiMesh
 
 # Prop obstacles (static, from worldgen layout).
 var _obstacles: Array = []          # [{pos: Vector2, half: Vector2}]
+## Dungeon enemy spawn points (Vector2 world coords) from the worldgen
+## dungeon layout — deterministic per seed (package requirement).
+var dungeon_spawn_points: PackedVector2Array = PackedVector2Array()
 var _obstacle_grid: Dictionary = {} # Vector2i -> Array[int]
 
 
@@ -470,6 +473,19 @@ func _weighted_eligible_type() -> int:
 
 
 func _spawn_position() -> Vector2:
+	# Dungeon maps: prefer the layout's deterministic spawn candidates that
+	# are far enough from the player (they live in rooms away from spawn).
+	if not dungeon_spawn_points.is_empty():
+		var player_pos := Vector2(_player.global_position.x, _player.global_position.z)
+		var best: Vector2 = dungeon_spawn_points[0]
+		var best_d := -1.0
+		for i in range(dungeon_spawn_points.size()):
+			var p: Vector2 = dungeon_spawn_points[i]
+			var d := p.distance_to(player_pos)
+			if d > best_d:
+				best_d = d
+				best = p
+		return best
 	var player_pos := Vector2(_player.global_position.x, _player.global_position.z)
 	for i in range(12):
 		var angle := _rng.randf_range(0.0, TAU)
