@@ -313,7 +313,7 @@ func _on_player_died() -> void:
 	# the screen now (its _present already defers while death panel is up).
 	var menu = get_node_or_null("HUD/LevelUpMenu")
 	if menu != null and (menu as Control).visible:
-		menu._on_option_pressed(-1)
+		menu.dismiss_for_death()
 	_show_death_spotlight()
 	_show_death_panel()
 	get_tree().paused = true
@@ -360,6 +360,11 @@ func _on_ad_continue() -> void:
 	_death_panel.visible = false
 	_spotlight.visible = false
 	get_tree().paused = false
+	# A level-up deferred behind the death panel now gets its turn.
+	if _levelup_menu_open() or true:
+		var menu = get_node_or_null("HUD/LevelUpMenu")
+		if menu != null:
+			menu.present_if_pending()
 	_player.set_dead(false)
 	_stats.hearts = _stats.max_hearts
 	_horde.grant_player_iframes(2.0)

@@ -23,6 +23,7 @@ EventBus="*res://src/autoload/event_bus.gd"
 SaveService="*res://src/autoload/save_service.gd"
 EconomyService="*res://src/autoload/economy_service.gd"
 AmpsService="*res://src/autoload/amps_service.gd"
+FontService="*res://src/autoload/font_service.gd"
 InputService="*res://src/autoload/input_service.gd"
 AudioDirector="*res://src/autoload/audio_director.gd"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
@@ -38,10 +39,6 @@ window/handheld/orientation=4
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/GodotFirebaseAndroid/plugin.cfg", "res://addons/goutte.animated_shape_2d/plugin.cfg", "res://addons/scene_manager/plugin.cfg", "res://addons/godot_ai/plugin.cfg")
-
-[gui]
-
-theme/custom="res://assets/theme/al67x_theme.tres"
 
 [input]
 

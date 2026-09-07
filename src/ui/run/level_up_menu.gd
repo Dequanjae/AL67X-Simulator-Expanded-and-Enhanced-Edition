@@ -85,6 +85,20 @@ func _on_option_pressed(index: int) -> void:
 		visible = false
 		get_tree().paused = false
 
+## Death wants the screen: hide and drop pending choices WITHOUT applying
+## any card. (The old code called _on_option_pressed(-1) — GDScript's
+## negative indexing made that APPLY the last card on death.)
+func dismiss_for_death() -> void:
+	_pending = 0
+	visible = false
+
+
+## Re-present a pending choice if one was deferred (e.g. revive via ad).
+func present_if_pending() -> void:
+	if _pending > 0 and not visible and not _death_owns_pause():
+		_present()
+
+
 ## True when the death panel (or another end-of-run overlay) is up.
 func _death_owns_pause() -> bool:
 	var scene := get_tree().current_scene

@@ -1,7 +1,3 @@
-[gd_resource type="Theme" load_steps=2 format=3]
-
-[ext_resource type="FontFile" path="res://assets/fonts/YouBlockheadOpen.ttf" id="1_font"]
+[gd_resource type="Theme" format=3]
 
 [resource]
-default_font = ExtResource("1_font")
-default_font_size = 16
