@@ -1,7 +1,7 @@
 {
-  "_readme": "Aisles theme \u2014 shop shelving rows with door gaps. See theme_shop_classic.json for field docs. Props with role='shelf' are used for the aisle rows.",
+  "_readme": "Aisles theme — shop shelving rows with door gaps. See theme_shop_classic.json for field docs. Props with role='shelf' are used for the aisle rows.",
   "id": "shop_aisles",
-  "name": "The Shop \u2014 Stockroom Aisles",
+  "name": "The Shop — Stockroom Aisles",
   "colors": {
     "floor": "#4d4a43",
     "floor_alt": "#45423c",
@@ -12,7 +12,11 @@
     {
       "shape": "mesh",
       "mesh": "res://assets/models/pallet0/pallet0.glb",
-      "size": [0.9, 0.15, 1.1],
+      "size": [
+        0.9,
+        0.15,
+        1.1
+      ],
       "color": "#8B7355",
       "weight": 2
     }
@@ -28,8 +32,8 @@
     "spawn_clear_radius": 4.5
   },
   "spawns": {
-    "shawarma_max": 26,
-    "shawarma_respawn_sec": 2.3,
+    "shawarma_max": 40,
+    "shawarma_respawn_sec": 1.4,
     "powerup_interval_sec": [
       16,
       30

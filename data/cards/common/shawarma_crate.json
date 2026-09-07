@@ -1,0 +1,9 @@
+{
+  "id": "shawarma_crate",
+  "name": "Shawarma Crate",
+  "description": "+8 max shawarmas on the map",
+  "base": true,
+  "weight": 9,
+  "icon": "",
+  "effect": { "type": "shawarma_max_add", "value": 8 }
+}

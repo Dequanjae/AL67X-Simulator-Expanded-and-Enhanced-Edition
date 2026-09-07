@@ -1,0 +1,9 @@
+{
+  "id": "lucky_fridge",
+  "name": "Lucky Fridge",
+  "description": "Powerups appear 30% more often",
+  "base": true,
+  "weight": 8,
+  "icon": "",
+  "effect": { "type": "powerup_rate_mult", "value": 1.3 }
+}

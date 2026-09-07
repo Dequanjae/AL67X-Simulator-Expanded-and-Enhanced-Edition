@@ -101,7 +101,7 @@ func _ready() -> void:
 	_player.camera = _camera
 	_player.stats = _stats
 	_player.set_shield_visible(_stats.shield > 0)
-	_pickups.configure(layout["walkable_points"], _theme.get("spawns", {}), _player)
+	_pickups.configure(layout["walkable_points"], _theme.get("spawns", {}), _player, _stats)
 
 	var equipped := str(SaveService.get_value("allans.equipped", "player1"))
 	_swarm.setup(_player, equipped)
@@ -182,10 +182,25 @@ func _on_boss_spawned_camera(_boss_id: String) -> void:
 	_camera_rig.shake(1.1)
 
 
+## Waits until the level-up menu closes (player picked or pool empty).
+## Bounded so a stuck menu can never freeze the run forever.
+func _await_levelup_closed() -> void:
+	var waited := 0.0
+	while _levelup_menu_open() and waited < 60.0:
+		await get_tree().create_timer(0.1, true).timeout
+		waited += 0.1
+
+
 func _on_boss_killed(boss_id: String) -> void:
 	EventBus.boss_defeated.emit(boss_id, _level)
 	_unlock_next_level()
 	_end_run(true, "boss_defeated")
+
+
+## True while the level-up menu is presenting choices (it owns the pause).
+func _levelup_menu_open() -> bool:
+	var menu = get_node_or_null("HUD/LevelUpMenu")
+	return menu != null and (menu as Control).visible
 
 
 func _unlock_next_level() -> void:
@@ -204,7 +219,7 @@ func _on_dev_boss_win() -> void:
 
 func _on_blob_collected(amount: int) -> void:
 	_run_blobs += amount
-	_grant_xp(_blob_xp * float(amount))
+	_grant_xp(_blob_xp * _stats.shawarma_xp_mult * float(amount))
 	_refresh_hud()
 
 
@@ -219,6 +234,8 @@ func _on_enemy_killed(enemy_id: String, _world_pos: Vector3) -> void:
 
 func _grant_xp(amount: float) -> void:
 	var level_ups := _stats.add_xp(amount)
+	if _ended:
+		return
 	for i in range(level_ups):
 		EventBus.player_leveled_up.emit(_stats.level)
 
@@ -292,6 +309,11 @@ func _apply_player_damage(_damage: float) -> void:
 func _on_player_died() -> void:
 	EventBus.player_died.emit()
 	_player.set_dead(true)
+	# If a level-up choice is mid-presentation, close it first — death owns
+	# the screen now (its _present already defers while death panel is up).
+	var menu = get_node_or_null("HUD/LevelUpMenu")
+	if menu != null and (menu as Control).visible:
+		menu._on_option_pressed(-1)
 	_show_death_spotlight()
 	_show_death_panel()
 	get_tree().paused = true
@@ -348,6 +370,11 @@ func _on_ad_continue() -> void:
 func _end_run(victory: bool, reason: String) -> void:
 	if _ended:
 		return
+	# Level-up choice pending? It owns the pause. Wait for it to close so we
+	# never unpause under a visible menu or swap scenes mid-choice (that was
+	# the "level up + level beaten at once" bug).
+	if _levelup_menu_open():
+		await _await_levelup_closed()
 	_ended = true
 	get_tree().paused = false
 	EconomyService.add_blobs(_run_blobs)

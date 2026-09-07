@@ -26,6 +26,11 @@ var orbital_count := 0
 var nova_interval := 0.0
 var xp := 0.0
 var level := 0
+## Card-driven pickup economy knobs.
+var shawarma_max_add := 0
+var shawarma_xp_mult := 1.0
+var powerup_rate_mult := 1.0
+var powerup_count_add := 0
 
 var _config: Dictionary = {}
 
@@ -92,6 +97,14 @@ func apply_effect(effect: Dictionary) -> void:
 			shield += int(value)
 		"projectile_bounce_add":
 			projectile_bounces += int(value)
+		"shawarma_max_add":
+			shawarma_max_add += int(value)
+		"shawarma_xp_mult":
+			shawarma_xp_mult *= value
+		"powerup_rate_mult":
+			powerup_rate_mult *= value
+		"powerup_count_add":
+			powerup_count_add += int(value)
 		"pierce_add":
 			projectile_pierce += int(value)
 		"orbital_add":

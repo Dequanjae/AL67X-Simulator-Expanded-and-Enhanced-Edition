@@ -489,54 +489,154 @@ fn wall_line(
 }
 
 fn gen_rooms(rng: &mut Rng, arena: Vec2, theme: &Theme, clearance: f64, spawn_clear: f64) -> Vec<Prop> {
+    // DUNGEON-STYLE WAREHOUSE: a corridor grid framing a set of small
+    // "stations" (rooms). Each room gets wall segments with door gaps and
+    // is furnished from the theme's props so every room reads as its own
+    // little shop section.
     let mut props = Vec::new();
     let half = Vec2::new(arena.x * 0.5, arena.y * 0.5);
     let wall_def = pick_prop(rng, theme, "wall");
     let wall_size = wall_def.size.unwrap_or([0.5, 2.0, 2.6]);
     let seg_len = wall_size[2];
-    let door_w = (clearance + 0.8_f64).max(3.6);
-    let cols = if arena.x > 44.0 { 3 } else { 2 };
-    for ci in 1..cols {
-        let x = -half.x + arena.x * (ci as f64) / (cols as f64);
-        props.extend(wall_line(
-            rng,
-            &wall_def,
-            x,
-            -half.y + WALL_MARGIN,
-            half.y - WALL_MARGIN,
-            true,
-            seg_len,
-            door_w,
-            spawn_clear,
-        ));
+    let door_w = (clearance + 1.2_f64).max(3.6);
+
+    // Room grid: 3x2 on big arenas, 2x2 on small ones.
+    let (cols, rows) = if arena.x > 46.0 || arena.y > 46.0 {
+        (3, 2)
+    } else {
+        (2, 2)
+    };
+    let corridor_w = (clearance * 2.2).max(5.0);
+    // Interior region for the room block (leave an outer walkway ring).
+    let inner_w = arena.x - WALL_MARGIN * 2.0 - corridor_w * 0.5;
+    let inner_h = arena.y - WALL_MARGIN * 2.0 - corridor_w * 0.5;
+    let cell_w = inner_w / cols as f64;
+    let cell_h = inner_h / rows as f64;
+    if cell_w < door_w * 1.6 || cell_h < door_w * 1.6 {
+        // Arena too small for rooms — fall back to scatter so we never
+        // generate an unplayable maze.
+        return gen_scatter(rng, arena, theme, clearance, spawn_clear);
     }
-    props.extend(wall_line(
-        rng,
-        &wall_def,
-        0.0,
-        -half.x + WALL_MARGIN,
-        half.x - WALL_MARGIN,
-        false,
-        seg_len,
-        door_w,
-        spawn_clear,
-    ));
-    let extras = gen_scatter_into(
+
+    // Roles available for furnishing (theme props carry roles; walls
+    // excluded so furniture does not double as structure).
+    let furnishing: Vec<&PropDef> = theme
+        .props
+        .iter()
+        .filter(|p| p.role != "wall")
+        .collect();
+
+    let origin_x = -inner_w * 0.5;
+    let origin_y = -inner_h * 0.5;
+
+    for r in 0..rows {
+        for c in 0..cols {
+            // Room rect (walls on the room's cell edges, doors on 2 sides).
+            let x0 = origin_x + c as f64 * cell_w;
+            let y0 = origin_y + r as f64 * cell_h;
+            let x1 = x0 + cell_w;
+            let y1 = y0 + cell_h;
+            // Shrink so a corridor runs between neighbouring rooms.
+            let pad = corridor_w * 0.5;
+            let rx0 = x0 + pad * 0.5;
+            let ry0 = y0 + pad * 0.5;
+            let rx1 = x1 - pad * 0.5;
+            let ry1 = y1 - pad * 0.5;
+
+            // Perimeter walls with doors: verticals on left (except col 0
+            // outer handled below), horizontals on top; right/bottom walls
+            // shared with next cell are drawn once.
+            // Left wall (door in middle) unless it's the leftmost edge and
+            // we want an opening to the outer ring anyway.
+            props.extend(wall_line(rng, &wall_def, rx0, ry0, ry1, true, seg_len, door_w, spawn_clear));
+            // Top wall.
+            props.extend(wall_line(rng, &wall_def, ry0, rx0, rx1, false, seg_len, door_w, spawn_clear));
+            // Right wall only on the last column.
+            if c == cols - 1 {
+                props.extend(wall_line(rng, &wall_def, rx1, ry0, ry1, true, seg_len, door_w, spawn_clear));
+            }
+            // Bottom wall only on the last row.
+            if r == rows - 1 {
+                props.extend(wall_line(rng, &wall_def, ry1, rx0, rx1, false, seg_len, door_w, spawn_clear));
+            }
+
+            // Furnish the room interior: 2-4 props placed with clearance
+            // in the room's inner area, picked by role weight.
+            if !furnishing.is_empty() {
+                let cxm = (rx0 + rx1) * 0.5;
+                let cym = (ry0 + ry1) * 0.5;
+                let inner_rx = (rx1 - rx0) * 0.5 - clearance * 0.6;
+                let inner_ry = (ry1 - ry0) * 0.5 - clearance * 0.6;
+                if inner_rx > 0.5 && inner_ry > 0.5 {
+                    let n = rng.randi_range(2, 5) as usize;
+                    for _ in 0..n {
+                        let total_w: f64 = furnishing.iter().map(|p| p.weight).sum();
+                        let mut roll = rng.randf() * total_w.max(0.001);
+                        let mut picked = furnishing[0];
+                        for p in &furnishing {
+                            roll -= p.weight;
+                            if roll <= 0.0 {
+                                picked = *p;
+                                break;
+                            }
+                        }
+                        let pd = picked;
+                        let size = pd.size.unwrap_or([1.0, 1.0, 1.0]);
+                        // Keep clear of the doors: place in the central area.
+                        let px = cxm + rng.randf_range(-inner_rx, inner_rx).max(-inner_rx).min(inner_rx)
+                            - (size[0] * 0.5).min(inner_rx * 0.5);
+                        let py = cym + rng.randf_range(-inner_ry, inner_ry).max(-inner_ry).min(inner_ry)
+                            - (size[2] * 0.5).min(inner_ry * 0.5);
+                        // Overlap guard against this room's existing props.
+                        let he = Vec2::new(
+                            (size[0] * 0.5 + clearance * 0.5).max(0.4),
+                            (size[2] * 0.5 + clearance * 0.5).max(0.4),
+                        );
+                        let too_close = props.iter().any(|q: &Prop| {
+                            let qh = half_extents(q);
+                            let dx = (q.pos.0 - px).abs();
+                            let dy = (q.pos.1 - py).abs();
+                            dx < he.x + qh.x && dy < he.y + qh.y
+                        });
+                        if too_close {
+                            continue;
+                        }
+                        // Keep the central spawn clearing clear (player
+                        // spawns at arena center) — the smoke test checks
+                        // this and previously failed on L5/backrooms.
+                        let dx = px - 0.0;
+                        let dy = py - 0.0;
+                        let dist_from_center = (dx * dx + dy * dy).sqrt();
+                        if dist_from_center < spawn_clear + size[0].max(size[2]) * 0.5 {
+                            continue;
+                        }
+                        props.push(Prop {
+                            shape: pd.shape.clone().unwrap_or_else(|| "box".into()),
+                            size,
+                            color: pd.color.clone().unwrap_or_else(|| "#8B7355".into()),
+                            pos: (px, py),
+                            rot: rng.randi_range(0, 4) as f64 * 90.0,
+                            mesh: pd.mesh.clone(),
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    // A little furniture in the outer ring walkway too.
+    let extras = ((arena.x + arena.y) * 0.35) as i32;
+    props.extend(gen_scatter_into(
         rng,
         arena,
         theme,
         clearance,
         spawn_clear,
         &props,
-        (arena.x * arena.y * 0.008) as i32,
-    );
-    props.extend(extras);
+        extras,
+    ));
     props
 }
-
-// ---------------------------------------------------------------------
-// Validation — coarse-grid flood fill from the spawn point
-// ---------------------------------------------------------------------
 
 fn validate(arena: Vec2, props: &[Prop]) -> ValidationResult {
     let nx = ((arena.x / CELL_SIZE) as i32).max(1);

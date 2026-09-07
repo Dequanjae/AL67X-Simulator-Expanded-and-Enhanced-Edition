@@ -648,11 +648,50 @@ func _steer(delta: float, p: Vector2, current_vel: Vector2, player_pos: Vector2,
 				if d < SEPARATION_RADIUS and d > 0.001:
 					push += away / d * (SEPARATION_RADIUS - d)
 					checked += 1
-	var new_vel := desired + push * speed * 1.6
+	# Obstacle avoidance: if the chase vector points into a wall/prop
+	# footprint, deflect along a tangent instead of grinding into it.
+	var avoid := _obstacle_avoid(p, desired)
+	var new_vel := desired + push * speed * 1.6 + avoid * speed * 1.2
 	var max_speed := speed * 1.3
 	if new_vel.length() > max_speed:
 		new_vel = new_vel.normalized() * max_speed
 	return current_vel.lerp(new_vel, minf(1.0, 10.0 * delta))
+
+
+## Basic pathfinding feel: probe ahead; when the probe crosses an obstacle,
+## return a tangent deflection (perpendicular-ish), preferring the open side.
+func _obstacle_avoid(p: Vector2, desired: Vector2) -> Vector2:
+	if desired.length_squared() < 0.0001:
+		return Vector2.ZERO
+	var dir := desired.normalized()
+	if _obstacle_probe(p, dir, 1.6) == null:
+		return Vector2.ZERO
+	var left := Vector2(-dir.y, dir.x)
+	var right := -left
+	var left_clear := _obstacle_probe(p, (dir * 0.4 + left).normalized(), 2.4) == null
+	var right_clear := _obstacle_probe(p, (dir * 0.4 + right).normalized(), 2.4) == null
+	if left_clear and right_clear:
+		return left if left.dot(desired) >= right.dot(desired) else right
+	return left if left_clear else right
+
+
+## First obstacle hit within `len` along `dir`, or null (coarse grid).
+func _obstacle_probe(p: Vector2, dir: Vector2, probe_len: float) -> Variant:
+	var q := p + dir * probe_len
+	var cell_a := Vector2i((p / HASH_CELL).floor())
+	var cell_b := Vector2i((q / HASH_CELL).floor())
+	for cx in range(mini(cell_a.x, cell_b.x), maxi(cell_a.x, cell_b.x) + 1):
+		for cz in range(mini(cell_a.y, cell_b.y), maxi(cell_a.y, cell_b.y) + 1):
+			var bucket: Variant = _obstacle_grid.get(Vector2i(cx, cz))
+			if bucket == null:
+				continue
+			for idx in bucket:
+				var ob: Dictionary = _obstacles[idx]
+				var op: Vector2 = ob["pos"]
+				var oh: Vector2 = ob["half"]
+				if absf(q.x - op.x) <= oh.x + 0.35 and absf(q.y - op.y) <= oh.y + 0.35:
+					return ob
+	return null
 
 
 ## Charge behavior state machine. Returns telegraph flash amount (0..1).

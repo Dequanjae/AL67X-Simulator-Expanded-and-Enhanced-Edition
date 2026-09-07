@@ -65,7 +65,7 @@ func _flow() -> void:
 
 	# 3. Forced level-up → menu appears, tree pauses.
 	run.debug_grant_xp(999.0)
-	var level_up: LevelUpController = run.get_node("LevelUpController")
+	var level_up = run.get_node("HUD/LevelUpMenu")
 	if not await _wait(func() -> bool: return tree.paused and not level_up._options.is_empty(), "level-up menu presents + pauses"):
 		return
 	var stats: PlayerStats = run._stats

@@ -29,18 +29,20 @@ var _respawn_timer := 0.0
 var _powerup_timer := 0.0
 var _vacuum_timer := 0.0
 var _active := false
+var _player_stats: PlayerStats
 
 
-func configure(walkable_points: PackedVector3Array, spawn_config: Dictionary, player: Node3D) -> void:
+func configure(walkable_points: PackedVector3Array, spawn_config: Dictionary, player: Node3D, stats: PlayerStats = null) -> void:
 	_walkable = walkable_points
 	_config = spawn_config
 	_player = player
+	_player_stats = stats
 	_rng.randomize()
 	var powerups_data: Variant = JsonData.load_json("res://data/powerups/powerups.json")
 	_effect_pool = powerups_data.get("effects", []) if powerups_data is Dictionary else []
 	_icon_paths = JsonData.list_files(POWERUP_ICON_DIR, "png")
 	# Initial fill.
-	for i in range(int(_config.get("shawarma_max", 20))):
+	for i in range(_effective_shawarma_max()):
 		_spawn_shawarma()
 	_powerup_timer = _roll_powerup_interval()
 	_active = true
@@ -54,7 +56,7 @@ func start_vacuum(seconds: float) -> void:
 func _process(delta: float) -> void:
 	if not _active:
 		return
-	var max_shawarma := int(_config.get("shawarma_max", 20))
+	var max_shawarma := _effective_shawarma_max()
 	if _shawarma_count < max_shawarma:
 		_respawn_timer -= delta
 		if _respawn_timer <= 0.0:
@@ -66,6 +68,8 @@ func _process(delta: float) -> void:
 			_spawn_loot_box()
 		else:
 			_spawn_powerup()
+			for i in range(_stats_extra_powerup_count()):
+				_spawn_powerup()
 		_powerup_timer = _roll_powerup_interval()
 	# Vacuum: drag every shawarma toward the player.
 	_vacuum_timer -= delta
@@ -91,7 +95,7 @@ func get_active_shawarma_positions() -> PackedVector3Array:
 
 func _roll_powerup_interval() -> float:
 	var interval: Array = _config.get("powerup_interval_sec", [18, 32])
-	return _rng.randf_range(float(interval[0]), float(interval[1]))
+	return maxf(4.0, _rng.randf_range(float(interval[0]), float(interval[1])) / _stats_powerup_rate())
 
 
 func _spawn_point() -> Vector3:
@@ -187,3 +191,24 @@ func _weighted_pick(pool: Array) -> Dictionary:
 		if roll <= 0.0:
 			return entry
 	return pool.back()
+
+## Card-driven knobs (stats from RunController; nil-safe without them).
+
+
+func _stats_extra_powerup_count() -> int:
+	if _player_stats == null:
+		return 0
+	return _player_stats.powerup_count_add
+
+
+func _stats_powerup_rate() -> float:
+	if _player_stats == null:
+		return 1.0
+	return _player_stats.powerup_rate_mult
+
+
+func _effective_shawarma_max() -> int:
+	var base_max := int(_config.get("shawarma_max", 20))
+	if _player_stats == null:
+		return base_max
+	return base_max + _player_stats.shawarma_max_add

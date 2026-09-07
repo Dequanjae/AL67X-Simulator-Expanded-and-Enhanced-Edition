@@ -1,7 +1,7 @@
 {
-  "_readme": "Rings theme \u2014 concentric prop rings with door gaps around the central spawn. See theme_shop_classic.json for field docs.",
+  "_readme": "Rings theme — concentric prop rings with door gaps around the central spawn. See theme_shop_classic.json for field docs.",
   "id": "shop_rings",
-  "name": "The Shop \u2014 Winding Workshop",
+  "name": "The Shop — Winding Workshop",
   "colors": {
     "floor": "#414a44",
     "floor_alt": "#3a423d",
@@ -12,7 +12,11 @@
     {
       "shape": "mesh",
       "mesh": "res://assets/models/pallet0/pallet0.glb",
-      "size": [0.9, 0.15, 1.1],
+      "size": [
+        0.9,
+        0.15,
+        1.1
+      ],
       "color": "#8B7355",
       "weight": 2
     }
@@ -28,8 +32,8 @@
     "spawn_clear_radius": 5.0
   },
   "spawns": {
-    "shawarma_max": 24,
-    "shawarma_respawn_sec": 2.6,
+    "shawarma_max": 38,
+    "shawarma_respawn_sec": 1.4,
     "powerup_interval_sec": [
       18,
       34

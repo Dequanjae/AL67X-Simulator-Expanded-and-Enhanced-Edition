@@ -25,6 +25,10 @@ var _pinch_prev_dist := -1.0
 var _zoom_accum := 0.0
 var _mouse_seen := false
 var _last_touch_vector := Vector2.ZERO  # mobile keeps drifting this way
+# --- Virtual joystick (hold anywhere) ---
+## Anchor point for the floating joystick: where the first finger landed.
+var _stick_anchor := Vector2.ZERO
+var _stick_active := false
 
 
 func _ready() -> void:
@@ -37,8 +41,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventScreenTouch:
 		if event.pressed:
 			_touches[event.index] = event.position
+			if _touches.size() == 1:
+				_stick_anchor = event.position
+				_stick_active = true
 		else:
 			_touches.erase(event.index)
+			if _touches.is_empty():
+				_stick_active = false
 		if _touches.size() != 2:
 			_pinch_prev_dist = -1.0
 	elif event is InputEventScreenDrag:
@@ -65,9 +74,10 @@ func get_move_vector() -> Vector2:
 	if _touches.size() >= 2:
 		_last_touch_vector = Vector2.ZERO
 		return Vector2.ZERO
-	# Active touch (finger, or mouse-drag via touch emulation).
+	# Active touch: floating joystick — vector from the FINGER-DOWN anchor,
+	# not from screen center (hold anywhere on screen).
 	if _touches.size() == 1:
-		_last_touch_vector = _vector_toward(_touches.values()[0])
+		_last_touch_vector = _vector_from_anchor(_touches.values()[0])
 		return _last_touch_vector
 	# Keyboard override for desktop dev.
 	var kb := Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -103,6 +113,17 @@ func _vector_toward(screen_point: Vector2) -> Vector2:
 		return Vector2.ZERO
 	var center := viewport.get_visible_rect().size * 0.5
 	var offset := screen_point - center
+	var dist := offset.length()
+	if dist < DEADZONE_PX:
+		return Vector2.ZERO
+	return offset.normalized() * clampf(dist / SATURATION_RADIUS_PX, 0.0, 1.0)
+
+
+## Floating joystick vector: from where the finger LANDED (anchor) to where
+## it is now. Same deadzone/saturation as the old center-based scheme, so the
+## feel is identical — but the anchor is anywhere the thumb rests.
+func _vector_from_anchor(screen_point: Vector2) -> Vector2:
+	var offset := screen_point - _stick_anchor
 	var dist := offset.length()
 	if dist < DEADZONE_PX:
 		return Vector2.ZERO

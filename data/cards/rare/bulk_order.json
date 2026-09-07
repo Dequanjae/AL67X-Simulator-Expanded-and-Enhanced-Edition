@@ -1,0 +1,9 @@
+{
+  "id": "bulk_order",
+  "name": "Bulk Order",
+  "description": "Powerups can spawn in pairs (+1 max active)",
+  "base": true,
+  "weight": 7,
+  "icon": "",
+  "effect": { "type": "powerup_count_add", "value": 1 }
+}

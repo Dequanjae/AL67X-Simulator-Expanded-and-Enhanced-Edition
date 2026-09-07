@@ -14,19 +14,35 @@
     "wall": "res://assets/textures/concrete_block_wall_1k.jpg"
   },
   "props": [
-    { "shape": "mesh", "mesh": "res://assets/models/pallet0/pallet0.glb", "size": [0.9, 0.15, 1.1], "color": "#8B7355", "weight": 2 }
+    {
+      "shape": "mesh",
+      "mesh": "res://assets/models/pallet0/pallet0.glb",
+      "size": [
+        0.9,
+        0.15,
+        1.1
+      ],
+      "color": "#8B7355",
+      "weight": 2
+    }
   ],
   "generation": {
     "algorithm": "rooms",
-    "arena_size": [46, 42],
+    "arena_size": [
+      46,
+      42
+    ],
     "prop_density": 0.006,
     "min_clearance": 3.2,
     "spawn_clear_radius": 4.5
   },
   "spawns": {
-    "shawarma_max": 26,
-    "shawarma_respawn_sec": 2.4,
-    "powerup_interval_sec": [16, 30],
+    "shawarma_max": 40,
+    "shawarma_respawn_sec": 1.4,
+    "powerup_interval_sec": [
+      16,
+      30
+    ],
     "lootbox_chance": 0.17
   }
 }

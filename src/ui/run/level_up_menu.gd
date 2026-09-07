@@ -30,11 +30,27 @@ func _ready() -> void:
 
 func _on_player_leveled_up(_new_level: int) -> void:
 	_pending += 1
+	# Never present over the death panel or a run that already ended —
+	# _end_run force-unpauses and swaps the scene; presenting then races
+	# the scene change and leaves a half-torn UI. The run is over; the
+	# pending choice is simply dropped.
+	if get_tree().current_scene == null or not is_instance_valid(get_tree().current_scene):
+		_pending -= 1
+		return
+	var rc = get_tree().current_scene.get_node_or_null("RunController")
+	if rc != null and ("_ended" in rc) and bool(rc.get("_ended")):
+		_pending -= 1
+		return
 	if not visible:
 		_present()
 
 
 func _present() -> void:
+	# Arbitration: exactly one pause-owner. If the death panel owns the
+	# pause (hearts hit 0 while a level-up was pending), the death flow
+	# unpauses on its own buttons — we defer instead of fighting it.
+	if _death_owns_pause():
+		return
 	var owned: Array = SaveService.get_value("cards.owned", {}).keys()
 	var pool := CardCatalog.level_up_pool(_all_cards, owned)
 	_options = CardCatalog.roll_options(pool, 3, _rng)
@@ -68,3 +84,16 @@ func _on_option_pressed(index: int) -> void:
 	else:
 		visible = false
 		get_tree().paused = false
+
+## True when the death panel (or another end-of-run overlay) is up.
+func _death_owns_pause() -> bool:
+	var scene := get_tree().current_scene
+	if scene == null or not is_instance_valid(scene):
+		return true
+	var dp = scene.get_node_or_null("HUD/DeathPanel")
+	if dp != null and (dp as Control).visible:
+		return true
+	var ao = scene.get_node_or_null("HUD/AscendOverlay")
+	if ao != null and (ao as Control).visible:
+		return true
+	return false

@@ -1,0 +1,9 @@
+{
+  "id": "spice_route",
+  "name": "Spice Route",
+  "description": "Shawarmas grant +50% XP",
+  "base": true,
+  "weight": 9,
+  "icon": "",
+  "effect": { "type": "shawarma_xp_mult", "value": 1.5 }
+}
