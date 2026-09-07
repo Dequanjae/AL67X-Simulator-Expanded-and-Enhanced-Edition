@@ -39,6 +39,10 @@ window/handheld/orientation=4
 
 enabled=PackedStringArray("res://addons/GodotFirebaseAndroid/plugin.cfg", "res://addons/goutte.animated_shape_2d/plugin.cfg", "res://addons/scene_manager/plugin.cfg", "res://addons/godot_ai/plugin.cfg")
 
+[gui]
+
+theme/custom="res://assets/theme/al67x_theme.tres"
+
 [input]
 
 move_up={

@@ -104,16 +104,12 @@ func _finish_load() -> void:
 
 
 func _decide() -> void:
-	var mode := str(SaveService.get_value("meta.save_mode", ""))
-	if mode == "local":
-		_go_hub()
-		return
+	# Always show the boot menu (Play Now / Google). A previously chosen
+	# save mode no longer skips it — the menu IS the title screen.
 	var adapter := CloudSaveAndroid.new()
+	var mode := str(SaveService.get_value("meta.save_mode", ""))
 	if mode == "cloud" and adapter.is_available() and adapter.is_signed_in():
-		EventBus.cloud_state_changed.emit("syncing")
-		await SaveService.attach_cloud_adapter(adapter)
-		_go_hub()
-		return
+		_status_label.text = "Cloud save active"
 	_show_menu(adapter)
 
 

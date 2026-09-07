@@ -17,7 +17,11 @@ func _ready() -> void:
 		var label := Label3D.new()
 		label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 		label.no_depth_test = true
-		label.alpha_cut = 1
+		# alpha_cut MUST stay 0 (transparent pass). With DISCARD (1) the label
+		# renders in the OPAQUE pass, where the unshaded floor draws after it
+		# and paints over it -> "numbers under the floor".
+		label.alpha_cut = 0
+		label.font = preload("res://assets/fonts/YouBlockheadOpen.ttf")
 		label.fixed_size = false
 		label.font_size = 64
 		label.outline_size = 14

@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://d156n0o4rfqcv" path="res://src/ui/boot.gd" id="1_boot"]
 
-
 [sub_resource type="StyleBoxFlat" id="support_style"]
 content_margin_left = 24.0
 content_margin_top = 24.0
@@ -42,10 +41,10 @@ grow_vertical = 2
 expand_mode = 1
 stretch_mode = 6
 
-[node name="LoadingBar" type="ProgressBar" parent="."]
+[node name="LoadingBar" type="ProgressBar" parent="." unique_id=2111274191]
 visible = false
 layout_mode = 1
-anchors_preset = 12
+anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -57,7 +56,6 @@ offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 0
 show_percentage = false
-value = 0.0
 
 [node name="TitleLabel" type="Label" parent="." unique_id=1903994144]
 visible = false

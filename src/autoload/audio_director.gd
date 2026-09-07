@@ -12,8 +12,8 @@ extends Node
 ## DISTINCT sound, throttled + pitch-jittered so hordes read as punchy, not
 ## as white noise.
 
-const SFX_POOL_SIZE := 10
-const SFX_MIN_INTERVAL := 0.045
+const SFX_POOL_SIZE := 16
+const SFX_MIN_INTERVAL := 0.018
 const MUSIC_FADE_SEC := 0.7
 const TRANSITION_MIN_GAP := 1.0
 
