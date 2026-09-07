@@ -9,6 +9,11 @@ const POOL_SIZE := 28
 var _labels: Array[Label3D] = []
 var _next := 0
 var _rng := RandomNumberGenerator.new()
+## Runtime load (NOT preload): a parse-time preload of a font that failed to
+## import in a fresh CI environment kills this whole script at load -> black
+## screen (same failure class as the July run_controller bug). Runtime load
+## + null check degrades to the default font instead.
+var _font: Font = load("res://assets/fonts/YouBlockheadOpen.ttf")
 
 
 func _ready() -> void:
@@ -21,7 +26,8 @@ func _ready() -> void:
 		# renders in the OPAQUE pass, where the unshaded floor draws after it
 		# and paints over it -> "numbers under the floor".
 		label.alpha_cut = 0
-		label.font = preload("res://assets/fonts/YouBlockheadOpen.ttf")
+		if _font != null:
+			label.font = _font
 		label.fixed_size = false
 		label.font_size = 64
 		label.outline_size = 14

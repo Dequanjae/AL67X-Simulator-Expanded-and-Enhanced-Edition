@@ -86,8 +86,20 @@ jobs:
           sed -i "s|^version/name=.*|version/name=\"1.0.${{ github.run_number }}\"|" export_presets.cfg
           grep -E "^version/(code|name)" export_presets.cfg
 
+      - name: Install fontconfig (dynamic font importer needs it)
+        run: |
+          apt-get update -qq && apt-get install -y -qq libfontconfig1 fontconfig > /dev/null 2>&1 || true
+          echo "fontconfig installed"
+
       - name: Import project resources
         run: godot --headless --import
+
+      - name: Font/theme smoke check
+        run: |
+          godot --headless --script res://src/dev/font_smoke.gd || {
+            echo "::error::Font/theme import failed — see errors above"
+            exit 1
+          }
 
       - name: Export debug APK
         run: |
