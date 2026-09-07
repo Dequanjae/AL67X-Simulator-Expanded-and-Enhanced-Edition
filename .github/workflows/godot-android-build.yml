@@ -80,6 +80,12 @@ jobs:
           name: rust-android-so
           path: addons/godot-rust/target/android/arm64-v8a
 
+      - name: Stamp version code/name from run number
+        run: |
+          sed -i "s|^version/code=.*|version/code=${{ github.run_number }}|" export_presets.cfg
+          sed -i "s|^version/name=.*|version/name=\"1.0.${{ github.run_number }}\"|" export_presets.cfg
+          grep -E "^version/(code|name)" export_presets.cfg
+
       - name: Import project resources
         run: godot --headless --import
 
