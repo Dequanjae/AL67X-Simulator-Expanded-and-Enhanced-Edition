@@ -57,6 +57,14 @@ func _build_box_section() -> void:
 			LootBoxCatalog.odds_text(box),
 		]
 		buy_button.pressed.connect(_on_buy_box.bind(box_id))
+		# Frame-1 art (the shop-icon motor box) beside the price line.
+		var art := BoxOpenPopup.frame_texture(str(box.get("art_rarity", "common")), 0)
+		var art_rect := TextureRect.new()
+		art_rect.texture = art
+		art_rect.custom_minimum_size = Vector2(0, 84)
+		art_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		art_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		buy_button.add_child(art_rect)
 		row.add_child(buy_button)
 		var open_button := Button.new()
 		open_button.name = "Open_%s" % box_id
@@ -84,9 +92,10 @@ func _on_open_box(box_id: String) -> void:
 		_result_label.text = "No %s to open." % box_id
 		_refresh()
 		return
-	var reveal := get_tree().get_first_node_in_group("card_reveal")
-	if reveal != null:
-		reveal.show_card(result)
+	# Motor-box opening popup: tap to drop the housing, rewards after.
+	var popup := get_tree().get_first_node_in_group("box_open_popup")
+	if popup != null:
+		popup.open_with_result(result)
 	_result_label.text = ""
 	_refresh()
 
@@ -139,7 +148,7 @@ func _build_upgrade_section() -> void:
 		var type_cfg: Dictionary = _upgrade_config.get("upgrade_types", {}).get(type_id, {})
 		var level := CardUpgrades.get_level(_selected_card, type_id)
 		var price := CardUpgrades.cost(type_id, level, _upgrade_config)
-		var currency := "AL67X" if str(price["currency"]) == "tokens" else "Blobs"
+		var currency := "Watts" if str(price["currency"]) == "watts" else ("AL67X" if str(price["currency"]) == "tokens" else "Blobs")
 		var button := Button.new()
 		button.custom_minimum_size = Vector2(0, 76)
 		button.add_theme_font_size_override("font_size", 20)
@@ -156,7 +165,7 @@ func _on_buy_upgrade(upgrade_type: String) -> void:
 		_result_label.text = "Upgrade purchased!"
 	else:
 		var price := CardUpgrades.cost(upgrade_type, CardUpgrades.get_level(_selected_card, upgrade_type), _upgrade_config)
-		_result_label.text = "Not enough %s." % ("AL67X Tokens" if str(price["currency"]) == "tokens" else "Blobs")
+		_result_label.text = "Not enough %s." % ("Watts" if str(price["currency"]) == "watts" else ("AL67X Tokens" if str(price["currency"]) == "tokens" else "Blobs"))
 	_refresh()
 
 

@@ -108,6 +108,10 @@ signal shield_broken()
 
 signal blobs_changed(new_balance: int)
 signal tokens_changed(new_balance: int)
+
+## Watts balance changed (EconomyService/WattsService emit; hub top bar
+## listens). Watts accrue in real time — the first read after load syncs.
+signal watts_changed(new_balance: int)
 signal purchase_completed(item_id: String)
 signal purchase_failed(item_id: String, reason: String)
 

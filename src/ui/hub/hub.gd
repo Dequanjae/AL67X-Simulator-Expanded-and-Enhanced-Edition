@@ -11,8 +11,9 @@ const TAB_TRANSITION := {
 var _current_tab := "play"
 
 @onready var _safe_area: MarginContainer = $SafeArea
-@onready var _blobs_label: Label = $SafeArea/Layout/TopBar/TopBarBox/BlobsLabel
-@onready var _tokens_label: Label = $SafeArea/Layout/TopBar/TopBarBox/TokensLabel
+@onready var _blobs_label: Label = $SafeArea/Layout/TopBar/TopBarBox/BlobsRow/BlobsLabel
+@onready var _tokens_label: Label = $SafeArea/Layout/TopBar/TopBarBox/TokensRow/TokensLabel
+@onready var _watts_label: Label = $SafeArea/Layout/TopBar/TopBarBox/WattsRow/WattsLabel
 @onready var _tabs: Dictionary = {
 	"play": $SafeArea/Layout/Content/PlayTab,
 	"allans": $SafeArea/Layout/Content/AllansTab,
@@ -33,6 +34,7 @@ func _ready() -> void:
 		_nav_buttons[tab_id].pressed.connect(_on_nav_pressed.bind(tab_id))
 	EventBus.blobs_changed.connect(func(_v: int) -> void: _refresh_currency())
 	EventBus.tokens_changed.connect(func(_v: int) -> void: _refresh_currency())
+	EventBus.watts_changed.connect(func(_v: int) -> void: _refresh_currency())
 	EventBus.save_loaded.connect(_refresh_currency)
 	$SafeArea/Layout/TopBar/TopBarBox/SettingsButton.pressed.connect(
 		func() -> void: $SettingsPanel.open())
@@ -44,6 +46,7 @@ func _ready() -> void:
 func _refresh_currency() -> void:
 	_blobs_label.text = "Blobs: %d" % EconomyService.get_blobs()
 	_tokens_label.text = "AL67X: %d" % EconomyService.get_tokens()
+	_watts_label.text = "Watts: %d" % EconomyService.get_watts()
 
 
 func _on_nav_pressed(tab_id: String) -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="Script" path="res://src/ui/hub/hub.gd" id="1_hub"]
 [ext_resource type="Script" path="res://src/ui/hub/tab_play.gd" id="2_play"]
@@ -10,6 +10,9 @@
 [ext_resource type="Script" path="res://src/ui/hub/card_reveal.gd" id="8_cardreveal"]
 [ext_resource type="Script" path="res://src/ui/hub/whats_new_popup.gd" id="9_whatsnew"]
 [ext_resource type="Script" path="res://src/ui/hub/settings_panel.gd" id="10_settings"]
+[ext_resource type="Script" path="res://src/ui/hub/box_open_popup.gd" id="11_boxpopup"]
+[ext_resource type="Texture2D" path="res://assets/UI/Currency/Watt.png" id="12_watt"]
+[ext_resource type="Texture2D" path="res://assets/UI/Currency/Blob.png" id="13_blob"]
 
 [node name="Hub" type="Control"]
 layout_mode = 3
@@ -48,20 +51,54 @@ custom_minimum_size = Vector2(0, 52)
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="BlobsLabel" type="Label" parent="SafeArea/Layout/TopBar/TopBarBox"]
+[node name="WattsRow" type="HBoxContainer" parent="SafeArea/Layout/TopBar/TopBarBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="WattsIcon" type="TextureRect" parent="SafeArea/Layout/TopBar/TopBarBox/WattsRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(32, 32)
+expand_mode = 1
+stretch_mode = 5
+texture = ExtResource("12_watt")
+
+[node name="WattsLabel" type="Label" parent="SafeArea/Layout/TopBar/TopBarBox/WattsRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 22
+text = "Watts: 0"
+vertical_alignment = 1
+
+[node name="BlobsRow" type="HBoxContainer" parent="SafeArea/Layout/TopBar/TopBarBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="BlobsIcon" type="TextureRect" parent="SafeArea/Layout/TopBar/TopBarBox/BlobsRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(32, 32)
+expand_mode = 1
+stretch_mode = 5
+texture = ExtResource("13_blob")
+
+[node name="BlobsLabel" type="Label" parent="SafeArea/Layout/TopBar/TopBarBox/BlobsRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "Blobs: 0"
-horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TokensLabel" type="Label" parent="SafeArea/Layout/TopBar/TopBarBox"]
+[node name="TokensRow" type="HBoxContainer" parent="SafeArea/Layout/TopBar/TopBarBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="TokensLabel" type="Label" parent="SafeArea/Layout/TopBar/TopBarBox/TokensRow"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 22
 text = "AL67X: 0"
-horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="SettingsButton" type="Button" parent="SafeArea/Layout/TopBar/TopBarBox"]
@@ -396,6 +433,105 @@ layout_mode = 2
 custom_minimum_size = Vector2(360, 72)
 theme_override_font_sizes/font_size = 22
 text = "Later"
+
+[node name="BoxOpenPopup" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_boxpopup")
+
+[node name="Dim" type="ColorRect" parent="BoxOpenPopup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Center" type="CenterContainer" parent="BoxOpenPopup"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Popup" type="PanelContainer" parent="BoxOpenPopup/Center"]
+layout_mode = 2
+
+[node name="VB" type="VBoxContainer" parent="BoxOpenPopup/Center/Popup"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="BoxArt" type="Control" parent="BoxOpenPopup/Center/Popup/VB"]
+custom_minimum_size = Vector2(420, 460)
+layout_mode = 2
+
+[node name="Motor" type="TextureRect" parent="BoxOpenPopup/Center/Popup/VB/BoxArt"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -204.0
+offset_top = -269.0
+offset_right = 204.0
+offset_bottom = 269.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Housing" type="TextureRect" parent="BoxOpenPopup/Center/Popup/VB/BoxArt"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -183.5
+offset_top = -184.0
+offset_right = 183.5
+offset_bottom = 184.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TapHint" type="Label" parent="BoxOpenPopup/Center/Popup/VB"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "TAP TO OPEN"
+horizontal_alignment = 1
+
+[node name="RewardsBox" type="VBoxContainer" parent="BoxOpenPopup/Center/Popup/VB"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CardsLabel" type="Label" parent="BoxOpenPopup/Center/Popup/VB/RewardsBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = ""
+horizontal_alignment = 1
+
+[node name="CurrencyLabel" type="Label" parent="BoxOpenPopup/Center/Popup/VB/RewardsBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = ""
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="BoxOpenPopup/Center/Popup/VB/RewardsBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 64)
+theme_override_font_sizes/font_size = 22
+text = "COLLECT"
 
 [node name="CardReveal" type="Control" parent="."]
 visible = false

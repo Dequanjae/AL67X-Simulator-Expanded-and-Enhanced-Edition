@@ -1,7 +1,9 @@
 {
   "id": "premium_box",
   "name": "Premium Loot Box",
+  "art_rarity": "epic",
   "cost": { "currency": "tokens", "amount": 50 },
+  "rewards": { "cards": 2, "blobs": 150, "tokens": 8 },
   "drops": [
     { "rarity": "common", "weight": 30 },
     { "rarity": "rare", "weight": 40 },

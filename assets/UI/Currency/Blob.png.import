@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx0s8whv3ymb"
-path="res://.godot/imported/launcher_192x192.png-1026da755cdf47ee3553e46c14ed17de.ctex"
+uid="uid://cmpcahr53w4pe"
+path="res://.godot/imported/Blob.png-6e9e6a65f18f2d9deb3239f28d735157.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://icons/launcher_192x192.png"
-dest_files=["res://.godot/imported/launcher_192x192.png-1026da755cdf47ee3553e46c14ed17de.ctex"]
+source_file="res://assets/UI/Currency/Blob.png"
+dest_files=["res://.godot/imported/Blob.png-6e9e6a65f18f2d9deb3239f28d735157.ctex"]
 
 [params]
 

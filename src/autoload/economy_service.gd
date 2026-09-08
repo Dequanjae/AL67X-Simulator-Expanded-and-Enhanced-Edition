@@ -37,6 +37,24 @@ func get_tokens() -> int:
 	return int(SaveService.get_value("economy.tokens", 0))
 
 
+## Watts (time currency): lazily loads WattsService, which does offline
+## accrual math (stored + elapsed * rate, capped). See watts_service.gd.
+func get_watts() -> int:
+	return WattsService.get_watts()
+
+
+func spend_watts(amount: int) -> bool:
+	var ok: bool = WattsService.spend_watts(amount)
+	if not ok and amount > 0:
+		EventBus.purchase_failed.emit("watts", "insufficient_watts")
+	return ok
+
+
+func add_watts(amount: int) -> void:
+	WattsService.add_watts(amount)
+
+
+
 func add_blobs(amount: int) -> void:
 	if amount == 0:
 		return

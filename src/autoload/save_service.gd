@@ -53,6 +53,8 @@ static func default_data() -> Dictionary:
 		"economy": {
 			"blobs": 0,   # soft currency (Blobs/Shawarmas)
 			"tokens": 0,  # hard currency (AL67X Tokens)
+			"watts": 0,  # time currency (accrues via WattsService)
+			"watts_synced_hours": 0.0,  # last watts accrual sync (unix hours)
 			"loot_boxes": {},  # box_id -> unopened count (opened in Phase 8)
 		},
 		"allans": {

@@ -45,6 +45,8 @@ static func purchase(card_id: String, upgrade_type: String, config: Dictionary) 
 	var paid: bool
 	if str(price["currency"]) == "tokens":
 		paid = EconomyService.spend_tokens(int(price["amount"]))
+	elif str(price["currency"]) == "watts":
+		paid = EconomyService.spend_watts(int(price["amount"]))
 	else:
 		paid = EconomyService.spend_blobs(int(price["amount"]))
 	if not paid:
