@@ -9,9 +9,9 @@ extends SceneTree
 ## script exists. Runtime application is editor-gate-verified, not CI.
 func _init() -> void:
 	var failures: PackedStringArray = []
-	var font: Variant = load("res://assets/fonts/YouBlockheadOpen.ttf")
+	var font: Variant = load("res://assets/UI/fonts/Clash-Regular.ttf")
 	if font == null or not (font is Font):
-		failures.append("font load failed: res://assets/fonts/YouBlockheadOpen.ttf")
+		failures.append("font load failed: res://assets/UI/fonts/Clash-Regular.ttf")
 	var theme: Variant = load("res://assets/theme/al67x_theme.tres")
 	if theme == null or not (theme is Theme):
 		failures.append("theme load failed: res://assets/theme/al67x_theme.tres")

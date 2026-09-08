@@ -7,7 +7,7 @@
         "type": "damage_mult_add",
         "value": 0.05
       },
-      "cost_base": 50,
+      "cost_base": 5,
       "cost_growth": 1.25,
       "currency": "watts"
     },
@@ -17,7 +17,7 @@
         "type": "range_add",
         "value": 0.4
       },
-      "cost_base": 40,
+      "cost_base": 4,
       "cost_growth": 1.22,
       "currency": "watts"
     },
@@ -37,7 +37,7 @@
         "type": "projectile_scale_add",
         "value": 0.06
       },
-      "cost_base": 60,
+      "cost_base": 6,
       "cost_growth": 1.3,
       "currency": "watts"
     },
@@ -47,7 +47,7 @@
         "type": "projectile_bounce_add",
         "value": 1
       },
-      "cost_base": 120,
+      "cost_base": 12,
       "cost_growth": 1.6,
       "currency": "watts"
     }

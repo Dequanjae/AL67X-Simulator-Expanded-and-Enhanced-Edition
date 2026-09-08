@@ -1,18 +1,17 @@
 class_name CurrencyBar
 extends HBoxContainer
 ## One currency readout row for the hub top bar: icon + live balance label.
-## Reusable — the three TopBars scenes (watts / blobs / gems) each instance
-## this script with a different `currency` and icon texture. Listens to the
-## matching EventBus signal so the label stays live, and refreshes on save
-## load. Editable per-currency scenes live in scenes/ui/TopBars/.
+## The three TopBars scenes (watts / blobs / gems) each instance this script
+## with a different `currency` and icon texture. Listens to the matching
+## EventBus signal so the label stays live, and refreshes on save load.
+## Label shows the bare number (no prefix) — thousands abbreviate to
+## "1.2K" style. Gems always show the full number (premium currencies get
+## exact counts). Uses the Clash UI font set in the scene.
 
 @export_enum("watts", "blobs", "gems") var currency := "watts"
 
-## Label text prefix, e.g. "Watts:" — set per scene.
-@export var prefix := "Watts:"
-
-## Format: "%s 1,234". Set true for the big counters, false for plain ints.
-@export var use_thousands_separator := false
+## Gems show exact counts (never abbreviated). Watts capped at 20 anyway.
+@export var abbreviate_thousands := true
 
 const _GETTERS := {
 	"watts": "get_watts",
@@ -43,18 +42,19 @@ func _refresh() -> void:
 	var value := 0
 	if currency in _GETTERS:
 		value = int(EconomyService.call(_GETTERS[currency]))
-	_label.text = "%s %s" % [prefix, _format(value)]
+	_label.text = _format(value)
 
 
 func _format(value: int) -> String:
-	if use_thousands_separator:
-		var s := str(value)
-		var out := ""
-		var count := 0
-		for i in range(s.length() - 1, -1, -1):
-			out = s[i] + out
-			count += 1
-			if count % 3 == 0 and i > 0:
-				out = "," + out
-		return out
-	return str(value)
+	if value < 1000 or not abbreviate_thousands:
+		return str(value)
+	# 1,234 -> "1.2K"; 12,345 -> "12.3K"; 1,234,567 -> "1.23M"
+	if value < 1_000_000:
+		var k := value / 1000.0
+		if k >= 100.0:
+			return "%dK" % int(k)
+		return "%.1fK" % k
+	var m := value / 1_000_000.0
+	if m >= 100.0:
+		return "%dM" % int(m)
+	return "%.2fM" % m

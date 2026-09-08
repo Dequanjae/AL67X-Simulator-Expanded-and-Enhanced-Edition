@@ -1,57 +1,29 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=5 format=3]
 
-[ext_resource type="Texture2D" path="res://assets/UI/Currency/Watt.png" id="12_watt"]
-
-[ext_resource type="Texture2D" path="res://assets/UI/Currency/Blob.png" id="13_blob"]
+[ext_resource type="PackedScene" path="res://scenes/ui/TopBars/top_bar_watts.tscn" id="14_wattsbar"]
+[ext_resource type="PackedScene" path="res://scenes/ui/TopBars/top_bar_blobs.tscn" id="15_blobsbar"]
+[ext_resource type="PackedScene" path="res://scenes/ui/TopBars/top_bar_gems.tscn" id="16_gemsbar"]
 
 [node name="TopBar" type="PanelContainer"]
 layout_mode = 2
 custom_minimum_size = Vector2(0, 52)
+
 [node name="TopBarBox" type="HBoxContainer" parent="."]
 layout_mode = 2
 theme_override_constants/separation = 24
-[node name="WattsRow" type="HBoxContainer" parent="TopBarBox"]
+
+[node name="WattsRow" parent="TopBarBox" instance=ExtResource("14_wattsbar")]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 8
-[node name="WattsIcon" type="TextureRect" parent="TopBarBox/WattsRow"]
-layout_mode = 2
-custom_minimum_size = Vector2(32, 32)
-expand_mode = 1
-stretch_mode = 5
-texture = ExtResource("12_watt")
-[node name="WattsLabel" type="Label" parent="TopBarBox/WattsRow"]
+
+[node name="BlobsRow" parent="TopBarBox" instance=ExtResource("15_blobsbar")]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 22
-text = "Watts: 0"
-vertical_alignment = 1
-[node name="BlobsRow" type="HBoxContainer" parent="TopBarBox"]
+
+[node name="GemsRow" parent="TopBarBox" instance=ExtResource("16_gemsbar")]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_constants/separation = 8
-[node name="BlobsIcon" type="TextureRect" parent="TopBarBox/BlobsRow"]
-layout_mode = 2
-custom_minimum_size = Vector2(32, 32)
-expand_mode = 1
-stretch_mode = 5
-texture = ExtResource("13_blob")
-[node name="BlobsLabel" type="Label" parent="TopBarBox/BlobsRow"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 22
-text = "Blobs: 0"
-vertical_alignment = 1
-[node name="TokensRow" type="HBoxContainer" parent="TopBarBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 8
-[node name="TokensLabel" type="Label" parent="TopBarBox/TokensRow"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 22
-text = "AL67X: 0"
-vertical_alignment = 1
+
 [node name="SettingsButton" type="Button" parent="TopBarBox"]
 layout_mode = 2
 custom_minimum_size = Vector2(120, 0)

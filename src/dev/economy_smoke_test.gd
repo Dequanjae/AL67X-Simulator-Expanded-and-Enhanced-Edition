@@ -156,6 +156,9 @@ func _test_popup_ui() -> void:
 	var cards_label: Label = rewards_box.get_node("CardsLabel")
 	_check(cards_label.text.contains("["), "cards listed: %s" % cards_label.text)
 	# top bar rows
-	_check(instance.get_node_or_null("SafeArea/Layout/TopBar/TopBarBox/WattsRow/WattsLabel") != null, "watts row in top bar")
-	_check(instance.get_node_or_null("SafeArea/Layout/TopBar/TopBarBox/BlobsRow/BlobsIcon") != null, "blob icon in top bar")
-	_check(instance.get_node_or_null("SafeArea/Layout/TopBar/TopBarBox/BlobsRow/BlobsLabel") != null, "blobs row in top bar")
+	# TopBars (instanced from scenes/ui/TopBars/): watts bar + blobs bar + gems bar
+	_check(instance.get_node_or_null("SafeArea/Layout/TopBar/TopBarBox/WattsRow/Top/WattsLabel") != null, "watts row in top bar")
+	_check(instance.get_node_or_null("SafeArea/Layout/TopBar/TopBarBox/WattsRow/FillBar") != null, "watts generation bar present")
+	_check(instance.get_node_or_null("SafeArea/Layout/TopBar/TopBarBox/BlobsRow/Icon") != null, "blob icon in top bar")
+	_check(instance.get_node_or_null("SafeArea/Layout/TopBar/TopBarBox/BlobsRow/ValueLabel") != null, "blobs row in top bar")
+	_check(instance.get_node_or_null("SafeArea/Layout/TopBar/TopBarBox/GemsRow/ValueLabel") != null, "gems row in top bar")

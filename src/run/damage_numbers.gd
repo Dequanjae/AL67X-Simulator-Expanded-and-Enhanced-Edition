@@ -13,7 +13,7 @@ var _rng := RandomNumberGenerator.new()
 ## import in a fresh CI environment kills this whole script at load -> black
 ## screen (same failure class as the July run_controller bug). Runtime load
 ## + null check degrades to the default font instead.
-var _font: Font = load("res://assets/fonts/YouBlockheadOpen.ttf")
+var _font: Font = load("res://assets/UI/fonts/Clash-Bold.ttf")
 
 
 func _ready() -> void:

@@ -2,13 +2,13 @@
 
 importer="font_data_dynamic"
 type="FontFile"
-uid="uid://btp6lcy5eghim"
-path="res://.godot/imported/YouBlockheadOpen.ttf-d63a946470895e21932b9c8c43394c5c.fontdata"
+uid="uid://bhapvfwob5yvt"
+path="res://.godot/imported/Clash-Heavy.ttf-82b815da84b72095e1348d3713af0f82.fontdata"
 
 [deps]
 
-source_file="res://assets/fonts/YouBlockheadOpen.ttf"
-dest_files=["res://.godot/imported/YouBlockheadOpen.ttf-d63a946470895e21932b9c8c43394c5c.fontdata"]
+source_file="res://assets/UI/fonts/Clash-Heavy.ttf"
+dest_files=["res://.godot/imported/Clash-Heavy.ttf-82b815da84b72095e1348d3713af0f82.fontdata"]
 
 [params]
 

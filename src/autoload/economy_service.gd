@@ -43,6 +43,12 @@ func get_watts() -> int:
 	return WattsService.get_watts()
 
 
+## Read-only balance for per-frame UI (get_watts() syncs/writes the save —
+## never call it every frame).
+func get_watts_readonly() -> int:
+	return WattsService.get_watts_readonly()
+
+
 func spend_watts(amount: int) -> bool:
 	var ok: bool = WattsService.spend_watts(amount)
 	if not ok and amount > 0:

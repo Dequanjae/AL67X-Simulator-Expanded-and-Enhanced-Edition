@@ -1,26 +1,56 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=6 format=3]
 
-[ext_resource type="Script" path="res://src/ui/components/currency_bar.gd" id="1_bar"]
+[ext_resource type="Script" path="res://src/ui/components/watts_bar.gd" id="1_bar"]
 [ext_resource type="Texture2D" path="res://assets/UI/Currency/Watt.png" id="2_icon"]
+[ext_resource type="FontFile" path="res://assets/UI/fonts/Clash-Bold.ttf" id="3_font"]
 
-[node name="WattsTopBar" type="HBoxContainer"]
+[sub_resource type="StyleBoxFlat" id="fill_style"]
+bg_color = Color(1, 0.85, 0.1, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxEmpty" id="bg_style"]
+
+[node name="WattsTopBar" type="VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 8
 size_flags_horizontal = 3
+theme_override_constants/separation = 2
 script = ExtResource("1_bar")
-currency = "watts"
-prefix = "Watts:"
 
-[node name="Icon" type="TextureRect" parent="."]
+[node name="Top" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="Icon" type="TextureRect" parent="Top"]
 layout_mode = 2
 custom_minimum_size = Vector2(32, 32)
 expand_mode = 1
 stretch_mode = 5
 texture = ExtResource("2_icon")
 
-[node name="ValueLabel" type="Label" parent="."]
+[node name="WattsLabel" type="Label" parent="Top"]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 22
-text = "Watts: 0"
+text = "0"
 vertical_alignment = 1
+
+[node name="FillBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(96, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+show_percentage = false
+theme_override_styles/fill = SubResource("fill_style")
+theme_override_styles/background = SubResource("bg_style")
+
+[node name="TimerLabel" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.9, 1, 1)
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 13
+text = "15.0s"
+horizontal_alignment = 1

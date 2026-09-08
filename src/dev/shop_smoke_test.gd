@@ -58,9 +58,13 @@ func _test_pure() -> void:
 
 	# Purchase fails broke, succeeds funded, persists + deducts.
 	# (Upgrades cost Watts since the Economy v2 switch — fund Watts AND
-	# blobs: blobs pay for the loot box purchase below.)
+	# blobs: blobs pay for the loot box purchase below. Watts cap is 20 now,
+	# so zero the balance first for the broke check, then top to cap.)
+	SaveService.set_value("economy.watts", 0)
+	SaveService.set_value("economy.watts_synced_hours", Time.get_unix_time_from_system() / 3600.0)
 	_check(not CardUpgrades.purchase("sharpened_brushes", "damage", config), "broke purchase rejected")
 	EconomyService.add_watts(10000)
+	_check(EconomyService.get_watts() == int(WattsService.config().get("cap", 20)), "watts fund clamps to cap")
 	EconomyService.add_blobs(10000)
 	var blobs_before := EconomyService.get_blobs()
 	var watts_before := EconomyService.get_watts()

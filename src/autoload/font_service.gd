@@ -8,7 +8,7 @@ extends Node
 ## problem: if the font somehow fails, the game still boots with the
 ## default font instead of dying with a broken theme.
 
-const GAME_FONT_PATH := "res://assets/fonts/YouBlockheadOpen.ttf"
+const GAME_FONT_PATH := "res://assets/UI/fonts/Clash-Regular.ttf"
 
 func _ready() -> void:
 	call_deferred("_apply_font")

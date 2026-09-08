@@ -66,3 +66,29 @@ static func add_watts(amount: int) -> void:
 
 static func _now_hours() -> float:
 	return Time.get_unix_time_from_system() / 3600.0
+
+
+## Read-only balance (no seeding, no sync writes) — safe per frame.
+static func get_watts_readonly() -> int:
+	return clampi(int(SaveService.get_value("economy.watts", 0)), 0, int(config().get("cap", 480)))
+
+
+## Non-mutating progress read for the watts bar UI: full watts ready to
+## bank (`cycles`) plus the fraction (0.0-1.0) of the next one. Per-frame
+## safe — no writes. Banking still happens through get_watts(), which
+## advances the sync point by exactly the banked integer and PRESERVES the
+## fraction, so the bar never loses sub-cycle progress.
+static func watts_progress() -> Dictionary:
+	var cfg := config()
+	var cap := int(cfg.get("cap", 480))
+	var per_hour := maxf(1.0, float(cfg.get("per_hour", 60)))
+	var synced := float(SaveService.get_value("economy.watts_synced_hours", 0.0))
+	if synced <= 0.0:
+		# Not seeded yet — the first get_watts() call seeds it.
+		return {"cycles": 0, "fraction": 0.0, "full": false}
+	var stored := int(SaveService.get_value("economy.watts", 0))
+	if stored >= cap:
+		return {"cycles": 0, "fraction": 1.0, "full": true}
+	var elapsed := minf((_now_hours() - synced) * per_hour, float(cap - stored))
+	var cycles := int(elapsed)
+	return {"cycles": cycles, "fraction": elapsed - cycles, "full": false}

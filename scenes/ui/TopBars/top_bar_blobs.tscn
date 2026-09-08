@@ -1,15 +1,16 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://src/ui/components/currency_bar.gd" id="1_bar"]
 [ext_resource type="Texture2D" path="res://assets/UI/Currency/Blob.png" id="2_icon"]
+[ext_resource type="FontFile" path="res://assets/UI/fonts/Clash-Bold.ttf" id="3_font"]
 
 [node name="BlobsTopBar" type="HBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 8
+theme_override_constants/separation = 6
 size_flags_horizontal = 3
 script = ExtResource("1_bar")
 currency = "blobs"
-prefix = "Blobs:"
+abbreviate_thousands = true
 
 [node name="Icon" type="TextureRect" parent="."]
 layout_mode = 2
@@ -21,6 +22,7 @@ texture = ExtResource("2_icon")
 [node name="ValueLabel" type="Label" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 22
-text = "Blobs: 0"
+text = "0"
 vertical_alignment = 1
