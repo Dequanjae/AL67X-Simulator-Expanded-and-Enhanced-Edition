@@ -1,0 +1,76 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://src/ui/hub/tab_shop.gd" id="5_shop"]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/npc/allan_shopkeeper.png" id="6_keeper"]
+
+[node name="ShopTab" type="VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 12
+script = ExtResource("5_shop")
+[node name="TitleRow" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+[node name="Keeper" type="TextureRect" parent="TitleRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(120, 128)
+texture = ExtResource("6_keeper")
+expand_mode = 1
+stretch_mode = 5
+[node name="TitleBox" type="VBoxContainer" parent="TitleRow"]
+layout_mode = 2
+alignment = 1
+[node name="Title" type="Label" parent="TitleRow/TitleBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 44
+text = "SHOP"
+[node name="KeeperLabel" type="Label" parent="TitleRow/TitleBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Allan the shop bender"
+[node name="Scroll" type="ScrollContainer" parent="."]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+[node name="Content" type="VBoxContainer" parent="Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
+[node name="BoxTitle" type="Label" parent="Scroll/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "LOOT BOXES"
+horizontal_alignment = 1
+[node name="BoxList" type="VBoxContainer" parent="Scroll/Content"]
+layout_mode = 2
+theme_override_constants/separation = 10
+[node name="UpgradeTitle" type="Label" parent="Scroll/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "CARD UPGRADES"
+horizontal_alignment = 1
+[node name="CardSelect" type="OptionButton" parent="Scroll/Content"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 72)
+theme_override_font_sizes/font_size = 22
+[node name="UpgradeList" type="VBoxContainer" parent="Scroll/Content"]
+layout_mode = 2
+theme_override_constants/separation = 10
+[node name="TokenTitle" type="Label" parent="Scroll/Content"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "AL67X TOKENS"
+horizontal_alignment = 1
+[node name="DebugTokensButton" type="Button" parent="Scroll/Content"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 80)
+theme_override_font_sizes/font_size = 24
+text = "DEBUG: +100 AL67X Tokens"
+[node name="ResultLabel" type="Label" parent="Scroll/Content"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 56)
+theme_override_font_sizes/font_size = 22
+horizontal_alignment = 1
+autowrap_mode = 2

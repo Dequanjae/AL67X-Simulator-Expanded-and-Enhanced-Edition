@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/ui/hub/tab_play.gd" id="2_play"]
+
+[node name="PlayTab" type="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+alignment = 1
+script = ExtResource("2_play")
+[node name="Title" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "AL67X SIMULATOR"
+horizontal_alignment = 1
+[node name="LevelLabel" type="Label" parent="."]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Day 1 at the Electric Motor Shop"
+horizontal_alignment = 1
+autowrap_mode = 2
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 120)
+theme_override_font_sizes/font_size = 44
+text = "PLAY"

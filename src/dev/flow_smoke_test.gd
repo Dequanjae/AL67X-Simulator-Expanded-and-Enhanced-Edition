@@ -47,13 +47,14 @@ func _flow() -> void:
 	if not await _wait_for_scene(tree, "Hub"):
 		return
 
-	# Press PLAY on the hub — call _start_run directly.
+	# Press PLAY on the hub — drive the real PlayTab button.
 	await _wait_transition_settled(tree)
 	var hub := tree.current_scene
 	if hub == null:
 		_failures.append("hub not found")
 		return
-	hub._start_run()
+	var play_button: Button = hub.get_node("SafeArea/Layout/Content/PlayTab/PlayButton")
+	play_button.pressed.emit()
 	if not await _wait_for_scene(tree, "Run"):
 		return
 

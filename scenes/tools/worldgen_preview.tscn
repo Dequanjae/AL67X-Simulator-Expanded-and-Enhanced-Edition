@@ -1,0 +1,261 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://src/dev/worldgen_preview.gd" id="1_preview"]
+[ext_resource type="Script" path="res://src/worldgen/level_builder.gd" id="2_builder"]
+
+[sub_resource type="Environment" id="preview_env"]
+ambient_light_source = 2
+ambient_light_color = Color(1, 1, 1, 1)
+ambient_light_energy = 0.7
+
+[node name="WorldgenPreview" type="Node3D"]
+script = ExtResource("1_preview")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("preview_env")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 12, 0)
+shadow_enabled = true
+
+[node name="PreviewRoot" type="Node3D" parent="."]
+
+[node name="Builder" type="Node3D" parent="PreviewRoot"]
+script = ExtResource("2_builder")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8, 0.6, 0, -0.6, 0.8, 0, 32, 32)
+projection = 1
+size = 60.0
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Panel" type="PanelContainer" parent="UI"]
+anchors_preset = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 360.0
+offset_bottom = 600.0
+
+[node name="Controls" type="VBoxContainer" parent="UI/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="UI/Panel/Controls"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "WORLDGEN PREVIEW"
+
+[node name="LevelRow" type="HBoxContainer" parent="UI/Panel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="LevelLabel" type="Label" parent="UI/Panel/Controls/LevelRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+theme_override_font_sizes/font_size = 15
+text = "Level"
+
+[node name="LevelSlider" type="HSlider" parent="UI/Panel/Controls/LevelRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 28)
+min_value = 1.0
+max_value = 99.0
+step = 1.0
+value = 1.0
+
+[node name="LevelValue" type="Label" parent="UI/Panel/Controls/LevelRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(36, 0)
+theme_override_font_sizes/font_size = 15
+text = "1"
+
+[node name="VariantRow" type="HBoxContainer" parent="UI/Panel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="VariantLabel" type="Label" parent="UI/Panel/Controls/VariantRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+theme_override_font_sizes/font_size = 15
+text = "Variant"
+
+[node name="VariantSlider" type="HSlider" parent="UI/Panel/Controls/VariantRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 28)
+max_value = 12.0
+step = 1.0
+value = 0.0
+
+[node name="VariantValue" type="Label" parent="UI/Panel/Controls/VariantRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(36, 0)
+theme_override_font_sizes/font_size = 15
+text = "0"
+
+[node name="AlgoRow" type="HBoxContainer" parent="UI/Panel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="AlgoLabel" type="Label" parent="UI/Panel/Controls/AlgoRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+theme_override_font_sizes/font_size = 15
+text = "Algorithm"
+
+[node name="AlgoOption" type="OptionButton" parent="UI/Panel/Controls/AlgoRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+custom_minimum_size = Vector2(0, 36)
+theme_override_font_sizes/font_size = 15
+
+[node name="ArenaWRow" type="HBoxContainer" parent="UI/Panel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ArenaWLabel" type="Label" parent="UI/Panel/Controls/ArenaWRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+theme_override_font_sizes/font_size = 15
+text = "Arena W"
+
+[node name="ArenaWSlider" type="HSlider" parent="UI/Panel/Controls/ArenaWRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 28)
+min_value = 20.0
+max_value = 120.0
+step = 2.0
+value = 44.0
+
+[node name="ArenaWValue" type="Label" parent="UI/Panel/Controls/ArenaWRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(36, 0)
+theme_override_font_sizes/font_size = 15
+text = "44"
+
+[node name="ArenaDRow" type="HBoxContainer" parent="UI/Panel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ArenaDLabel" type="Label" parent="UI/Panel/Controls/ArenaDRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+theme_override_font_sizes/font_size = 15
+text = "Arena D"
+
+[node name="ArenaDSlider" type="HSlider" parent="UI/Panel/Controls/ArenaDRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 28)
+min_value = 20.0
+max_value = 120.0
+step = 2.0
+value = 40.0
+
+[node name="ArenaDValue" type="Label" parent="UI/Panel/Controls/ArenaDRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(36, 0)
+theme_override_font_sizes/font_size = 15
+text = "40"
+
+[node name="DensityRow" type="HBoxContainer" parent="UI/Panel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="DensityLabel" type="Label" parent="UI/Panel/Controls/DensityRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+theme_override_font_sizes/font_size = 15
+text = "Density"
+
+[node name="DensitySlider" type="HSlider" parent="UI/Panel/Controls/DensityRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 28)
+min_value = 0.0
+max_value = 0.12
+step = 0.002
+value = 0.03
+
+[node name="DensityValue" type="Label" parent="UI/Panel/Controls/DensityRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(36, 0)
+theme_override_font_sizes/font_size = 15
+text = "0.030"
+
+[node name="ClearanceRow" type="HBoxContainer" parent="UI/Panel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="ClearanceLabel" type="Label" parent="UI/Panel/Controls/ClearanceRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+theme_override_font_sizes/font_size = 15
+text = "Clearance"
+
+[node name="ClearanceSlider" type="HSlider" parent="UI/Panel/Controls/ClearanceRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 28)
+min_value = 2.5
+max_value = 8.0
+step = 0.1
+value = 3.4
+
+[node name="ClearanceValue" type="Label" parent="UI/Panel/Controls/ClearanceRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(36, 0)
+theme_override_font_sizes/font_size = 15
+text = "3.4"
+
+[node name="SpawnClearRow" type="HBoxContainer" parent="UI/Panel/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="SpawnClearLabel" type="Label" parent="UI/Panel/Controls/SpawnClearRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(110, 0)
+theme_override_font_sizes/font_size = 15
+text = "Spawn clear"
+
+[node name="SpawnClearSlider" type="HSlider" parent="UI/Panel/Controls/SpawnClearRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 28)
+min_value = 2.0
+max_value = 10.0
+step = 0.5
+value = 4.5
+
+[node name="SpawnClearValue" type="Label" parent="UI/Panel/Controls/SpawnClearRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(36, 0)
+theme_override_font_sizes/font_size = 15
+text = "4.5"
+
+[node name="RebuildRow" type="HBoxContainer" parent="UI/Panel/Controls"]
+layout_mode = 2
+
+[node name="RebuildButton" type="Button" parent="UI/Panel/Controls/RebuildRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+theme_override_font_sizes/font_size = 16
+text = "REBUILD"
+
+[node name="StatsLabel" type="Label" parent="UI/Panel/Controls"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 60)
+theme_override_font_sizes/font_size = 14
+autowrap_mode = 2
+modulate = Color(0.8, 0.9, 1, 1)
+text = "generating…"

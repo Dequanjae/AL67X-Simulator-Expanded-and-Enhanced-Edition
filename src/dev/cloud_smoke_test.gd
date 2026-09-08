@@ -134,10 +134,12 @@ func _test_contract() -> void:
 	_check(not await android.sign_in_interactive(), "android sign-in inert off-device")
 
 
+## Boot UI: PLAY NOW persists local mode and enters the hub. (The Google
+## sign-in button was removed in the 2026-09-08 UI cleanup — cloud contract
+## itself is still covered by the mock-adapter tests above.)
 func _test_boot_ui() -> void:
 	var tree := get_tree()
 
-	# Fresh save → boot shows both save paths.
 	SaveService._cloud = CloudSaveAdapter.new()
 	SaveService.reset_to_defaults()
 	await tree.create_timer(0.5).timeout
@@ -146,21 +148,16 @@ func _test_boot_ui() -> void:
 		return
 	var boot := tree.current_scene
 	var menu: VBoxContainer = boot.get_node("Menu")
-	if not await _wait(func() -> bool: return menu.visible, "fresh save shows save-path menu"):
+	if not await _wait(func() -> bool: return menu.visible, "boot shows title menu"):
 		return
-	var google_button: Button = boot.get_node("Menu/GoogleButton")
-	_check(google_button.disabled, "google button disabled off-android")
+	_check(boot.get_node_or_null("Menu/GoogleButton") == null, "google button removed from boot")
+	_check(boot.get_node_or_null("SupportPanel") == null, "support panel removed from boot")
 
 	# PLAY NOW persists local mode and enters the hub.
 	(boot.get_node("Menu/PlayNowButton") as Button).pressed.emit()
 	if not await _wait(func() -> bool: return tree.current_scene != null and tree.current_scene.name == "Hub" and not SceneManager.is_transitioning, "play now enters hub"):
 		return
 	_check(str(SaveService.get_value("meta.save_mode", "")) == "local", "local mode persisted")
-
-	# Subsequent boot skips the menu entirely.
-	SceneManager.change_scene("res://scenes/boot/boot.tscn", {"speed": 4.0, "wait_time": 0.05})
-	if not await _wait(func() -> bool: return tree.current_scene != null and tree.current_scene.name == "Hub" and not SceneManager.is_transitioning, "local mode boots straight to hub"):
-		return
 
 
 func _wait(predicate: Callable, name: String) -> bool:

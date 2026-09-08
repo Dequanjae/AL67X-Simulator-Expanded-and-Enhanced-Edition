@@ -71,6 +71,28 @@ func add_tokens(amount: int) -> void:
 	EventBus.tokens_changed.emit(balance)
 
 
+
+## Gems (premium currency): no earn source yet — the top bar is wired so
+## grants/purchases can land later without UI changes.
+func get_gems() -> int:
+	return int(SaveService.get_value("economy.gems", 0))
+
+
+func add_gems(amount: int) -> void:
+	if amount == 0:
+		return
+	var balance := maxi(0, get_gems() + amount)
+	SaveService.set_value("economy.gems", balance)
+	EventBus.gems_changed.emit(balance)
+
+
+func spend_gems(amount: int) -> bool:
+	if amount < 0 or get_gems() < amount:
+		return false
+	add_gems(-amount)
+	return true
+
+
 ## Returns false (and changes nothing) if the balance is insufficient.
 func spend_blobs(amount: int) -> bool:
 	if amount < 0 or get_blobs() < amount:

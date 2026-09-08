@@ -72,8 +72,6 @@ func _run_tests() -> void:
 				_failures.append("allan sheet missing on disk: %s" % entry["sheet"])
 	var curves: Variant = JsonData.load_json("res://data/balance/run_curves.json")
 	_check(curves is Dictionary and curves.has("survival_timer") and curves.has("enemy_spawn"), "run curves load")
-	var whats_new: Variant = JsonData.load_json("res://data/whats_new.json")
-	_check(whats_new is Dictionary and whats_new.get("entries", []).size() >= 1, "whats_new feed loads")
 
 	# --- Full run-loop signal traffic (mirrors run_placeholder flow) -----
 	var tracked := [

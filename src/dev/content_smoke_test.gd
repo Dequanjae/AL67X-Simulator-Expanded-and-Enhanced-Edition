@@ -19,8 +19,6 @@ const TEST_THEME := "res://data/levels/theme_throwaway.json"
 const TEST_BOSS := "res://data/bosses/boss_throwaway.json"
 const TEST_SKIN := "res://assets/sprites/allan/player11.png"
 const ALLANS := "res://data/allans/allans.json"
-const WHATS_NEW := "res://data/whats_new.json"
-const NEWS_ID := "9999-99-99-throwaway-test"
 const STEP_TIMEOUT_FRAMES := 1200
 
 var _failures: PackedStringArray = []
@@ -94,17 +92,6 @@ func _add() -> void:
 	})
 	_write_json(ALLANS, registry)
 
-	# What's New: prepend a feed entry.
-	_backup(WHATS_NEW)
-	var feed: Dictionary = JsonData.load_json(WHATS_NEW)
-	feed["entries"].push_front({
-		"id": NEWS_ID, "date": "9999-99-99",
-		"title": "Pipeline Test Update",
-		"body": "If you can read this, the content pipeline works.",
-		"image": "",
-	})
-	_write_json(WHATS_NEW, feed)
-
 	print("CONTENT ADD: DONE")
 	get_tree().quit(0)
 
@@ -128,7 +115,8 @@ func _verify() -> void:
 	var eligible_ids: Array = EnemyCatalog.eligible_for_level(enemies, 1).map(func(e: Dictionary) -> String: return str(e["id"]))
 	_check(eligible_ids.has("throwaway_enemy"), "enemy eligible at its min_level")
 
-	# Loot box → purchasable + openable.
+	# Loot box → purchasable + openable. (Loot v2: open() returns two cards
+	# with a rarities array — every rolled rarity must honor the table.)
 	SaveService.reset_to_defaults()
 	var box := LootBoxCatalog.by_id("throwaway_box")
 	_check(not box.is_empty(), "loot box appears in catalog")
@@ -138,7 +126,9 @@ func _verify() -> void:
 	rng.seed = 7
 	var result := LootBoxCatalog.open("throwaway_box", rng)
 	_check(bool(result.get("ok", false)), "loot box opens")
-	_check(str(result.get("rarity", "")) == "common", "loot box honors its own drop table")
+	var rolled: Array = result.get("rarities", [result.get("rarity", "")])
+	for rarity in rolled:
+		_check(str(rarity) == "common", "loot box honors its own drop table")
 
 	# Level theme → loaded + generates a valid dodge-able layout.
 	var themes: Array = []
@@ -172,9 +162,6 @@ func _verify() -> void:
 	_check(AllanSprites.sheet_texture("player11") != null, "skin sheet imported + loadable")
 	_check(FusionSystem.max_tier() == 11, "fusion tier ceiling follows the registry")
 
-	# What's New → feed + live popup UI on hub load, dismiss persistence.
-	await _verify_whats_new()
-
 	if _failures.is_empty():
 		print("CONTENT TEST: PASS")
 	else:
@@ -185,17 +172,7 @@ func _verify() -> void:
 
 
 func _verify_whats_new() -> void:
-	SaveService.reset_to_defaults()
-	var data: Variant = JsonData.load_json("res://data/whats_new.json")
-	var entries: Array = data.get("entries", []) if data is Dictionary else []
-	var found_title := false
-	for entry in entries:
-		if str(entry.get("title", "")).contains("Pipeline Test Update"):
-			found_title = true
-	_check(entries.size() > 0, "what's new feed has entries")
-	_check(found_title, "feed lists the new entry")
-	SaveService.set_value("meta.whats_new_last_seen", NEWS_ID)
-	_check(str(SaveService.get_value("meta.whats_new_last_seen", "")) == NEWS_ID, "last-seen persisted")
+	pass  # removed: What's New popup cut in the 2026-09-08 UI cleanup
 
 
 # ---------------------------------------------------------------------------
@@ -208,7 +185,6 @@ func _cleanup() -> void:
 		if FileAccess.file_exists(absolute):
 			DirAccess.remove_absolute(absolute)
 	_restore(ALLANS)
-	_restore(WHATS_NEW)
 	SaveService.reset_to_defaults()
 	print("CONTENT CLEANUP: DONE")
 	get_tree().quit(0)

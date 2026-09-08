@@ -1,0 +1,90 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/ui/hub/box_open_popup.gd" id="11_boxpopup"]
+
+[node name="BoxOpenPopup" type="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("11_boxpopup")
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+[node name="Popup" type="PanelContainer" parent="Center"]
+layout_mode = 2
+[node name="VB" type="VBoxContainer" parent="Center/Popup"]
+layout_mode = 2
+theme_override_constants/separation = 14
+[node name="BoxArt" type="Control" parent="Center/Popup/VB"]
+custom_minimum_size = Vector2(420, 460)
+layout_mode = 2
+[node name="Motor" type="TextureRect" parent="Center/Popup/VB/BoxArt"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -204.0
+offset_top = -269.0
+offset_right = 204.0
+offset_bottom = 269.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+[node name="Housing" type="TextureRect" parent="Center/Popup/VB/BoxArt"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -183.5
+offset_top = -184.0
+offset_right = 183.5
+offset_bottom = 184.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+[node name="TapHint" type="Label" parent="Center/Popup/VB"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "TAP TO OPEN"
+horizontal_alignment = 1
+[node name="RewardsBox" type="VBoxContainer" parent="Center/Popup/VB"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+[node name="CardsLabel" type="Label" parent="Center/Popup/VB/RewardsBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = ""
+horizontal_alignment = 1
+[node name="CurrencyLabel" type="Label" parent="Center/Popup/VB/RewardsBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = ""
+horizontal_alignment = 1
+[node name="CloseButton" type="Button" parent="Center/Popup/VB/RewardsBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 64)
+theme_override_font_sizes/font_size = 22
+text = "COLLECT"

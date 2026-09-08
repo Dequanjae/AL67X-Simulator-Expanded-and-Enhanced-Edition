@@ -1,3 +1,4 @@
+@tool
 class_name LevelBuilder
 extends Node3D
 ## Turns a LevelGenerator layout + theme into 3D nodes:
@@ -7,6 +8,9 @@ extends Node3D
 ##  - pallets: low platform with 60% chance of a motor stacked on top.
 ##
 ## Physics layers: 1 = world (walls/props), 2 = player, pickups mask 2.
+## @tool: runs in-editor for the worldgen preview (scenes/tools/). At tool
+## time randf() is seeded by the engine, so pallet motors may stack
+## differently than in-game — preview only.
 
 const WALL_HEIGHT := 2.2
 const WALL_THICKNESS := 1.0

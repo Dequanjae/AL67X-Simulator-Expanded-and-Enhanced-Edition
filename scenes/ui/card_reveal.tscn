@@ -1,0 +1,59 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/ui/hub/card_reveal.gd" id="8_cardreveal"]
+
+[node name="CardReveal" type="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_cardreveal")
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.82)
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+[node name="Box" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+[node name="TitleLabel" type="Label" parent="Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+text = "CARD UNLOCKED!"
+horizontal_alignment = 1
+[node name="NameLabel" type="Label" parent="Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Goon Launcher (epic)"
+horizontal_alignment = 1
+[node name="DescLabel" type="Label" parent="Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "+2 projectiles"
+horizontal_alignment = 1
+[node name="CountLabel" type="Label" parent="Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Owned: x1"
+horizontal_alignment = 1
+modulate = Color(1, 1, 1, 0.7)
+[node name="CloseButton" type="Button" parent="Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 88)
+theme_override_font_sizes/font_size = 26
+text = "NICE!"

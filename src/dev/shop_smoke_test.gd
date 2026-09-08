@@ -57,12 +57,17 @@ func _test_pure() -> void:
 	_check(int(cost5["amount"]) < int(cost50["amount"]), "cost keeps growing (uncapped)")
 
 	# Purchase fails broke, succeeds funded, persists + deducts.
+	# (Upgrades cost Watts since the Economy v2 switch — fund Watts AND
+	# blobs: blobs pay for the loot box purchase below.)
 	_check(not CardUpgrades.purchase("sharpened_brushes", "damage", config), "broke purchase rejected")
+	EconomyService.add_watts(10000)
 	EconomyService.add_blobs(10000)
 	var blobs_before := EconomyService.get_blobs()
+	var watts_before := EconomyService.get_watts()
 	_check(CardUpgrades.purchase("sharpened_brushes", "damage", config), "funded purchase succeeds")
 	_check(CardUpgrades.get_level("sharpened_brushes", "damage") == 1, "upgrade level persisted")
-	_check(EconomyService.get_blobs() == blobs_before - int(cost0["amount"]), "cost deducted")
+	_check(EconomyService.get_blobs() == blobs_before, "no blobs spent on watts upgrade")
+	_check(EconomyService.get_watts() == watts_before - int(cost0["amount"]), "cost deducted from watts")
 	var cost_next := CardUpgrades.cost("damage", CardUpgrades.get_level("sharpened_brushes", "damage"), config)
 	_check(int(cost_next["amount"]) > int(cost0["amount"]), "next level costs more")
 

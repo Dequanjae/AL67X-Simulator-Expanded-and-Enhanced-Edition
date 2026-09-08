@@ -68,16 +68,20 @@ func _test_pure() -> void:
 		_check(bool(result["ok"]), "pull %d succeeds" % i)
 		if not bool(result["ok"]):
 			break
-		var rarity := str(result["rarity"])
-		if not allowed_rarities.has(rarity):
-			_failures.append("pull rolled rarity outside the box table: %s" % rarity)
-		rarities_seen[rarity] = int(rarities_seen.get(rarity, 0)) + 1
+		# Loot v2: one open = multiple cards; every rarity honors the table.
+		var pull_rarities: Array = result["rarities"]
+		for rarity in pull_rarities:
+			if not allowed_rarities.has(rarity):
+				_failures.append("pull rolled rarity outside the box table: %s" % rarity)
+			rarities_seen[rarity] = int(rarities_seen.get(rarity, 0)) + 1
 	_check(EconomyService.get_loot_box_count("basic_box") == 0, "all boxes consumed")
 	_check(rarities_seen.size() >= 2, "multiple rarities appear across %d pulls" % PULLS)
+	# Loot v2: each open banks `rewards.cards` cards (basic_box = 2).
+	var cards_per_open := maxi(1, int(box.get("rewards", {}).get("cards", 1)))
 	var owned: Dictionary = SaveService.get_value("cards.owned", {})
 	for card_id in owned:
 		total_cards += int(owned[card_id].get("count", 0))
-	_check(total_cards == PULLS, "every pull banked a card (%d/%d)" % [total_cards, PULLS])
+	_check(total_cards == PULLS * cards_per_open, "every pull banked a card (%d/%d)" % [total_cards, PULLS * cards_per_open])
 
 	# card_unlocked fired exactly once per distinct card.
 	var distinct: Dictionary = {}
@@ -111,7 +115,7 @@ func _test_pure() -> void:
 	EventBus.loot_box_collected.emit("not_a_real_box")
 	_check(EconomyService.get_loot_box_count("basic_box") == before + 2, "unknown pickup id ignored")
 
-	# Premium box rolls only its own table (seeded).
+	# Premium box rolls only its own table (seeded). Loot v2: rarities array.
 	SaveService.reset_to_defaults()
 	EconomyService.add_loot_box("premium_box", 20)
 	var premium := LootBoxCatalog.by_id("premium_box")
@@ -119,8 +123,10 @@ func _test_pure() -> void:
 	rng.seed = 99
 	for i in range(20):
 		result = LootBoxCatalog.open("premium_box", rng)
-		if bool(result["ok"]) and not premium_rarities.has(str(result["rarity"])):
-			_failures.append("premium pull outside its table: %s" % result["rarity"])
+		if bool(result["ok"]):
+			for rarity in result["rarities"]:
+				if not premium_rarities.has(str(rarity)):
+					_failures.append("premium pull outside its table: %s" % str(rarity))
 
 
 func _test_ui() -> void:

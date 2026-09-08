@@ -1,0 +1,58 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/ui/hub/allan_reveal.gd" id="7_reveal"]
+
+[node name="AllanReveal" type="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_reveal")
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.82)
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+[node name="Box" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+[node name="TitleLabel" type="Label" parent="Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 56
+theme_override_colors/font_color = Color(1, 0.85, 0.3, 1)
+text = "NEW ALLAN!"
+horizontal_alignment = 1
+[node name="Portrait" type="TextureRect" parent="Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(320, 420)
+expand_mode = 1
+stretch_mode = 5
+[node name="NameLabel" type="Label" parent="Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Allan II — Tier 2"
+horizontal_alignment = 1
+[node name="EquipButton" type="Button" parent="Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 92)
+theme_override_font_sizes/font_size = 28
+text = "EQUIP NOW!"
+[node name="LaterButton" type="Button" parent="Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(360, 72)
+theme_override_font_sizes/font_size = 22
+text = "Later"

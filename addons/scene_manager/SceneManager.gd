@@ -102,6 +102,13 @@ func _process(_delta: float) -> void:
 
 func change_scene(path: Variant, setted_options: Dictionary = {}) -> void:
 	assert(path == null or path is String or path is PackedScene, 'Path must be a string or a PackedScene')
+	# Race fix (2026-09-08): own the transitioning flag for the WHOLE
+	# transition. It used to be set only inside fade_out() — with
+	# skip_fade_out the unguarded replace window let _process re-adopt the
+	# outgoing scene mid-replace, orphaning the new one (boot→hub black
+	# screen after PLAY NOW). fade_in() clears it at the end; when the
+	# fade-in is skipped we clear it here.
+	is_transitioning = true
 	var options = _get_final_options(setted_options)
 	if not options["skip_fade_out"]:
 		await fade_out(setted_options)
@@ -113,6 +120,9 @@ func change_scene(path: Variant, setted_options: Dictionary = {}) -> void:
 	await _tree.create_timer(options["wait_time"]).timeout
 	if not options["skip_fade_in"]:
 		await fade_in(setted_options)
+	else:
+		is_transitioning = false
+		transition_finished.emit()
 
 func reload_scene(setted_options: Dictionary = {}) -> void:
 	await change_scene(null, setted_options)

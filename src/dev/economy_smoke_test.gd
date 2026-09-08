@@ -25,6 +25,7 @@ func _bootstrap() -> void:
 
 func _run() -> void:
 	_test_watts()
+	_test_gems()
 	await _test_loot_v2()
 	await _test_popup_ui()
 	if _failures.is_empty():
@@ -71,6 +72,24 @@ func _test_watts() -> void:
 	var level_before := CardUpgrades.get_level(card_id, "damage")
 	_check(CardUpgrades.purchase(card_id, "damage", up_cfg), "damage upgrade purchasable with watts")
 	_check(CardUpgrades.get_level(card_id, "damage") == level_before + 1, "watts upgrade persisted")
+
+
+## Gems (premium currency): balance persists, clamps at 0, spends cleanly.
+func _test_gems() -> void:
+	SaveService.reset_to_defaults()
+	_check(EconomyService.get_gems() == 0, "gems start at 0")
+	EconomyService.add_gems(250)
+	_check(EconomyService.get_gems() == 250, "gems granted")
+	var seen: Array[int] = []
+	EventBus.gems_changed.connect(func(v: int) -> void: seen.append(v))
+	EconomyService.add_gems(50)
+	_check(seen.has(300), "gems_changed emitted with new balance")
+	_check(EconomyService.spend_gems(100), "gems spendable")
+	_check(EconomyService.get_gems() == 200, "gems balance after spend")
+	_check(not EconomyService.spend_gems(9999), "overdraft rejected")
+	_check(EconomyService.get_gems() == 200, "overdraft changes nothing")
+
+
 
 
 func _test_loot_v2() -> void:

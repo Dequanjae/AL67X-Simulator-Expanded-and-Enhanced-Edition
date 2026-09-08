@@ -1,0 +1,105 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/ui/hub/settings_panel.gd" id="10_settings"]
+
+[node name="SettingsPanel" type="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("10_settings")
+[node name="Dim" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.8)
+[node name="Center" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+[node name="Box" type="VBoxContainer" parent="Center"]
+layout_mode = 2
+custom_minimum_size = Vector2(520, 0)
+theme_override_constants/separation = 10
+[node name="Title" type="Label" parent="Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "SETTINGS"
+horizontal_alignment = 1
+[node name="MusicRow" type="HBoxContainer" parent="Center/Box"]
+layout_mode = 2
+theme_override_constants/separation = 12
+[node name="MusicLabel" type="Label" parent="Center/Box/MusicRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+theme_override_font_sizes/font_size = 19
+text = "Music"
+[node name="MusicSlider" type="HSlider" parent="Center/Box/MusicRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 36)
+max_value = 1.0
+step = 0.05
+value = 1.0
+[node name="SFXRow" type="HBoxContainer" parent="Center/Box"]
+layout_mode = 2
+theme_override_constants/separation = 12
+[node name="SFXLabel" type="Label" parent="Center/Box/SFXRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+theme_override_font_sizes/font_size = 19
+text = "Sound FX"
+[node name="SFXSlider" type="HSlider" parent="Center/Box/SFXRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 36)
+max_value = 1.0
+step = 0.05
+value = 1.0
+[node name="ShakeRow" type="HBoxContainer" parent="Center/Box"]
+layout_mode = 2
+theme_override_constants/separation = 12
+[node name="ShakeLabel" type="Label" parent="Center/Box/ShakeRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+theme_override_font_sizes/font_size = 19
+text = "Screen shake"
+[node name="ShakeSlider" type="HSlider" parent="Center/Box/ShakeRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+custom_minimum_size = Vector2(0, 36)
+max_value = 1.0
+step = 0.1
+value = 1.0
+[node name="SmoothingCheck" type="CheckButton" parent="Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+button_pressed = true
+text = "Camera smoothing"
+[node name="SplatsCheck" type="CheckButton" parent="Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+button_pressed = true
+text = "Goo splats"
+[node name="NumbersCheck" type="CheckButton" parent="Center/Box"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 19
+button_pressed = true
+text = "Damage numbers"
+[node name="CloseButton" type="Button" parent="Center/Box"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 64)
+theme_override_font_sizes/font_size = 22
+text = "DONE"

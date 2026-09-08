@@ -55,6 +55,7 @@ static func default_data() -> Dictionary:
 			"tokens": 0,  # hard currency (AL67X Tokens)
 			"watts": 0,  # time currency (accrues via WattsService)
 			"watts_synced_hours": 0.0,  # last watts accrual sync (unix hours)
+			"gems": 0,   # premium currency (Gems — no source yet, top bar ready)
 			"loot_boxes": {},  # box_id -> unopened count (opened in Phase 8)
 		},
 		"allans": {
@@ -76,7 +77,6 @@ static func default_data() -> Dictionary:
 			"updated_at": 0,   # unix time of last regen accounting
 		},
 		"meta": {
-			"whats_new_last_seen": "",  # last seen entry id from data/whats_new.json
 			"save_mode": "",            # "" = not chosen | "local" | "cloud"
 		},
 	}

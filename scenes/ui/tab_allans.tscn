@@ -1,0 +1,70 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://src/ui/hub/tab_allans.gd" id="3_allans"]
+
+[node name="AllansTab" type="HBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 24
+script = ExtResource("3_allans")
+[node name="LeftBox" type="VBoxContainer" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 10
+[node name="Header" type="HBoxContainer" parent="LeftBox"]
+layout_mode = 2
+theme_override_constants/separation = 14
+[node name="Portrait" type="TextureRect" parent="LeftBox/Header"]
+layout_mode = 2
+custom_minimum_size = Vector2(88, 112)
+expand_mode = 1
+stretch_mode = 5
+[node name="HeaderBox" type="VBoxContainer" parent="LeftBox/Header"]
+layout_mode = 2
+alignment = 1
+[node name="Title" type="Label" parent="LeftBox/Header/HeaderBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "ALLANS"
+[node name="EquippedLabel" type="Label" parent="LeftBox/Header/HeaderBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Allan (Tier 1)"
+[node name="OwnedLabel" type="Label" parent="LeftBox/Header/HeaderBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
+text = "Owned: 1 / 10"
+[node name="EnergyRow" type="HBoxContainer" parent="LeftBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+[node name="EnergyLabel" type="Label" parent="LeftBox/EnergyRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 17
+text = "Energy: 5 / 5"
+vertical_alignment = 1
+autowrap_mode = 2
+[node name="RefillButton" type="Button" parent="LeftBox/EnergyRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(170, 52)
+theme_override_font_sizes/font_size = 16
+text = "Refill — 20 AL67X"
+[node name="StatusLabel" type="Label" parent="LeftBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 34)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 1
+autowrap_mode = 2
+[node name="OwnedScroll" type="ScrollContainer" parent="LeftBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 76)
+vertical_scroll_mode = 0
+[node name="OwnedRow" type="HBoxContainer" parent="LeftBox/OwnedScroll"]
+layout_mode = 2
+theme_override_constants/separation = 8
+[node name="Grid" type="GridContainer" parent="."]
+layout_mode = 2
+custom_minimum_size = Vector2(430, 0)
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 4
